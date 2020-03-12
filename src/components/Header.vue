@@ -1,0 +1,81 @@
+<template>
+  <div>
+  <div class="header">
+    <div class="headerContent">
+      <span class="icon iconfont icon-fanhui1 left" @click="goBack"></span>
+      <div class="title">
+        <slot></slot>
+      </div>
+      <span class="right" v-if="right" @click="rightMethod">{{right}}</span>
+    </div>
+  </div>
+  <div class="place"></div>
+  </div>
+</template>
+<script>
+export default {
+  props: {
+    back: {
+      type: Function
+    },
+    right: {
+      type: String,
+      default: ''
+    },
+    rightMethod: {
+      type: Function,
+      default: () => {
+        console.log('测试')
+      }
+    }
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
+    goBack () {
+      if (this.back) {
+        this.back()
+      } else {
+        console.log('调用默认的back')
+      }
+    }
+  },
+  created () {
+  }
+}
+</script>
+<style lang="stylus" scoped>
+.header
+  height:64px;
+  padding-top:20px;
+  font-size:18px;
+  color:#24272B;
+  background-color:#FFFFFF;
+  position:fixed;
+  right:0;
+  left:0;
+  z-index:100;
+  .headerContent
+    line-height:44px;
+    height:44px;
+    position:relative;
+  .title
+    max-width: 60%;
+    margin: 0 auto;
+  .left
+    position:absolute;
+    left:14px;
+    font-weight:600;
+    color:#8795A8;
+    font-size:16px;
+  .right
+    position:absolute;
+    right:13px;
+    top:0;
+    font-size:17px;
+    color:#1890FF;
+.place
+  height:64px;
+</style>

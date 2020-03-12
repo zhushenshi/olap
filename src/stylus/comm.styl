@@ -1,0 +1,27 @@
+@import './variables.styl';
+.inline-ul
+  padding: 0
+  margin: 0
+  li
+    display: inline-block
+    margin: 0 20px
+    font-size:16px;
+    line-height:0;
+    color:rgba(146,146,146,1);
+    p
+      line-height: 22px;
+  li:first-child
+    margin-left: 0
+  li:last-child
+    margin-right: 0
+  li:after
+    content: "";
+    display inline-block
+    width:18px;
+    height:2px;
+    background-color:transparent;
+    margin-top:6px;
+  li.active
+    color:#1890FF;
+  li.active:after
+    background-color:#1890FF;

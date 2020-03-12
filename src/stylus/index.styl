@@ -1,0 +1,66 @@
+@import './variables.styl';
+@import './comm.styl';
+@import './reset.styl';
+.wrapper
+  background-color:#F0F0F0;
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
+.content
+  margin 0 14px
+.fr {
+  float: right;
+}
+.fl {
+  float: left;
+}
+.half{
+  width:50%
+}
+.text-left
+  text-align: left
+.text-right
+  text-align: right
+.text-center
+  text-align: center
+.margin-left
+  margin-left: 10px
+.margin-right
+  margin-right: 10px
+.nomargin
+  margin: 0
+.text
+  color: $text-color
+.text-red
+  color: $red-color
+a
+  color: $text-color
+  text-decoration: none
+a:hover
+  color: $red-color
+.bg-white
+  background-color #ffffff
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+.mt30
+  margin-top 30px
+.mb30
+  margin-bottom 30px
+.mt15
+  margin-top 15px
+.mb15
+  margin-bottom 15px
+.moneyColor
+  color: $red-color
+.infoColor
+  color: #ff6461
+.infoTipsColor
+  color: #ff9600
