@@ -35,12 +35,12 @@
         内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
         内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
       </div>
-      <div class="caseDetailsContent caseDetailsContent2">
+      <div class="caseDetailsContent caseDetailsContent2" v-if="type!==0">
         <div class="selectBox">
-          <div class="item">
-            <div class="title">申请人证据资料申请人证据资料申请人证据资料申请人证据资料申请人证据资料</div>
-            <div><span>证据1：</span><span class="text">借款协议借款协议借款协议借款协议借款协议借款协议借款协议</span></div>
-            <div>证据内容：证据内容：证据内容：证据内容：证据内容：证据内容：</div>
+          <div class="item active">
+            <div class="title">申请人证据资料</div>
+            <div><span>证据1：</span><span class="text">借款协议</span></div>
+            <div>证据内容：：</div>
             <div class="text wrap">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
               容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
               容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
@@ -48,12 +48,37 @@
               容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
               容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
             </div>
+            <span class="icon iconfont icon-xiangxia triangle"></span>
           </div>
           <div class="item">
-            5
+            <div class="title">申请人证据资料</div>
+            <div><span>证据1：</span><span class="text">借款协议借款协议借款协议借款协议借款协议借款协议借款协议</span></div>
+            <div>证据内容：</div>
+            <div class="text wrap">内容内容内容内容内容内容内容内容
+            </div>
+            <span class="icon iconfont icon-xiangxia triangle"></span>
           </div>
           <div class="item">
-            5
+            <div class="title">申请人证据资料</div>
+            <div><span>证据1：</span><span class="text">借款协议借款协议借款协议借款协议借款协议借款协议借款协议</span></div>
+            <div>证据内容：</div>
+            <div class="text wrap">内容内容内容内容内容内容内容内容
+            </div>
+            <span class="icon iconfont icon-xiangxia triangle"></span>
+          </div>
+        </div>
+        <div class="selectContent">
+          <div class="imgBox">
+            <img src="./../assets/imgs/fapiao.png" alt="">
+          </div>
+          <div class="imgBox">
+            <img src="./../assets/imgs/fapiao.png" alt="">
+          </div>
+          <div class="imgBox">
+            <img src="./../assets/imgs/fapiao.png" alt="">
+          </div>
+          <div class="imgBox">
+            <img src="./../assets/imgs/fapiao.png" alt="">
           </div>
         </div>
       </div>
@@ -87,9 +112,14 @@ export default {
       this.type = val
     },
     toastTex (e) {
-      console.log(e.target)
+      console.log(e.target.innerHTML)
       console.log(e.target.offsetWidth)
-      console.log(e.target.scrollHeight)
+      // console.log(e.target.scrollWidth)
+      console.log(e.target.previousSibling.offsetWidth)
+      console.log(e.target.parentNode.offsetWidth)
+      if ((e.target.offsetWidth + e.target.previousSibling.offsetWidth) > e.target.parentNode.offsetWidth) {
+        this.$Toast({ message: e.target.innerHTML, position: 'middle' })
+      }
       // div.scrollHeight==div.offsetHeight
     }
   },
@@ -98,45 +128,8 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
+@import "../stylus/caseBaseInfo.styl";
 .wrapper
-  section.casseBaseInfo
-    padding:14px 0 0 0;
-    background-color:#FFFFFF;
-    text-align:left
-    .casseBaseInfoBox
-      padding:0 25px 20px 20px;
-      position:relative;
-      overflow:hidden;
-      .arbNumber
-        font-size:20px;
-        font-weight:500;
-        line-height:28px;
-        color:#1890FF;
-        padding-bottom:5px;
-      .arbInfo
-        font-size:15px;
-        font-weight:400;
-        line-height:21px;
-        color:#000000;
-        margin-top:10px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -o-text-overflow: ellipsis;
-        white-space:nowrap;
-        .label
-          color:#9B9B9B;
-          margin:10px 0 0 3px;
-      .caseStatus
-        position:absolute;
-        right:-45px;
-        top:10px;
-        background-color:#A5D2FF;
-        color:#FFFFFF;
-        padding:5px;
-        transform:rotate(45deg);
-        width:136px;
-        text-align:center;
-        font-size:15px;
   .caseDetail
     text-align:left;
     padding:14px 0 0 0;
@@ -158,24 +151,24 @@ export default {
     line-height:24px;
     margin-top:7px;
   .caseDetailsContent2
-    padding:16px 0 10px;
+    padding:16px 0 0;
     .selectBox
       white-space: nowrap;
       overflow: auto;
       .item
         width:303px;
-        background-color:blue;
         display:inline-block;
         margin:0 7px;
-        // height:173px;
-        background:#0084FF;
+        margin-bottom:18px
+        background:#FFFFFF;
         box-shadow:0px 3px 6px rgba(0,0,0,0.16);
         opacity:1;
         border-radius:5px;
         font-size:15px;
-        color:#FFFFFF
-        padding:16px 16px 8px 16px;
-        line-height:24px;
+        color:#9B9B9B
+        padding:8px 16px 9px 16px;
+        line-height:22px;
+        position: relative;
         >div
           margin:8px 0;
           overflow: hidden;
@@ -184,12 +177,43 @@ export default {
           font-size:16px
           margin-bottom:14px;
         .text
-          color:#C6E4FF;
+          color:#000000;
         .wrap
           white-space: normal;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           overflow: hidden;
-
+          min-height:44px;
+        .triangle
+          opacity:0;
+          position:absolute;
+          color:#0084FF;
+          left:0;
+          right:0;
+          bottom:-12px;
+          margin:auto;
+          font-size:36px;
+          text-align:center;
+      .active
+        background:#0084FF;
+        color:#FFFFFF
+        .text
+          color:#C6E4FF;
+        .triangle
+          opacity:1;
+          position:absolute;
+          color:#0084FF;
+          left:0;
+          right:0;
+          bottom:-12px;
+          margin:auto;
+          font-size:36px;
+          text-align:center;
+    .selectContent
+      padding:14px;
+      .imgBox
+        padding:14px;
+        img
+          width:100%;
 </style>

@@ -65,6 +65,8 @@ export default {
         width:37px;
         position relative
         top:2px;
+        img
+          width:100%;
     .home-info
       margin-top:14px;
       box-shadow:0px 3px 6px rgba(0,0,0,0.16);
