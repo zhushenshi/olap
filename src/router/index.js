@@ -21,19 +21,29 @@ const routes = [
     component: () => import('../views/ToDoList.vue')
   },
   {
-    path: '/toDoList/examine', // 审核裁决书
+    path: '/toDoList/auditArbitralDetail', // 审核裁决书
     name: 'auditArbitralDetail',
+    component: () => import('../views/AuditArbitralDetail.vue')
+  },
+  {
+    path: '/toDoList/examine', // 审核裁决书
+    name: 'examine',
     component: () => import('../views/Examine.vue')
   },
   {
     path: '/toDoList/examine/examineResult', // 审核结果
-    name: 'auditArbitralDetail',
+    name: 'examineResult',
     component: () => import('../views/ExamineResult.vue')
   },
   {
     path: '/toDoList/auditRecharge', // 充值审核
     name: 'auditRecharge ',
     component: () => import('../views/AuditRecharge.vue')
+  },
+  {
+    path: '/caseDetails', // 案件详情
+    name: 'CaseDetails ',
+    component: () => import('../views/CaseDetails.vue')
   },
   {
     path: '/about',
