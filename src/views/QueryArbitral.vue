@@ -33,7 +33,7 @@
     </div>
     <div class="filterCnt">
       <ul>
-        <li v-for="(item,index) in filterList" :key="index">   
+        <li v-for="(item,index) in filterList" :key="index">
             <p>
               <span>
                 <img src="./../assets/imgs/shenhe.png">
@@ -47,7 +47,7 @@
             </p>
             <p>
               <span class="filterTitle">标的额：</span>
-            {{item.arbDisputeMoney}}
+            {{item.arbDisputeMoney | money}}元
             </p>
             <p>
               <span class="filterTitle">申请日期：</span>
@@ -58,7 +58,7 @@
               <span>
                 <img src="./../assets/imgs/zhongcaifuwuqi.png"/>
               </span>
-              <div class="status">{{item.status}}</div>
+              <div class="status" v-if='item.status'>{{item.status}}</div>
               <div>
                 <span class="recall">撤回</span>
               </div>
@@ -92,7 +92,7 @@ export default {
           label: v.label
         }
       }),
-      activeName: '0', // tabs name为空时，默认值为0
+      activeName: 0, // tabs name为空时，默认值为0
       sortName: '',
       caseName: '',
       filterList: [],
@@ -124,7 +124,7 @@ export default {
       this.$router.push(url)
     },
     getAllArbitralInfos () {
-      var arbStatusList = this.activeName !== '0' ? this.activeName.split(',') : []
+      var arbStatusList = this.activeName !== 0 ? this.activeName.split(',') : []
       if (arbStatusList.length > 0) {
         this.formInline.arbStatusBegin = arbStatusList[0]
         this.formInline.arbStatusEnd = arbStatusList[arbStatusList.length - 1]
@@ -132,18 +132,18 @@ export default {
         delete this.formInline.arbStatusBegin
         delete this.formInline.arbStatusEnd
       }
-      let params = Object.assign({}, this.formInline, {
+      const params = Object.assign({}, this.formInline, {
         pageNo: this.pageNo,
         pageSize: this.pageSize,
-        sortCreateTime:this.sortName,
-        sortArbNumber:this.caseName
+        sortCreateTime: this.sortName,
+        sortArbNumber: this.caseName
       })
       delete params.status
       this.loading = true
       api.getAllArbitralInfos(params).then(res => {
         // this.loading = false
         if (res.data.code === '1') {
-          let tableData = res.data.list
+          const tableData = res.data.list
           tableData.forEach(v => {
             v.code = v.arbNumber || v.arbTemporaryNumber
             v.status = util.getStatus(v.arbStatus)
@@ -159,8 +159,11 @@ export default {
     this.activeName = 0
   },
   created () {
-      this.getAllArbitralInfos()
-      console.log(this.activeName)
+    if (this.$route.params.form) {
+      this.formInline = this.$route.params.form
+    }
+
+    this.getAllArbitralInfos()
   }
 }
 </script>
@@ -206,7 +209,7 @@ export default {
       flex 1
       margin 0 8px
       span
-        color #727272 
+        color #727272
         font-size 14px
         background #F2F2F2
         padding 4px 16px
@@ -256,7 +259,7 @@ export default {
 .filterCnt
     ul
       overflow hidden
-      padding  0 14px 
+      padding  0 14px
       li
        background #ffffff
        margin-bottom 14px
@@ -280,7 +283,7 @@ export default {
        .filterR
           right 12px
           position absolute
-          bottom 20px
+          top 25%
           .status
             color #1890FF
             font-size 12px

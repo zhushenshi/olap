@@ -48,16 +48,16 @@ const routes = [
     name: 'Login',
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
   },
-  {     //案件查询
+  { // 案件查询
     path: '/queryArbitral',
     name: 'QueryArbitral',
-    component: () => import('../views/QueryArbitral.vue'),
+    component: () => import('../views/QueryArbitral.vue')
   },
   {
     path: '/queryArbitral/search',
     name: 'Search',
     component: () => import('../views/Search.vue')
-  },
+  }
 ]
 
 const router = new VueRouter({
