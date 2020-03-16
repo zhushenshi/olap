@@ -25,7 +25,7 @@ export default {
       form: {
         createTime: ''
       },
-      pickerValue: ''
+      pickerValue: new Date()
     }
   },
   components: { Header },
@@ -50,6 +50,12 @@ export default {
       this.form.createTime = mm
     },
     openPicker () {
+      // 如果已经选过日期，则再次打开时间选择器时，日期回显
+      // if (this.form.createTime) {
+      //   this.pickerValue = this.form.createTime
+      // } else {
+      //   this.pickerValue = new Date()
+      // }
       this.$refs.picker.open()
     }
   },

@@ -60,7 +60,7 @@
               </span> -->
              <div class="filterRs">
                 <div class="status" v-if='item.status'>{{item.status}}</div>
-                <div class="otherStatus">
+                <div class="otherStatus" v-if="item.arbStatus>=10">
                   <span class="recall">撤回</span>
                 </div>
                 <div class="otherStatus">
@@ -116,12 +116,10 @@ export default {
       this.search()
     },
     fllter (val) {
-      console.log(val)
       this.sortName = val
       this.getAllArbitralInfos()
     },
     fllters (val) {
-      console.log(val)
       this.caseName = val
       this.getAllArbitralInfos()
     },
