@@ -33,7 +33,7 @@
     </div>
     <div class="filterCnt">
       <ul>
-        <li v-for="(item,index) in filterList" :key="index">
+        <li v-for="(item,index) in filterList" :key="index" @click="intoDetail(item)">
             <p>
               <span>
                 <img src="./../assets/imgs/shenhe.png">
@@ -55,16 +55,18 @@
             </p>
           </div>
           <div class="filterR">
-              <span>
+              <!-- <span>
                 <img src="./../assets/imgs/zhongcaifuwuqi.png"/>
-              </span>
-              <div class="status" v-if='item.status'>{{item.status}}</div>
-              <div>
-                <span class="recall">撤回</span>
-              </div>
-              <div>
-                 <span class="recall">异议</span>
-              </div>
+              </span> -->
+             <div class="filterRs">
+                <div class="status" v-if='item.status'>{{item.status}}</div>
+                <div class="otherStatus">
+                  <span class="recall">撤回</span>
+                </div>
+                <div class="otherStatus">
+                  <span class="recall">异议</span>
+                </div>
+             </div>
           </div>
         </li>
       </ul>
@@ -102,6 +104,13 @@ export default {
     }
   },
   methods: {
+    intoDetail (item) {
+      console.log(item)
+      this.$router.push({
+        path: '/caseDetails',
+        query: { id: item.id }
+      })
+    },
     tabFilter (val) {
       this.activeName = val
       this.search()
@@ -283,13 +292,21 @@ export default {
        .filterR
           right 12px
           position absolute
-          top 25%
+          top 0
+          text-align right
+          height 100%
           .status
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 90px;
             color #1890FF
             font-size 12px
             border 1px solid #C5E3FF
             border-radius 10px
             padding 2px 5px
+          .otherStatus
+            margin 6px 0
           .recall
             display inline-block
             color #FF1818
@@ -298,7 +315,6 @@ export default {
             border-radius 10px
             width 40px
             text-align center
-            margin-top 5px
 .arbProsecutorName
   overflow: hidden;
   text-overflow:ellipsis;
@@ -311,4 +327,9 @@ export default {
   color #727272
   font-size 14px
   margin-top 80px
+.filterRs
+  margin 0 auto
+  position relative
+  top 50%
+  transform: translateY(-50%)
 </style>
