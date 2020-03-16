@@ -128,4 +128,15 @@ export default {
       background:#FFFFFF;
       font-size:15px;
       line-height:21px;
+/deep/.van-tabs--line .van-tabs__wrap
+  height:46px;
+/deep/.van-tab
+  font-size:15px
+  line-height:46px;
+  min-width:87px;
+/deep/ .van-tabs__line
+  width:60px!important;
+  background-color: #1890ff!important;
+/deep/ .van-tab--active
+  color:#1890ff;
 </style>
