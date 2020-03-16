@@ -3,10 +3,13 @@
     <Header :back="back" right="确认" :rightMethod='search'>搜索</Header>
     <div class="serachCnt">
       <input v-model="form.arbNumber" placeholder="请输入案件编号"/>
-      <input v-model="form.arbName" placeholder="请选择案由"/>
+      <!-- <input v-model="form.arbName" placeholder="请选择案由"/> -->
       <input v-model="form.arbProsecutorName" placeholder="请输入申请人"/>
       <input v-model="form.arbDefendantName" placeholder="请输入被申请人"/>
-      <input v-model="form.createTime" readonly @click="openPicker" placeholder="请选择时间"/>
+      <div class="inputArrow">
+        <input v-model="form.createTime" readonly @click="openPicker" placeholder="请选择申请时间"/>
+        <img src="./../assets/imgs/arrow.png"/>
+      </div>
        <mt-datetime-picker ref="picker"  v-model="pickerValue"
           type="date"
           @confirm="handleConfirm">
@@ -22,7 +25,7 @@ export default {
       form: {
         createTime: ''
       },
-      pickerValue: ''
+      pickerValue: new Date()
     }
   },
   components: { Header },
@@ -47,6 +50,12 @@ export default {
       this.form.createTime = mm
     },
     openPicker () {
+      // 如果已经选过日期，则再次打开时间选择器时，日期回显
+      // if (this.form.createTime) {
+      //   this.pickerValue = this.form.createTime
+      // } else {
+      //   this.pickerValue = new Date()
+      // }
       this.$refs.picker.open()
     }
   },
@@ -72,5 +81,10 @@ export default {
       border-radius 10px
       width 90%
       margin 10px 0
-
+.inputArrow
+  position relative
+  img
+    right 15px
+    top 26px
+    position absolute
 </style>
