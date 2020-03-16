@@ -2,7 +2,7 @@
   <div class="wrapper">
     <Header :back="back" right="审核" :rightMethod='back'>充值审核</Header>
     <section class="casseBaseInfo">
-      <div class="casseBaseInfoBox">
+      <div class="caseBaseInfoBox">
         <div class="arbNumber">
           <img src="../assets/imgs/chongzhi.png" class="titleIcon">
           上海指旺信息科技有限公司</div>

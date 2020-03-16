@@ -2,7 +2,7 @@
   <div class="wrapper">
     <Header :back="back" right="审核" :rightMethod='back'>审核裁决书</Header>
     <section class="casseBaseInfo">
-      <div class="casseBaseInfoBox">
+      <div class="caseBaseInfoBox">
         <div class="arbNumber">编号：(2018)北国仲字第1号</div>
         <div class="arbInfo">
           <span class="label">案由：</span>

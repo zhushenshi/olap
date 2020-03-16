@@ -43,7 +43,7 @@ const routes = [
   {
     path: '/caseDetails', // 案件详情
     name: 'CaseDetails ',
-    component: () => import('../views/CaseDetails.vue')
+    component: () => import('../views/caseDetail')
   },
   {
     path: '/about',
