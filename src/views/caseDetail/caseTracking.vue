@@ -1,11 +1,11 @@
 <template>
 <div class="tabItem">
   <div class="itemBox" v-for="(item,index) in arr" :key="index">
-    <p class="topTime">{{item[0].endTime |formatDate}}</p>
+    <p class="topTime">{{item[0].endTime | formatm}}</p>
     <div class="item" v-for="(ite,inde) in item" :key="inde">
       <div class="left">
-        <div class="leftTop">{{ite.endTime | formathh}}</div>
-        <div class="leftBottom">{{ite.endTime|formatms}}</div>
+        <div class="leftTop">{{ite.endTime | formatDay}}</div>
+        <div class="leftBottom">{{ite.endTime | formathm}}</div>
       </div>
       <div class="right">
         <p>{{ite.index}}：{{ite.taskName}}</p>
@@ -41,11 +41,6 @@ export default {
             v.index = '第' + (len - i) + '步'
           })
           var arr = []
-          // this.histroyTaskInst.forEach((ele, i) => {
-          //   if (ele.endTime) {
-
-          //   }
-          // })
           for (let i = 0; i < this.histroyTaskInst.length; i++) {
             if (i === 0) {
               const ar = []
@@ -58,19 +53,12 @@ export default {
               } else {
                 const a = []
                 a.push(this.histroyTaskInst[i])
-                arr[arr.length - 1].push(a)
+                arr.push(a)
               }
             }
           }
           console.log(arr)
           this.arr = arr
-          // for (let i = 0; i < arr.length; i++) {
-          //   for (let j = 0; this.histroyTaskInst; j++) {
-          //     if (this.histroyTaskInst[i].endTime === this.histroyTaskInst[j].endTime) {
-
-          //     }
-          //   }
-          // }
         }
       })
     }
