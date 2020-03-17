@@ -16,6 +16,16 @@ export default {
     if (value) date = moment(value).format('YYYY-MM-DD HH:mm')
     return date
   },
+  formathh: value => {
+    let date = ''
+    if (value) date = moment(value).format('HH')
+    return date
+  },
+  formatms: value => {
+    let date = ''
+    if (value) date = moment(value).format('mm:ss')
+    return date
+  },
   formatSex: value => {
     let sex = ''
     if (value === '1') sex = '男'

@@ -1,36 +1,46 @@
 <template>
 <div class="tabItem">
-  <div class="itemBox" v-if="type==='one'">
-    <p class="topTime">2019年12月</p>
+  <div class="itemBox" v-for="(item,index) in histroyTaskInst" :key="index">
+    <p class="topTime">{{item.endTime |formatDate}}</p>
     <div class="item">
       <div class="left">
-        <div class="leftTop">12</div>
-        <div class="leftBottom">12:00</div>
+        <div class="leftTop">{{item.endTime | formathh}}</div>
+        <div class="leftBottom">{{item.endTime|formatms}}</div>
       </div>
       <div class="right">
-        <p>第十一步</p>
-        <p class="text">爱丽丝</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="left">
-        <div class="leftTop">12</div>
-        <div class="leftBottom">12:00</div>
-      </div>
-      <div class="right">
-        <p>第十一步</p>
-        <p class="text">爱丽丝</p>
+        <p>{{item.index}}：{{item.taskName}}</p>
+        <p class="text">{{item.assignee}}</p>
       </div>
     </div>
   </div>
 </div>
 </template>
 <script>
+import { api } from '@/utils/api'
 export default {
   name: 'CaseTracking',
   data () {
     return {
-      type: 'one'
+      type: 'one',
+      histroyTaskInst: []
+    }
+  },
+  created () {
+    this.getHistroyTaskInst()
+  },
+  methods: {
+    getHistroyTaskInst () { // 案件追踪
+      api.getHistroyTaskInst({
+        arbProcess: '217526'
+      }).then((res) => {
+        if (res.data.code === '1') {
+          this.histroyTaskInst = res.data.data
+          const len = this.histroyTaskInst.length
+          this.histroyTaskInst.forEach((v, i) => {
+            v.index = '第' + (len - i) + '步'
+          })
+        }
+      })
     }
   }
 }
