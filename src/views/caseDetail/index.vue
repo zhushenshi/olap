@@ -56,14 +56,30 @@
 import Header from '@/components/Header.vue'
 import applyInfo from './applyInfo.vue'
 import caseTracking from './caseTracking.vue'
+import { api } from '@/utils/api'
 
 export default {
   name: 'CaseDetail',
   data () {
     return {
+      id: ''
     }
   },
-  components: { Header, applyInfo, caseTracking }
+  components: { Header, applyInfo, caseTracking },
+  methods: {
+    getData () {
+      api.getArbitralInfoDetail({ arbitralId: this.id }).then(res => {
+        if (res.data.code === '1') {
+          console.log(res)
+        }
+      })
+    }
+  },
+  created () {
+    console.log(this.$route.query.id)
+    this.id = this.$route.query.id
+    this.getData()
+  }
 }
 </script>
 
