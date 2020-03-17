@@ -47,7 +47,9 @@
         <van-tab title="补充资料">内容 2</van-tab>
         <van-tab title="调节资料">内容 2</van-tab>
         <van-tab title="撤回资料">内容 2</van-tab>
-        <van-tab title="管辖权异议资料">内容 2</van-tab>
+        <van-tab title="管辖权异议资料">
+          <jurisdiction></jurisdiction>
+        </van-tab>
       </van-tabs>
     </section>
   </div>
@@ -56,6 +58,7 @@
 import Header from '@/components/Header.vue'
 import applyInfo from './applyInfo.vue'
 import caseTracking from './caseTracking.vue'
+import jurisdiction from './jurisdiction.vue'
 import { api } from '@/utils/api'
 
 export default {
@@ -65,7 +68,7 @@ export default {
       id: ''
     }
   },
-  components: { Header, applyInfo, caseTracking },
+  components: { Header, applyInfo, caseTracking, jurisdiction },
   methods: {
     getData () {
       api.getArbitralInfoDetail({ arbitralId: this.id }).then(res => {

@@ -1,35 +1,90 @@
 <template>
 <div class="tabItem">
-      <h3>申请仲裁书</h3>
-      <div class="borderBottom" style=";padding:13px 0;">
-        <span class="icon iconfont icon-pdf"></span>
-        <span class="fileName">仲裁申请书.pdf</span>
+      <div class="jurisdictItem">
+          <h3>基本信息</h3>
+          <div class="info">
+            <div class="infoLeft">
+              <p>异议申请时间</p>
+              <p class="infoDetail">{{arbiInfo.decisionCreateTime}}</p>
+            </div>
+            <span class="infoLine"></span>
+            <div class="infoRight">
+              <p>异议申请流程</p>
+              <p class="infoDetail">立案</p>
+            </div>
+        </div>
+          <div class="info">
+            <div class="infoLeft">
+              <p>异议申请人</p>
+              <p class="infoDetail">{{arbiInfo.decisionProsecutorName}}</p>
+            </div>
+            <span class="infoLine"></span>
+            <div class="infoRight">
+            </div>
+        </div>
       </div>
-        <div style="padding:16px 0 0 0;">
-          <h3>证据资料(2个债权)</h3>
-        </div>
-      <div>
-        <div class="grayBg">
-        <p class="bold black"> 证据一（ZQ1)</p>
-        <p class="" style="margin:7px 0 16px 0;">订单编号：MJZH201909241873148780</p>
-        <p class="borderBottom"></p>
-        <p style="padding:14px 0 0 0;">证据标题：</p>
-        <p class="black" style="margin-top:2px;">这里是标题标题标题这里是标题标题标题</p>
-          <p style="margin-top:16px;">证明内容：</p>
-          <p class="black" style="margin-top:2px;">这里是内容内容</p>
-          <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
-          <div style="background-color:#FFFFFF;padding:14px;">
-            <div>
-              <span class="icon iconfont icon-pdf"></span>
-              <span class="fileName">仲裁申请书.pdf</span>
-            </div>
-            <div style="margin-top:12px;">
-              <span class="icon iconfont icon-pdf"></span>
-              <span class="fileName">仲裁申请书.pdf</span>
-            </div>
+       <div class="jurisdictItem">
+          <h3>被申请人异议资料</h3>
+          <div style=";padding:13px 0;">
+            <p class="titleInfo">异议申请书</p>
+            <span class="icon iconfont icon-pdf"></span>
+            <span class="fileName">仲裁申请书.pdf</span>
           </div>
+          <p class="titleInfo">证据资料</p>
+         <div class="grayBg">
+            <p class="bold black"> 证据一（ZQ1)</p>
+            <p class="" style="margin:7px 0 16px 0;">订单编号：MJZH201909241873148780</p>
+            <p class="borderBottom"></p>
+            <p style="padding:14px 0 0 0;">证据标题：</p>
+            <p class="black" style="margin-top:2px;">这里是标题标题标题这里是标题标题标题</p>
+            <p style="margin-top:16px;">证明内容：</p>
+            <p class="black" style="margin-top:2px;">这里是内容内容</p>
+            <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
+            <div style="background-color:#FFFFFF;padding:14px;">
+              <div>
+                <span class="icon iconfont icon-pdf"></span>
+                <span class="fileName">仲裁申请书.pdf</span>
+              </div>
+              <div style="margin-top:12px;">
+                <span class="icon iconfont icon-pdf"></span>
+                <span class="fileName">仲裁申请书.pdf</span>
+              </div>
+            </div>
         </div>
-        <p class="borderBottom" style="margin-top:14px;"></p>
+         <p class="titleInfo">事实和理由</p>
+         <div class="reason">事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容</div>
+       </div>
+       <div class="jurisdictItem">
+         <h3>申请人答辩料</h3>
+          <div style=";padding:13px 0;">
+            <p class="titleInfo">答辩书</p>
+            <span class="icon iconfont icon-pdf"></span>
+            <span class="fileName">仲裁申请书.pdf</span>
+         </div>
+           <p class="titleInfo">证据资料</p>
+           <div class="grayBg">
+              <p class="bold black"> 证据一（ZQ1)</p>
+              <p class="" style="margin:7px 0 16px 0;">订单编号：MJZH201909241873148780</p>
+              <p class="borderBottom"></p>
+              <p style="padding:14px 0 0 0;">证据标题：</p>
+              <p class="black" style="margin-top:2px;">这里是标题标题标题这里是标题标题标题</p>
+              <p style="margin-top:16px;">证明内容：</p>
+              <p class="black" style="margin-top:2px;">这里是内容内容</p>
+              <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
+              <div style="background-color:#FFFFFF;padding:14px;">
+                <div>
+                  <span class="icon iconfont icon-pdf"></span>
+                  <span class="fileName">仲裁申请书.pdf</span>
+                </div>
+                <div style="margin-top:12px;">
+                  <span class="icon iconfont icon-pdf"></span>
+                  <span class="fileName">仲裁申请书.pdf</span>
+                </div>
+              </div>
+            </div>
+         <p class="titleInfo">答辩及质证意见</p>
+         <div class="reason">事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容</div>
+       </div>
       </div>
 </div>
 </template>
@@ -38,8 +93,7 @@ export default {
   name: 'ApplyInfo',
   data () {
     return {
-      active: 0,
-      activeNames: ['1']
+      arbiInfo: {}
     }
   }
 }
@@ -71,7 +125,7 @@ export default {
   .grayBg
     background-color:#F6F7F9;
     padding:15px 15px 14px 16px;
-    margin-top:14px;
+    margin:14px 0;
   .bold
     font-weight:bold;
   .black
@@ -109,4 +163,32 @@ export default {
     font-size: 15px;
     padding:0;
     line-height:21px;
+.jurisdictItem
+  margin 9px 0
+.info
+  display flex
+  margin 13px 0
+  div
+    flex 1
+    .infoDetail
+      color #333333
+  .infoLine
+    width 1px
+    height 30px
+    background #F0F0F0
+    display inline-block
+    position relative
+    top 5px
+  .infoRight
+    padding-left 9px
+  .infoLeft p,.infoRight p
+    margin-bottom 5px
+.titleInfo
+  color #9B9B9B
+  font-size 15px
+  margin-bottom 2px
+.reason
+  color #000000
+  font-size 15px
+  line-height 22px
 </style>
