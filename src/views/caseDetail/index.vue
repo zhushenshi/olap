@@ -39,7 +39,127 @@
     <section class="caseDetail">
       <van-tabs :border="false" :ellipsis="false">
         <van-tab title="申请信息">
-          <apply-info :arbiInfo="arbiInfo"></apply-info>
+          <div class="tabItem">
+            <van-collapse v-model="activeNames" bind:change="onChange">
+              <van-collapse-item name="1" :is-link="false" :border="false">
+                <template slot="title">
+                  <div style="padding:15px 0 14px 0;">
+                    <h3>仲裁申请书</h3>
+                  </div>
+                </template>
+                <div v-for="(item,index) in arbitrationApplication" :key="index">
+                  <div style="padding:3px 0 13px;" v-for="(file,i) in item.arbAttachmentDatas" :key="i">
+                      <!-- pdf查看 -->
+                    <span class="icon iconfont icon-pdf"></span>
+                    <span class="fileName">{{file.attachName}}</span>
+                  </div>
+                </div>
+              </van-collapse-item>
+              <van-collapse-item name="2" :is-link="false" :border="false">
+                <template slot="title">
+                  <div style="padding:15px 0 14px 0;">
+                    <h3>证据资料<span v-if="ismany">({{arbiInfo.arbDebtCount}}个债权)</span></h3>
+                  </div>
+                </template>
+                <div >
+                  <div class="grayBg" v-for="(evidence, index) in arbitralAttachment" :key="'k'+index">
+                    <p class="bold black"> {{evidence.evidenceName}}</p>
+                    <p v-if="ismany" style="margin:7px 0 7px 0;">({{evidence.arbDebtNum}})</p>
+                    <p v-if="ismany" style="margin:7px 0 7px 0;">订单编号：{{evidence.arbDebtOrderNum}}</p>
+                    <p class="borderBottom" style="padding-top:9px;"></p>
+                    <p style="padding:14px 0 0 0;">证据标题：</p>
+                    <p class="black" style="margin-top:2px;">{{evidence.evidenceTitle}}</p>
+                    <p style="margin-top:16px;">证明内容：</p>
+                    <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
+                    <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
+                    <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;">
+                      <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'j'+ind">
+                        <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
+                        <span class="fileName">{{file.attachName}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <p class="borderBottom" style="margin-top:14px;"></p> -->
+                </div>
+              </van-collapse-item>
+              <van-collapse-item :name="index+3" :is-link="false" :border="false" v-for="(item,index) in applyers" :key="'h'+index" >
+                <template slot="title">
+                  <div style="padding:15px 0 14px 0;">
+                    <h3>申请人信息1</h3>
+                  </div>
+                </template>
+                <div>
+                  <div class="flexInfoBox">
+                    <div class="infoItem">
+                      <div>公司名称</div>
+                      <div class="black mt2">互联网金融</div>
+                    </div>
+                    <div class="infoLine"></div>
+                    <div class="infoItem">
+                      <div>统一信用代码</div>
+                      <div class="black mt2">9875246464654</div>
+                    </div>
+                  </div>
+                  <div class="flexInfoBox">
+                    <div class="infoItem">
+                      <div>注册地址</div>
+                      <div class="black mt2">上海市黄浦区南京西路1200号</div>
+                    </div>
+                    <div class="infoLine"></div>
+                    <div class="infoItem">
+                      <div>约定送达地址</div>
+                      <div class="black mt2">上海市黄浦区南京西路1200号</div>
+                    </div>
+                  </div>
+                  <div class="flexInfoBox">
+                    <div class="infoItem">
+                      <div>邮编</div>
+                      <div class="black mt2">/</div>
+                    </div>
+                    <div class="infoLine"></div>
+                    <div class="infoItem">
+                      <div>法定代表人</div>
+                      <div class="black mt2">金成日</div>
+                    </div>
+                  </div>
+                  <div class="flexInfoBox">
+                    <div class="infoItem">
+                      <div>身份证号</div>
+                      <div class="black mt2">3101 0920 0009 0998 90</div>
+                    </div>
+                    <div class="infoLine"></div>
+                    <div class="infoItem">
+                      <div>手机号码</div>
+                      <div class="black mt2">13635347890</div>
+                    </div>
+                  </div>
+                  <div class="margin-top:20px;">
+                    <div>证件资料</div>
+                    <div class="certificates">
+                      <img src="../../../src/assets/imgs/chongzhi@2x.png" alt="">
+                      <img src="../../../src/assets/imgs/chongzhi@2x.png" alt="">
+                      <img src="../../../src/assets/imgs/chongzhi@2x.png" alt="">
+                      <img src="../../../src/assets/imgs/chongzhi@2x.png" alt="">
+                    </div>
+                  </div>
+                  <div class="black bold" style="margin-top:20px;">
+                    代理人信息
+                  </div>
+                  <div class="flexInfoBox">
+                    <div class="infoItem">
+                      <div>姓名</div>
+                      <div class="black mt2">金成日</div>
+                    </div>
+                    <div class="infoLine"></div>
+                    <div class="infoItem">
+                      <div>职务</div>
+                      <div class="black mt2">律师</div>
+                    </div>
+                  </div>
+                </div>
+              </van-collapse-item>
+            </van-collapse>
+          </div>
         </van-tab>
         <van-tab title="案件追踪">
           <case-tracking></case-tracking>
@@ -66,13 +186,105 @@ import caseTracking from './caseTracking.vue'
 import jurisdiction from './jurisdiction.vue'
 import { api } from '@/utils/api'
 import util from '@/utils/util'
+import DICT from '@/const/dict'
 
 export default {
   name: 'CaseDetail',
   data () {
     return {
       id: '',
-      arbiInfo: {}
+      arbiInfo: {},
+      active: 0,
+      activeNames: ['1'],
+      companyForm: {
+        coName: '', // 企业名称
+        coIdnum: '', // 统一代码
+        coLegalPerson: '', // 法定代表人
+        coLegalPersonIdnum: '', // 法定代表人身份证
+        coAdress: '', // 注册地址
+        coArrivedAddress: '', // 送达地址
+        coPhone: '', // 法定代表人手机号
+        coJob: '', // 法定代表人职务
+        coEmail: '', // 法定代表人邮箱
+        coZipcode: '', // 邮编
+        coLicenceAttach: '', // 营业执照
+        coLicenceAttachUrl: '',
+        coIdAttachFornt: '', // 身份证正面
+        coIdAttachRear: '', // 身份证反面
+        coIdAttachRearUrl: '',
+        coIdAttachForntUrl: '',
+        coIdPaperAttach: '', // 身份证明
+        coIdPaperAttachUrl: ''
+      },
+      step: 0,
+      loading: false,
+      id: '', // 案件id
+      tabName: '1',
+      arbiInfo: {
+        arbitralHearVideoResponse: []
+      },
+      histroyTaskInst: [],
+      replyBrief: [], // 答辩书
+      replyLists: [], // 答辩资料
+      applyedOtherLists: [], // 被申请人身份资料
+      applyOtherLists: [], // 申请人身份资料
+      arbitrationApplication: [], // 仲裁申请书
+      arbitralAttachment: [], //  证据资料
+      dissentApplication: [], // 异议申请书
+      dissentAttachment: [], //  异议证据资料
+      dissentReplyApplication: [], // 异议申请书
+      dissentReplyAttachment: [], //  异议证据资料
+      supplementaryArrs: [], //  补充资料 申请人
+      supplementaryArrb: [], //  补充资料 被申请人
+
+      arbTypes: DICT.arbTypes.filter((item, i) => { return i !== 0 }),
+      applyedArr: [],
+      applyers: [],
+      arbitralContractAdvancey: {},
+      arbitralAgentInfos: [],
+      documents: [], // 文书
+      arbitralRecordResponse: {},
+      showRecall: false,
+      withdrawn: false,
+      gridData: [{
+        name: '当事人提出仲裁申请，并已“预缴仲裁费用”，在案件状态在“立案”前提出撤回仲裁申请的。',
+        number: '100%'
+      }, {
+        name: '案件“立案”后，案件状态在“组庭”前，申请人撤回仲裁申请的。',
+        number: '50%'
+      }, {
+        name: '案件“组庭”后，在组庭开庭通知书送达前，申请人撤回仲裁申请或仲裁庭“资料审核不通过”的。',
+        number: '30%'
+      }, {
+        name: '组庭开庭通知书送达后， 裁决书送达前，申请人撤回仲裁申请的。',
+        number: '0%'
+      }],
+      stopStep: -1,
+      mediationDatas: [],
+      remark: '',
+      userInfoDialog: false,
+      uploadUrl: api.uploadURL,
+      fileList: [],
+      mime: ['.jpeg', '.jpg', '.png', '.pdf', '.doc', '.docx', '.docm'],
+      arbRecallApplyInfoResponse: {},
+      show: false,
+      DICT,
+      arbitralMediationResponse: {
+        mediationDocuments: []
+      },
+      conciliationEvidence: [],
+      arbitralLiveInfoResponse: {},
+      api: api,
+      util,
+      commpayInfoDialog: false,
+      ismany: false,
+      wsDialog: false,
+      multipleSelection: [], // 案件文书选择
+      arbDebtCount: 0,
+      wsobj: {
+        wslist: [],
+        sdlc: ''
+      }
     }
   },
   components: { Header, applyInfo, caseTracking, jurisdiction },
@@ -334,6 +546,56 @@ export default {
         return this.arbitralRecordResponse.bTime.replace(/:00$/, '') + '~' + eTime.replace(/:00$/, '')
       } else return ''
     },
+    getLastName (filaName) {
+      if (typeof filaName === 'string') {
+        return filaName.substring(filaName.lastIndexOf('.')).toLowerCase()
+      } else {
+        return ''
+      }
+    },
+    setAttachIcons (attaches) {
+      console.log(attaches, 'attaches')
+      attaches.forEach(attach => {
+        if (attach.attachUrlDes) {
+          const lastName = attach.attachName.substring(attach.attachName.lastIndexOf('.')).toLowerCase()
+          if (/\.jpg|\.png|\.jpeg/.test(lastName) === true) {
+            attach.downloadUrl = api.getImgURL(attach.attachUrlDes)
+            attach.imgSrc = attach.downloadUrl
+          } else { // pdf
+            attach.downloadUrl = api.getPdfURL(attach.attachUrlDes)
+            attach.imgSrc = util.getIcon(attach.attachName)
+          }
+        } else {
+
+        }
+      })
+    },
+    // 解决下载文件名称错误的问题
+    setAttachUrl (arr) {
+      if (arr instanceof Array) {
+        arr.forEach((item) => {
+          if (item.arbAttachmentDatas instanceof Array) {
+            item.arbAttachmentDatas.forEach((file) => {
+              const lastName = file.attachName.substring(file.attachName.lastIndexOf('.')).toLowerCase()
+              if (/\.jpg|\.png|\.jpeg/.test(lastName) === true) {
+                file.attachUrlDes = api.getImgURL(file.attachUrlDes)
+              } else { // pdf
+                file.attachUrlDes = api.getPdfURL(file.attachUrlDes)
+              }
+            })
+          } else if (item.attachName || item.documentName) {
+            const attachName = item.attachName || item.documentName
+            const attachUrlDes = item.attachUrlDes || item.documentUrlDes
+            const lastName = attachName.substring(attachName.lastIndexOf('.')).toLowerCase()
+            if (/\.jpg|\.png|\.jpeg/.test(lastName) === true) {
+              item.attachUrlDes = api.getImgURL(attachUrlDes)
+            } else { // pdf
+              item.attachUrlDes = api.getPdfURL(attachUrlDes)
+            }
+          }
+        })
+      }
+    },
     getData () {
       api.getArbitralInfoDetail({ arbitralId: this.id }).then(res => {
         if (res.data.code === '1') {
@@ -431,4 +693,71 @@ export default {
   background-color: #1890ff!important;
 /deep/ .van-tab--active
   color:#1890ff;
+.tabItem
+  padding:2px 15px 14px 14px;
+  h3
+    font-size:15px;
+    font-weight:bold;
+    color:#000;
+    line-height:21px;
+  h3:before
+    content: "";
+    display inline-block
+    width:4px;
+    height:16px;
+    background-color:#1890FF;
+    border-radius:1px;
+    vertical-align:text-top;
+    margin-right:8px;
+  .borderBottom
+    border-bottom:1pt solid #F0F0F0
+  .icon
+    font-size:20px;
+  .fileName
+    margin-left:8px;
+    color:#000000;
+  .grayBg
+    background-color:#F6F7F9;
+    padding:15px 15px 14px 16px;
+    margin-top:14px;
+  .bold
+    font-weight:bold;
+  .black
+    color:#000000;
+  .flexInfoBox
+    display:flex;
+    position:relative;
+    box-sizing:border-box;
+    justify-content:space-between;
+    margin-top:16px;
+    .infoItem
+      width:47%;
+    .infoLine
+      border-right:1px solid #F0F0F0;
+      height:65%;
+      position:absolute;
+      left:0;
+      right:0;
+      top:0;
+      bottom:0;
+      margin:auto;
+      width:1px;
+    .mt2
+      margin-top:2px;
+  .certificates
+    img
+      width 79px;
+      margin-top:6px;
+      margin-right:9px;
+    img:nth-child(4)
+      margin-right:0;
+  /deep/.van-cell
+    padding:0;
+    color:#9B9B9B;
+  /deep/.van-collapse-item__content
+    font-size: 15px;
+    padding:0;
+    line-height:21px;
+  /deep/.van-collapse-item
+    border-bottom:1px solid #f0f0f0
 </style>

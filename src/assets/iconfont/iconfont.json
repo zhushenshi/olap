@@ -1,205 +1,142 @@
 {
-  "id": "1645251",
-  "name": "仲裁系统app",
+  "id": "1696423",
+  "name": "仲裁",
   "font_family": "iconfont",
-  "css_prefix_text": "icon-",
+  "css_prefix_text": "icon",
   "description": "",
   "glyphs": [
     {
-      "icon_id": "5047736",
-      "name": "审核成功",
-      "font_class": "shenhechenggong",
+      "icon_id": "13511707",
+      "name": "仲裁_excel",
+      "font_class": "zhongcai_excel",
       "unicode": "e613",
       "unicode_decimal": 58899
     },
     {
-      "icon_id": "10278020",
-      "name": "公司",
-      "font_class": "gongsi",
-      "unicode": "e603",
-      "unicode_decimal": 58883
+      "icon_id": "13511708",
+      "name": "仲裁_ppt",
+      "font_class": "zhongcai_ppt",
+      "unicode": "e614",
+      "unicode_decimal": 58900
     },
     {
-      "icon_id": "13015924",
-      "name": "个人",
-      "font_class": "geren",
-      "unicode": "e619",
-      "unicode_decimal": 58905
-    },
-    {
-      "icon_id": "12841923",
-      "name": "pdf",
-      "font_class": "pdf1",
-      "unicode": "e649",
-      "unicode_decimal": 58953
-    },
-    {
-      "icon_id": "4429450",
-      "name": "关闭",
-      "font_class": "guanbi",
-      "unicode": "e66b",
-      "unicode_decimal": 58987
-    },
-    {
-      "icon_id": "8351861",
-      "name": "搜索",
-      "font_class": "sousuo",
-      "unicode": "e6de",
-      "unicode_decimal": 59102
-    },
-    {
-      "icon_id": "8351894",
-      "name": "眼睛3",
-      "font_class": "yanjing2",
-      "unicode": "e6ff",
-      "unicode_decimal": 59135
-    },
-    {
-      "icon_id": "8351970",
-      "name": "眼睛5",
-      "font_class": "yanjing5",
-      "unicode": "e749",
-      "unicode_decimal": 59209
-    },
-    {
-      "icon_id": "4318570",
-      "name": "图片 ",
-      "font_class": "pic",
-      "unicode": "e653",
-      "unicode_decimal": 58963
-    },
-    {
-      "icon_id": "13023065",
-      "name": "搜索",
-      "font_class": "sousuo1",
-      "unicode": "e618",
-      "unicode_decimal": 58904
-    },
-    {
-      "icon_id": "313735",
-      "name": "返回",
-      "font_class": "fanhui1",
-      "unicode": "e639",
-      "unicode_decimal": 58937
-    },
-    {
-      "icon_id": "2375550",
-      "name": "排序",
-      "font_class": "paixu",
+      "icon_id": "13511709",
+      "name": "仲裁_对话",
+      "font_class": "zhongcai_duihua",
       "unicode": "e615",
       "unicode_decimal": 58901
     },
     {
-      "icon_id": "5090059",
-      "name": "摄像头",
-      "font_class": "shexiangtou1",
-      "unicode": "e60e",
-      "unicode_decimal": 58894
+      "icon_id": "13511710",
+      "name": "仲裁_查询",
+      "font_class": "zhongcai_chaxun",
+      "unicode": "e616",
+      "unicode_decimal": 58902
     },
     {
-      "icon_id": "716546",
-      "name": "摄像头",
-      "font_class": "shexiangtou-copy",
-      "unicode": "e600",
-      "unicode_decimal": 58880
+      "icon_id": "13511711",
+      "name": "仲裁_word",
+      "font_class": "zhongcai_word",
+      "unicode": "e617",
+      "unicode_decimal": 58903
     },
     {
-      "icon_id": "2020034",
-      "name": "返回",
-      "font_class": "fanhui",
-      "unicode": "e6a1",
-      "unicode_decimal": 59041
+      "icon_id": "13511712",
+      "name": "仲裁_pdf",
+      "font_class": "zhongcai_pdf",
+      "unicode": "e618",
+      "unicode_decimal": 58904
     },
     {
-      "icon_id": "2020047",
-      "name": "向右",
-      "font_class": "xiangyou",
-      "unicode": "e6ac",
-      "unicode_decimal": 59052
+      "icon_id": "13511713",
+      "name": "仲裁_筛选状态01",
+      "font_class": "zhongcai_shaixuanzhuangtai",
+      "unicode": "e619",
+      "unicode_decimal": 58905
     },
     {
-      "icon_id": "1816287",
-      "name": "通过",
-      "font_class": "tongguo",
-      "unicode": "e683",
-      "unicode_decimal": 59011
+      "icon_id": "13511714",
+      "name": "仲裁_筛选状态02",
+      "font_class": "zhongcai_shaixuanzhuangtai1",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
     },
     {
-      "icon_id": "13086325",
-      "name": "向下",
-      "font_class": "xiangxia",
-      "unicode": "e748",
-      "unicode_decimal": 59208
+      "icon_id": "13511715",
+      "name": "仲裁_添加",
+      "font_class": "zhongcai_tianjia",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
     },
     {
-      "icon_id": "1970756",
-      "name": "word",
-      "font_class": "word",
-      "unicode": "e607",
-      "unicode_decimal": 58887
+      "icon_id": "13511716",
+      "name": "仲裁_视频",
+      "font_class": "zhongcai_shipin",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
     },
     {
-      "icon_id": "1970876",
-      "name": "ppt",
-      "font_class": "ppt",
-      "unicode": "e608",
-      "unicode_decimal": 58888
+      "icon_id": "13511717",
+      "name": "仲裁_删除",
+      "font_class": "zhongcai_shanchu",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
     },
     {
-      "icon_id": "1970963",
-      "name": "excel",
-      "font_class": "excel",
-      "unicode": "e609",
-      "unicode_decimal": 58889
+      "icon_id": "13511718",
+      "name": "仲裁_搜索",
+      "font_class": "zhongcai_sousuo",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
     },
     {
-      "icon_id": "1971255",
-      "name": "pdf",
-      "font_class": "pdf",
-      "unicode": "e60a",
-      "unicode_decimal": 58890
+      "icon_id": "13511719",
+      "name": "仲裁_待办",
+      "font_class": "zhongcai_daiban",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
     },
     {
-      "icon_id": "1972966",
-      "name": "文件",
-      "font_class": "wenjian",
-      "unicode": "e60c",
-      "unicode_decimal": 58892
+      "icon_id": "13511721",
+      "name": "仲裁_文本",
+      "font_class": "zhongcai_wenben",
+      "unicode": "e621",
+      "unicode_decimal": 58913
     },
     {
-      "icon_id": "4805305",
-      "name": "上",
-      "font_class": "shang",
-      "unicode": "e612",
-      "unicode_decimal": 58898
+      "icon_id": "13511722",
+      "name": "仲裁_左",
+      "font_class": "zhongcai_zuo",
+      "unicode": "e622",
+      "unicode_decimal": 58914
     },
     {
-      "icon_id": "13080567",
-      "name": "待办事项",
-      "font_class": "daibanshixiang",
-      "unicode": "e747",
-      "unicode_decimal": 59207
+      "icon_id": "13511723",
+      "name": "仲裁_筛选状态03",
+      "font_class": "zhongcai_shaixuanzhuangtai2",
+      "unicode": "e623",
+      "unicode_decimal": 58915
     },
     {
-      "icon_id": "13080382",
-      "name": "视频开庭",
-      "font_class": "shipinkaiting",
-      "unicode": "e746",
-      "unicode_decimal": 59206
+      "icon_id": "13511724",
+      "name": "仲裁_右",
+      "font_class": "zhongcai_you",
+      "unicode": "e624",
+      "unicode_decimal": 58916
     },
     {
-      "icon_id": "13080240",
-      "name": "首页",
-      "font_class": "shouye",
-      "unicode": "e743",
-      "unicode_decimal": 59203
+      "icon_id": "13511725",
+      "name": "仲裁_退出",
+      "font_class": "zhongcai_tuichu",
+      "unicode": "e625",
+      "unicode_decimal": 58917
     },
     {
-      "icon_id": "13080242",
-      "name": "案件查询",
-      "font_class": "anjianchaxun",
-      "unicode": "e745",
-      "unicode_decimal": 59205
+      "icon_id": "13511726",
+      "name": "仲裁-01",
+      "font_class": "zhongcai-",
+      "unicode": "e626",
+      "unicode_decimal": 58918
     }
   ]
 }

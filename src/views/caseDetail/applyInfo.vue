@@ -107,21 +107,24 @@
 </div> -->
 <div class="tabItem">
   <van-collapse v-model="activeNames" bind:change="onChange">
-    <van-collapse-item name="1" :is-link="false">
+    <van-collapse-item name="1" :is-link="false" :border="false">
       <template slot="title">
-        <div>
-          <h3>申请仲裁书</h3>
+        <div style="padding:15px 0 14px 0;">
+          <h3>仲裁申请书</h3>
         </div>
       </template>
-      <div class="borderBottom" style=";padding:13px 0;">
-        <span class="icon iconfont icon-pdf"></span>
-        <span class="fileName">仲裁申请书.pdf</span>
+      <div v-for="(item,index) in arbitrationApplication" :key="index">
+        <div style="padding:3px 0 13px;" v-for="(file,i) in item.arbAttachmentDatas" :key="i">
+            <!-- pdf查看 -->
+          <span class="icon iconfont icon-pdf"></span>
+          <span class="fileName">{{file.attachName}}</span>
+        </div>
       </div>
     </van-collapse-item>
-    <van-collapse-item name="2" :is-link="false">
+    <van-collapse-item name="2" :is-link="false" :border="false">
       <template slot="title">
-        <div style="padding:16px 0 0 0;">
-          <h3>证据资料(2个债权)</h3>
+        <div style="padding:15px 0 14px 0;">
+          <h3>证据资料<span v-if="ismany">({{arbiInfo.arbDebtCount}}个债权)</span></h3>
         </div>
       </template>
       <div >
@@ -154,17 +157,22 @@
 <script>
 export default {
   name: 'ApplyInfo',
+  props: ['arbiInfo'],
   data () {
     return {
       active: 0,
-      activeNames: ['1']
+      activeNames: ['1'],
+      arbitrationApplication: [
+        { success: false, msg: null, code: null, data: null, attachmentEvidenceId: 'f621a102680311ea9c0e005056ae47c6', attachmentEvidenceStatus: 1, arbitralPtype: 2, evidenceProperty: 1, evidenceName: '仲裁申请协议.pdf', evidenceTitle: '', evidenceContent: '', updateTime: '2020-03-17 12:01:21', updateBy: 'a8d16a5a676011ea9c0e005056ae47c6', updateProcess: 10, updatePName: '积木盒子', arbAttachmentDatas: [{ attachId: 'f6240fb7680311ea9c0e005056ae47c6', arbitralAttachmentEvidenceId: 'f621a102680311ea9c0e005056ae47c6', attachName: '仲裁申请协议.pdf', attachUrl: 'group1/M00/08/7A/rBAKcl5wSjKAHUSbAAM_DAjeR24207.pdf', attachUrlDes: '/olap-file/fast/file/downloadPdfFile?pdfUrl=YI+fm3g75gkYNt5hsmnEujfXFa0KOmhTwSrejE+6G6yJJ82a+MN+9IkTjdaaiSpLnckRjY67AXVtBDE6EGLyYAXkRm5sXgJNOh8OIv+E9BE=', attachType: 1, attachProperty: 1, attachStatus: null }], arbDebtOrderNum: null, arbDebtNum: null, arbDebtCount: null }
+      ],
+      ismany: true
     }
   }
 }
 </script>
 <style lang="stylus" scoped>
 .tabItem
-  padding:17px 15px 14px 14px;
+  padding:2px 15px 14px 14px;
   h3
     font-size:15px;
     font-weight:bold;
@@ -227,4 +235,6 @@ export default {
     font-size: 15px;
     padding:0;
     line-height:21px;
+  /deep/.van-collapse-item
+    border-bottom:1px solid #f0f0f0
 </style>

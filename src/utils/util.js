@@ -15,6 +15,18 @@ const util = {
     var uuid = s.join('')
     return uuid
   },
+  getFileIcon (name) { // 得到文件类选图标
+    var iconClass = ''
+    var lastName = name.substring(name.lastIndexOf('.')).toLowerCase()
+    if (lastName === '.pdf') {
+      iconClass = 'iconzhongcai_pdf'
+    } else if (lastName === '.doc' || lastName === '.docx') {
+      iconClass = 'iconzhongcai_word'
+    } else {
+      iconClass = ''
+    }
+    return iconClass
+  },
   getIcon (name) { // 得到文件类选图标
     var url = ''
     var lastName = name.substring(name.lastIndexOf('.')).toLowerCase()
