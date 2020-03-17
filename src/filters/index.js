@@ -16,14 +16,19 @@ export default {
     if (value) date = moment(value).format('YYYY-MM-DD HH:mm')
     return date
   },
-  formathh: value => {
+  formatm: value => {
     let date = ''
-    if (value) date = moment(value).format('HH')
+    if (value) date = moment(value).format('YYYY-MM')
     return date
   },
-  formatms: value => {
+  formatDay: value => {
     let date = ''
-    if (value) date = moment(value).format('mm:ss')
+    if (value) date = moment(value).format('DD')
+    return date
+  },
+  formathm: value => {
+    let date = ''
+    if (value) date = moment(value).format('HH:mm')
     return date
   },
   formatSex: value => {
