@@ -47,7 +47,9 @@
         <van-tab title="补充资料">内容 2</van-tab>
         <van-tab title="调节资料">内容 2</van-tab>
         <van-tab title="撤回资料">内容 2</van-tab>
-        <van-tab title="管辖权异议资料">内容 2</van-tab>
+        <van-tab title="管辖权异议资料">
+         <Jurisdiction></Jurisdiction>
+        </van-tab>
       </van-tabs>
     </section>
   </div>
@@ -56,6 +58,7 @@
 import Header from '@/components/Header.vue'
 import applyInfo from './applyInfo.vue'
 import caseTracking from './caseTracking.vue'
+import Jurisdiction from './jurisdiction.vue'
 
 export default {
   name: 'CaseDetail',
@@ -63,7 +66,7 @@ export default {
     return {
     }
   },
-  components: { Header, applyInfo, caseTracking }
+  components: { Header, applyInfo, caseTracking, Jurisdiction }
 }
 </script>
 
@@ -128,15 +131,4 @@ export default {
       background:#FFFFFF;
       font-size:15px;
       line-height:21px;
-/deep/.van-tabs--line .van-tabs__wrap
-  height:46px;
-/deep/.van-tab
-  font-size:15px
-  line-height:46px;
-  min-width:87px;
-/deep/ .van-tabs__line
-  width:60px!important;
-  background-color: #1890ff!important;
-/deep/ .van-tab--active
-  color:#1890ff;
 </style>
