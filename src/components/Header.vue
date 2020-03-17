@@ -2,7 +2,7 @@
   <div>
   <div class="header">
     <div class="headerContent">
-      <span class="icon iconfont icon-fanhui1 left" @click="goBack"></span>
+      <span class="icon iconfont iconzhongcai_zuo left" @click="goBack"></span>
       <div class="title">
         <slot></slot>
       </div>
@@ -39,6 +39,7 @@ export default {
         this.back()
       } else {
         console.log('调用默认的back')
+        this.$router.go(-1)
       }
     }
   },
