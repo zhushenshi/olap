@@ -19,6 +19,11 @@
 import { api } from '@/utils/api'
 export default {
   name: 'CaseTracking',
+  props: {
+    arbProcess: {
+      type: String
+    }
+  },
   data () {
     return {
       type: 'one',
@@ -28,11 +33,12 @@ export default {
   },
   created () {
     this.getHistroyTaskInst()
+    console.log(this.arbProcess, '77777')
   },
   methods: {
     getHistroyTaskInst () { // 案件追踪
       api.getHistroyTaskInst({
-        arbProcess: '217526'
+        arbProcess: this.arbProcess
       }).then((res) => {
         if (res.data.code === '1') {
           this.histroyTaskInst = res.data.data

@@ -60,7 +60,7 @@
               </span> -->
              <div class="filterRs">
                 <div class="status" v-if='item.status'>{{item.status}}</div>
-                <div class="otherStatus" v-if="item.arbStatus>=10">
+                <div class="otherStatus" v-if="item.recallStatus === '1'">
                   <span class="recall">撤回</span>
                 </div>
                 <div class="otherStatus">
