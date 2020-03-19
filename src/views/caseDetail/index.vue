@@ -40,18 +40,20 @@
       <van-tabs :border="false" :ellipsis="false">
         <van-tab title="申请信息">
           <div class="tabItem">
-            <van-collapse v-model="activeNames" bind:change="onChange">
+            <van-collapse v-model="activeNames1" bind:change="onChange">
               <van-collapse-item name="1" :is-link="false" :border="false">
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
                     <h3>仲裁申请书</h3>
                   </div>
                 </template>
-                <div v-for="(item,index) in arbitrationApplication" :key="index">
-                  <div style="padding:3px 0 13px;" v-for="(file,i) in item.arbAttachmentDatas" :key="i">
-                      <!-- pdf查看 -->
-                    <span class="icon iconfont icon-pdf"></span>
-                    <span class="fileName">{{file.attachName}}</span>
+                <div class="tabItemContainer">
+                  <div v-for="(item,index) in arbitrationApplication" :key="index">
+                    <div v-for="(file,i) in item.arbAttachmentDatas" :key="i">
+                        <!-- pdf查看 -->
+                      <span class="icon iconfont icon-pdf"></span>
+                      <span class="fileName">{{file.attachName}}</span>
+                    </div>
                   </div>
                 </div>
               </van-collapse-item>
@@ -61,7 +63,7 @@
                     <h3>证据资料<span v-if="ismany">({{arbiInfo.arbDebtCount}}个债权)</span></h3>
                   </div>
                 </template>
-                <div >
+                <div class="tabItemContainer">
                   <div class="grayBg" v-for="(evidence, index) in arbitralAttachment" :key="'k'+index">
                     <p class="bold black"> {{evidence.evidenceName}}</p>
                     <p v-if="ismany" style="margin:7px 0 7px 0;">({{evidence.arbDebtNum}})</p>
@@ -85,75 +87,598 @@
               <van-collapse-item :name="index+3" :is-link="false" :border="false" v-for="(item,index) in applyers" :key="'h'+index" >
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
-                    <h3>申请人信息1</h3>
+                    <h3>{{'申请人信息'+util.exchangeIndex(index+1)}}</h3>
                   </div>
                 </template>
-                <div>
+                <div class="tabItemContainer">
+                  <div v-if="item.pIdnum">
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>姓名</div>
+                        <div class="black mt2">{{item.pRealname}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>性别</div>
+                        <div class="black mt2">{{item.sex}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>民族</div>
+                        <div class="black mt2">{{item.nation}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>出生年月</div>
+                        <div class="black mt2">{{item.birthday}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>身份证</div>
+                        <div class="black mt2">{{item.pIdnum}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>邮箱</div>
+                        <div class="black mt2">{{item.pMail}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>手机号码</div>
+                        <div class="black mt2">{{item.pPhone}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>邮编</div>
+                        <div class="black mt2">{{item.pZipcode}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>居住地址</div>
+                        <div class="black mt2">{{item.pAdress}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>户籍地址</div>
+                        <div class="black mt2">{{item.pIdNumAddress}}</div>
+                      </div>
+                    </div>
+                    <div style="margin-top:20px;">
+                      <div>证件资料</div>
+                      <div class="certificates">
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.pIdAttachForntDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证正面</p>
+                        </div>
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.pIdAttachRearDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证明</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>公司名称</div>
+                        <div class="black mt2">{{item.coName}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>统一信用代码</div>
+                        <div class="black mt2">{{item.coIdnum}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>注册地址</div>
+                        <div class="black mt2">{{item.coAdress}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>约定送达地址</div>
+                        <div class="black mt2">{{item.coArrivedAddress}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>邮编</div>
+                        <div class="black mt2">{{item.coZipcode}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>法定代表人</div>
+                        <div class="black mt2">{{item.coLegalPerson}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>身份证号</div>
+                        <div class="black mt2">{{item.coLegalPersonIdnum}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>手机号码</div>
+                        <div class="black mt2">{{item.coPhone}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div>
+                        <div>邮箱</div>
+                        <div class="black mt2">{{item.coEmail}}</div>
+                      </div>
+                    </div>
+                    <div style="margin-top:20px;">
+                      <div>证件资料</div>
+                      <div class="certificates">
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.coLicenceAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>营业执照</p>
+                        </div>
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.coIdPaperAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证明</p>
+                        </div>
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.coIdAttachForntDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证正面</p>
+                        </div>
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.coIdAttachRearDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                            <!-- <img src="../../../src/assets/imgs/chongzhi@2x.png" alt=""> -->
+                          <p>身份证反面</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-if="item.arbitralAgentInfoResponse.agentRealname">
+                    <div class="black bold" style="margin-top:20px;">
+                      代理人信息
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>姓名</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentRealname}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>职务</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentJob}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>手机号码</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentPhone}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>执业证号</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentIdnum}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div>
+                        <div>邮箱</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentMail}}</div>
+                      </div>
+                    </div>
+                    <div style="margin-top:20px;">
+                      <div>证件资料</div>
+                      <div class="certificates">
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentLawyerAttachDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentLawyerAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>律师证照片</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentProxyAttachDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentProxyAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>授权委托书</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentCounselAttachDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentCounselAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>律所所函</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentIdAttachForntDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachForntDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证正面</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentIdAttachRearDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachRearDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证反面</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentJobAttachDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentJobAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>职务证明</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentContractAttachDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentContractAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>劳动合同</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </van-collapse-item>
+              <van-collapse-item :name="index+100" :is-link="false" :border="false" v-for="(item,index) in applyedArr" :key="'i'+index" >
+                <template slot="title">
+                  <div style="padding:15px 0 14px 0;">
+                    <h3>{{'被申请人信息'+util.exchangeIndex(index+1)}}</h3>
+                  </div>
+                </template>
+                <div class="tabItemContainer">
+                  <div v-if="item.pIdnum">
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>姓名</div>
+                        <div class="black mt2">{{item.pRealname}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>性别</div>
+                        <div class="black mt2">{{item.sex}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>民族</div>
+                        <div class="black mt2">{{item.nation}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>出生年月</div>
+                        <div class="black mt2">{{item.birthday}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>身份证</div>
+                        <div class="black mt2">{{item.pIdnum}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>邮箱</div>
+                        <div class="black mt2">{{item.pMail}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>手机号码</div>
+                        <div class="black mt2">{{item.pPhone}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>邮编</div>
+                        <div class="black mt2">{{item.pZipcode}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>居住地址</div>
+                        <div class="black mt2">{{item.pAdress}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>户籍地址</div>
+                        <div class="black mt2">{{item.pIdNumAddress}}</div>
+                      </div>
+                    </div>
+                    <div style="margin-top:20px;">
+                      <div>证件资料</div>
+                      <div class="certificates">
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.pIdAttachForntDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证正面</p>
+                        </div>
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.pIdAttachRearDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证明</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>公司名称</div>
+                        <div class="black mt2">{{item.coName}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>统一信用代码</div>
+                        <div class="black mt2">{{item.coIdnum}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>注册地址</div>
+                        <div class="black mt2">{{item.coAdress}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>约定送达地址</div>
+                        <div class="black mt2">{{item.coArrivedAddress}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>邮编</div>
+                        <div class="black mt2">{{item.coZipcode}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>法定代表人</div>
+                        <div class="black mt2">{{item.coLegalPerson}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>身份证号</div>
+                        <div class="black mt2">{{item.coLegalPersonIdnum}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>手机号码</div>
+                        <div class="black mt2">{{item.coPhone}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div>
+                        <div>邮箱</div>
+                        <div class="black mt2">{{item.coEmail}}</div>
+                      </div>
+                    </div>
+                    <div style="margin-top:20px;">
+                      <div>证件资料</div>
+                      <div class="certificates">
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.coLicenceAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>营业执照</p>
+                        </div>
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.coIdPaperAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证明</p>
+                        </div>
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.coIdAttachForntDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证正面</p>
+                        </div>
+                        <div class="certificatesBox">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.coIdAttachRearDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                            <!-- <img src="../../../src/assets/imgs/chongzhi@2x.png" alt=""> -->
+                          <p>身份证反面</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-if="item.arbitralAgentInfoResponse.agentRealname">
+                    <div class="black bold" style="margin-top:20px;">
+                      代理人信息
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>姓名</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentRealname}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>职务</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentJob}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div class="infoItem">
+                        <div>手机号码</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentPhone}}</div>
+                      </div>
+                      <div class="infoLine"></div>
+                      <div class="infoItem">
+                        <div>执业证号</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentIdnum}}</div>
+                      </div>
+                    </div>
+                    <div class="flexInfoBox">
+                      <div>
+                        <div>邮箱</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentMail}}</div>
+                      </div>
+                    </div>
+                    <div style="margin-top:20px;">
+                      <div>证件资料</div>
+                      <div class="certificates">
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentLawyerAttachDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentLawyerAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>律师证照片</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentProxyAttachDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentProxyAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>授权委托书</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentCounselAttachDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentCounselAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>律所所函</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentIdAttachForntDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachForntDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证正面</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentIdAttachRearDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachRearDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>身份证反面</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentJobAttachDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentJobAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>职务证明</p>
+                        </div>
+                        <div class="certificatesBox" v-if="item.arbitralAgentInfoResponse.agentContractAttachDes">
+                          <van-image
+                            class="certificatesImgBox"
+                            fit="contain"
+                            :src="api.getImgURL(item.arbitralAgentInfoResponse.agentContractAttachDes)">
+                            <template v-slot:error>加载失败</template>
+                          </van-image>
+                          <p>劳动合同</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </van-collapse-item>
+              <van-collapse-item name="1000" :is-link="false" :border="false">
+                <template slot="title">
+                  <div style="padding:15px 0 14px 0;">
+                    <h3>仲裁请求</h3>
+                  </div>
+                </template>
+                <div class="tabItemContainer">
                   <div class="flexInfoBox">
                     <div class="infoItem">
-                      <div>公司名称</div>
-                      <div class="black mt2">互联网金融</div>
+                      <div>案由</div>
+                      <div class="black mt2">{{arbiInfo.arbName}}</div>
                     </div>
                     <div class="infoLine"></div>
                     <div class="infoItem">
-                      <div>统一信用代码</div>
-                      <div class="black mt2">9875246464654</div>
+                      <div>标的额(元)</div>
+                      <div class="black mt2">{{arbiInfo.arbDisputeMoney}}</div>
                     </div>
                   </div>
                   <div class="flexInfoBox">
                     <div class="infoItem">
-                      <div>注册地址</div>
-                      <div class="black mt2">上海市黄浦区南京西路1200号</div>
+                      <div>产品类型</div>
+                      <div class="black mt2">{{arbiInfo.arbProductName}}</div>
                     </div>
                     <div class="infoLine"></div>
                     <div class="infoItem">
-                      <div>约定送达地址</div>
-                      <div class="black mt2">上海市黄浦区南京西路1200号</div>
-                    </div>
-                  </div>
-                  <div class="flexInfoBox">
-                    <div class="infoItem">
-                      <div>邮编</div>
-                      <div class="black mt2">/</div>
-                    </div>
-                    <div class="infoLine"></div>
-                    <div class="infoItem">
-                      <div>法定代表人</div>
-                      <div class="black mt2">金成日</div>
-                    </div>
-                  </div>
-                  <div class="flexInfoBox">
-                    <div class="infoItem">
-                      <div>身份证号</div>
-                      <div class="black mt2">3101 0920 0009 0998 90</div>
-                    </div>
-                    <div class="infoLine"></div>
-                    <div class="infoItem">
-                      <div>手机号码</div>
-                      <div class="black mt2">13635347890</div>
-                    </div>
-                  </div>
-                  <div class="margin-top:20px;">
-                    <div>证件资料</div>
-                    <div class="certificates">
-                      <img src="../../../src/assets/imgs/chongzhi@2x.png" alt="">
-                      <img src="../../../src/assets/imgs/chongzhi@2x.png" alt="">
-                      <img src="../../../src/assets/imgs/chongzhi@2x.png" alt="">
-                      <img src="../../../src/assets/imgs/chongzhi@2x.png" alt="">
-                    </div>
-                  </div>
-                  <div class="black bold" style="margin-top:20px;">
-                    代理人信息
-                  </div>
-                  <div class="flexInfoBox">
-                    <div class="infoItem">
-                      <div>姓名</div>
-                      <div class="black mt2">金成日</div>
-                    </div>
-                    <div class="infoLine"></div>
-                    <div class="infoItem">
-                      <div>职务</div>
-                      <div class="black mt2">律师</div>
+                      <div>仲裁费用(元)</div>
+                      <div class="black mt2">{{arbiInfo.arbArbitrateMoney}}</div>
                     </div>
                   </div>
                 </div>
@@ -167,13 +692,91 @@
         <van-tab title="案件文书">
           <case-tracking></case-tracking>
         </van-tab>
-        <van-tab title="组庭信息">内容 2</van-tab>
-        <van-tab title="答辩资料">内容 2</van-tab>
-        <van-tab title="补充资料">内容 2</van-tab>
-        <van-tab title="调节资料">内容 2</van-tab>
-        <van-tab title="撤回资料">内容 2</van-tab>
-        <van-tab title="管辖权异议资料">
-          <jurisdiction></jurisdiction>
+        <van-tab title="组庭信息" v-if="arbiInfo.arbitralMergeHearDetailResponse">
+          <div class="tabItem">
+            <van-collapse v-model="activeNames2" bind:change="onChange">
+              <van-collapse-item name="1" :is-link="false" :border="false">
+                <template slot="title">
+                  <div style="padding:15px 0 14px 0;">
+                    <h3>组庭信息</h3>
+                  </div>
+                </template>
+                <div class="tabItemContainer">
+                  <!-- <div class="flexInfoBox">
+                    <div>
+                      <div>合并组庭编号</div>
+                      <div class="black mt2">{{'item.pAdress'}}</div>
+                    </div>
+                  </div> -->
+                  <div class="flexInfoBox">
+                    <div>
+                      <div>合并开庭编号</div>
+                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.arbitralMergeNumber}}</div>
+                    </div>
+                  </div>
+                  <div class="flexInfoBox">
+                    <div class="infoItem">
+                      <div>庭审类型</div>
+                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.trialType}}</div>
+                    </div>
+                    <div class="infoLine"></div>
+                    <div class="infoItem">
+                      <div>庭审地点</div>
+                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.trialAddress}}</div>
+                    </div>
+                  </div>
+                  <div class="flexInfoBox">
+                    <div class="infoItem">
+                      <div>庭审日期</div>
+                      <div class="black mt2">{{obj.trialBeginTime}}-{{(obj.trialEndTime || '').substring(11)}}</div>
+                    </div>
+                    <div class="infoLine"></div>
+                    <div class="infoItem">
+                      <div>仲裁庭组成</div>
+                      <div class="black mt2" v-if="arbiInfo.arbitralMergeHearDetailResponse.composition === 1">独任仲裁庭</div>
+                      <div class="black mt2" v-else-if="arbiInfo.arbitralMergeHearDetailResponse.composition === 2">合议仲裁庭</div>
+                      <div class="black mt2" v-else>/</div>
+                    </div>
+                  </div>
+                  <div class="flexInfoBox">
+                    <div class="infoItem">
+                      <div>首席仲裁员</div>
+                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.arbitrator}}</div>
+                    </div>
+                    <div class="infoLine"></div>
+                    <div class="infoItem">
+                      <div>申请人仲裁员</div>
+                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.prosecutorArbitrator}}</div>
+                    </div>
+                  </div>
+                  <div class="flexInfoBox">
+                    <div>
+                      <div>被申请人仲裁员</div>
+                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.defendantArbitrator}}</div>
+                    </div>
+                  </div>
+                </div>
+              </van-collapse-item>
+            </van-collapse>
+          </div>
+        </van-tab>
+        <van-tab title="答辩资料" v-if="replyBrief.length||replyLists.length">
+          <reply-data :replyBrief="replyBrief" :replyLists="replyLists"></reply-data>
+        </van-tab>
+        <van-tab title="补充资料" v-if="supplementaryArrs.length||supplementaryArrb.length">
+          <supplement-data :supplementaryArrs="supplementaryArrs" :supplementaryArrb="supplementaryArrb"></supplement-data>
+        </van-tab>
+        <van-tab title="网络会议资料">
+          <video-data></video-data>
+        </van-tab>
+        <van-tab title="调解资料" v-if="arbitralMediationResponse">
+          <mediate-data :arbitralMediationResponse="arbitralMediationResponse" :conciliationEvidence="conciliationEvidence"></mediate-data>
+        </van-tab>
+        <van-tab title="撤回资料" v-if="arbRecallApplyInfoResponse">
+          <withdraw-data :arbRecallApplyInfoResponse="arbRecallApplyInfoResponse"></withdraw-data>
+        </van-tab>
+        <van-tab title="管辖权异议资料" v-if="dissentApplication.length>0">
+          <jurisdiction :dissentApplication="dissentApplication" :dissentAttachment="dissentAttachment" :arbiInfo="arbiInfo" :dissentReplyApplication="dissentReplyApplication"></jurisdiction>
         </van-tab>
       </van-tabs>
     </section>
@@ -182,8 +785,13 @@
 <script>
 import Header from '@/components/Header.vue'
 import applyInfo from './applyInfo.vue'
-import caseTracking from './caseTracking.vue'
-import jurisdiction from './jurisdiction.vue'
+import caseTracking from './caseTracking.vue'// 案件追踪
+import jurisdiction from './jurisdiction.vue'// 管辖权异议资料
+import withdrawData from './withdrawData.vue'// c撤回资料
+import mediateData from './mediateData.vue'// 调解资料
+import replyData from './replyData.vue'// 答辩资料
+import supplementData from './supplementData.vue'// 补充资料
+import videoData from './videoData.vue'// 网络会议资料
 import { api } from '@/utils/api'
 import util from '@/utils/util'
 import DICT from '@/const/dict'
@@ -195,7 +803,9 @@ export default {
       id: '',
       arbiInfo: {},
       active: 0,
-      activeNames: ['1'],
+      activeNames1: ['1', '2', 3, 4, 5, 6, 7, 8, 9, 10, 10, 100, 101, 102, 103, 104, 105, 106, 107, '1000'], // 申请信息
+      activeNames2: ['1'], // 组庭信息
+      activeNames3: ['1', '2'], // 答辩资料
       companyForm: {
         coName: '', // 企业名称
         coIdnum: '', // 统一代码
@@ -287,7 +897,7 @@ export default {
       }
     }
   },
-  components: { Header, applyInfo, caseTracking, jurisdiction },
+  components: { Header, applyInfo, caseTracking, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData },
   methods: {
     formatData () {
       const applyedArr = []
@@ -623,141 +1233,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  .wrapper
-    section.casseBaseInfo
-      padding:14px 0 0 0;
-      background-color:#FFFFFF;
-      text-align:left
-      .caseBaseInfoBox
-        padding:0 25px 12px 20px;
-        position:relative;
-        overflow:hidden;
-        .arbNumber
-          font-size:20px;
-          font-weight:500;
-          line-height:28px;
-          color:#1890FF;
-          .titleIcon
-            vertical-align:middle;
-        .arbInfo
-          font-size:15px;
-          font-weight:400;
-          line-height:21px;
-          color:#000000;
-          margin-top:13px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          -o-text-overflow: ellipsis;
-          white-space:nowrap;
-          .label
-            color:#9B9B9B;
-            margin:10px 0 0 3px;
-          .arbStatus
-            color: #1890FF;
-            display:inline-block;
-            line-height:21px;
-            background: #C4E3FF;
-            border-radius:18px;
-            padding:0 12px 0 10px;
-        .caseBaseInfoTable
-          display: flex;
-          margin-top:12px;
-          .caseBaseInfoItem
-            flex:1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -o-text-overflow: ellipsis;
-            white-space:nowrap;
-            text-align:center;
-            line-height:21px;
-            .label
-              color:#9B9B9B
-            .text
-              color:#24272B;
-              line-height:29px;
-    .caseDetail
-      text-align:left;
-      margin-top:14px;
-      color:#9B9B9B;
-      background:#FFFFFF;
-      font-size:15px;
-      line-height:21px;
-/deep/.van-tabs--line .van-tabs__wrap
-  height:46px;
-/deep/.van-tab
-  font-size:15px
-  line-height:46px;
-  min-width:87px;
-/deep/ .van-tabs__line
-  width:60px!important;
-  background-color: #1890ff!important;
-/deep/ .van-tab--active
-  color:#1890ff;
-.tabItem
-  padding:2px 15px 14px 14px;
-  h3
-    font-size:15px;
-    font-weight:bold;
-    color:#000;
-    line-height:21px;
-  h3:before
-    content: "";
-    display inline-block
-    width:4px;
-    height:16px;
-    background-color:#1890FF;
-    border-radius:1px;
-    vertical-align:text-top;
-    margin-right:8px;
-  .borderBottom
-    border-bottom:1pt solid #F0F0F0
-  .icon
-    font-size:20px;
-  .fileName
-    margin-left:8px;
-    color:#000000;
-  .grayBg
-    background-color:#F6F7F9;
-    padding:15px 15px 14px 16px;
-    margin-top:14px;
-  .bold
-    font-weight:bold;
-  .black
-    color:#000000;
-  .flexInfoBox
-    display:flex;
-    position:relative;
-    box-sizing:border-box;
-    justify-content:space-between;
-    margin-top:16px;
-    .infoItem
-      width:47%;
-    .infoLine
-      border-right:1px solid #F0F0F0;
-      height:65%;
-      position:absolute;
-      left:0;
-      right:0;
-      top:0;
-      bottom:0;
-      margin:auto;
-      width:1px;
-    .mt2
-      margin-top:2px;
-  .certificates
-    img
-      width 79px;
-      margin-top:6px;
-      margin-right:9px;
-    img:nth-child(4)
-      margin-right:0;
-  /deep/.van-cell
-    padding:0;
-    color:#9B9B9B;
-  /deep/.van-collapse-item__content
-    font-size: 15px;
-    padding:0;
-    line-height:21px;
-  /deep/.van-collapse-item
-    border-bottom:1px solid #f0f0f0
+@import "../../stylus/caseDetails.styl";
 </style>

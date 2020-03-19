@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "13555309",
+      "name": "仲裁_图片",
+      "font_class": "zhongcai_tupian",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
       "icon_id": "13511707",
       "name": "仲裁_excel",
       "font_class": "zhongcai_excel",
