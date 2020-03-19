@@ -22,6 +22,8 @@ const util = {
       iconClass = 'iconzhongcai_pdf'
     } else if (lastName === '.doc' || lastName === '.docx') {
       iconClass = 'iconzhongcai_word'
+    } else if (lastName === '.png' || lastName === '.jpg') {
+      iconClass = 'iconzhongcai_tupian'
     } else {
       iconClass = ''
     }

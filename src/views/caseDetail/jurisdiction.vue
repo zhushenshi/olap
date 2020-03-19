@@ -1,194 +1,159 @@
 <template>
 <div class="tabItem">
-      <div class="jurisdictItem">
+  <van-collapse v-model="activeNames" bind:change="onChange">
+    <van-collapse-item name="1" :is-link="false" :border="false">
+      <template slot="title">
+        <div style="padding:15px 0 0 0;">
           <h3>基本信息</h3>
-          <div class="info">
-            <div class="infoLeft">
-              <p>异议申请时间</p>
-              <p class="infoDetail">{{arbiInfo.decisionCreateTime}}</p>
-            </div>
-            <span class="infoLine"></span>
-            <div class="infoRight">
-              <p>异议申请流程</p>
-              <p class="infoDetail">立案</p>
-            </div>
         </div>
-          <div class="info">
-            <div class="infoLeft">
-              <p>异议申请人</p>
-              <p class="infoDetail">{{arbiInfo.decisionProsecutorName}}</p>
+      </template>
+      <div class="tabItemContainer">
+        <div>
+          <div class="flexInfoBox">
+            <div class="infoItem">
+              <div>异议申请时间</div>
+              <div class="black mt2">{{arbiInfo.decisionCreateTime}}</div>
             </div>
-            <span class="infoLine"></span>
-            <div class="infoRight">
+            <div class="infoLine"></div>
+            <div class="infoItem">
+              <div>异议申请流程</div>
+              <div class="black mt2">{{getstatus(arbiInfo.arbitralStatus)}}</div>
             </div>
-        </div>
-      </div>
-       <div class="jurisdictItem">
-          <h3>被申请人异议资料</h3>
-          <div style=";padding:13px 0;">
-            <p class="titleInfo">异议申请书</p>
-            <span class="icon iconfont icon-pdf"></span>
-            <span class="fileName">仲裁申请书.pdf</span>
           </div>
-          <p class="titleInfo">证据资料</p>
-         <div class="grayBg">
-            <p class="bold black"> 证据一（ZQ1)</p>
-            <p class="" style="margin:7px 0 16px 0;">订单编号：MJZH201909241873148780</p>
-            <p class="borderBottom"></p>
-            <p style="padding:14px 0 0 0;">证据标题：</p>
-            <p class="black" style="margin-top:2px;">这里是标题标题标题这里是标题标题标题</p>
-            <p style="margin-top:16px;">证明内容：</p>
-            <p class="black" style="margin-top:2px;">这里是内容内容</p>
-            <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
-            <div style="background-color:#FFFFFF;padding:14px;">
-              <div>
-                <span class="icon iconfont icon-pdf"></span>
-                <span class="fileName">仲裁申请书.pdf</span>
-              </div>
-              <div style="margin-top:12px;">
-                <span class="icon iconfont icon-pdf"></span>
-                <span class="fileName">仲裁申请书.pdf</span>
-              </div>
+          <div class="flexInfoBox">
+            <div class="infoItem">
+              <div>异议申请人</div>
+              <div class="black mt2">被申请人-{{arbiInfo.decisionProsecutorName}}</div>
             </div>
+          </div>
         </div>
-         <p class="titleInfo">事实和理由</p>
-         <div class="reason">事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容</div>
-       </div>
-       <div class="jurisdictItem">
-         <h3>申请人答辩料</h3>
-          <div style=";padding:13px 0;">
-            <p class="titleInfo">答辩书</p>
-            <span class="icon iconfont icon-pdf"></span>
-            <span class="fileName">仲裁申请书.pdf</span>
-         </div>
-           <p class="titleInfo">证据资料</p>
-           <div class="grayBg">
-              <p class="bold black"> 证据一（ZQ1)</p>
-              <p class="" style="margin:7px 0 16px 0;">订单编号：MJZH201909241873148780</p>
-              <p class="borderBottom"></p>
-              <p style="padding:14px 0 0 0;">证据标题：</p>
-              <p class="black" style="margin-top:2px;">这里是标题标题标题这里是标题标题标题</p>
-              <p style="margin-top:16px;">证明内容：</p>
-              <p class="black" style="margin-top:2px;">这里是内容内容</p>
-              <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
-              <div style="background-color:#FFFFFF;padding:14px;">
-                <div>
-                  <span class="icon iconfont icon-pdf"></span>
-                  <span class="fileName">仲裁申请书.pdf</span>
-                </div>
-                <div style="margin-top:12px;">
-                  <span class="icon iconfont icon-pdf"></span>
-                  <span class="fileName">仲裁申请书.pdf</span>
+      </div>
+    </van-collapse-item>
+    <van-collapse-item name="2" :is-link="false" :border="false">
+      <template slot="title">
+        <div style="padding:15px 0 0 0;">
+          <h3>被申请人异议资料</h3>
+        </div>
+      </template>
+      <div class="tabItemContainer">
+        <div class="flexInfoBox">
+          <div>
+            <div>异议申请书</div>
+            <div v-if="dissentApplication&&dissentApplication.length>0&&dissentApplication[0].arbAttachmentDatas&&dissentApplication[0].arbAttachmentDatas.length>0">
+              <div class="black mt2 fileBox" v-for="(evidence, index) in dissentApplication" :key="index">
+                <div v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'a'+ind">
+                  <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
+                  <span class="fileName" :href="file.attachUrlDes">{{file.attachName}}</span>
                 </div>
               </div>
             </div>
-         <p class="titleInfo">答辩及质证意见</p>
-         <div class="reason">事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容事实和理由内容</div>
-       </div>
+            <div class="black mt2 fileBox" v-else>/ </div>
+          </div>
+        </div>
+        <div style="margin-top:14px;">证据资料</div>
+        <div class="grayBg" v-for="(evidence, index) in dissentAttachment" :key="index">
+          <p class="bold black"> {{evidence.evidenceName}}</p>
+          <!-- <p style="margin:7px 0 7px 0;">({{evidence.arbDebtNum}})</p> -->
+          <!-- <p style="margin:7px 0 7px 0;">订单编号：{{'evidence.arbDebtOrderNum'}}</p> -->
+          <p class="borderBottom" style="padding-top:9px;"></p>
+          <p style="padding:14px 0 0 0;">证据标题：</p>
+          <p class="black" style="margin-top:2px;">{{evidence.evidenceTitle}}</p>
+          <p style="margin-top:16px;">证明内容：</p>
+          <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
+          <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
+          <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;">
+            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'b'+ind">
+              <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
+              <span class="fileName">{{file.attachName}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flexInfoBox">
+          <div>
+            <div>事实和理由</div>
+            <div class="black mt2">{{arbiInfo.remark}}</div>
+          </div>
+        </div>
       </div>
+    </van-collapse-item>
+    <van-collapse-item name="2" :is-link="false" :border="false" v-if="dissentReplyApplication.length>0">
+      <template slot="title">
+        <div style="padding:15px 0 0 0;">
+          <h3>申请人答辩资料</h3>
+        </div>
+      </template>
+      <div class="tabItemContainer">
+        <div class="flexInfoBox">
+          <div>
+            <div>答辩书</div>
+            <div v-if="dissentReplyApplication&&dissentReplyApplication.length>0&&dissentReplyApplication[0].arbAttachmentDatas&&dissentReplyApplication[0].arbAttachmentDatas.length>0">
+              <div class="black mt2 fileBox" v-for="(evidence, index) in dissentReplyApplication" :key="'c'+index">
+                <div v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'d'+ind">
+                  <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
+                  <span class="fileName" :href="file.attachUrlDes">{{file.attachName}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="black mt2 fileBox" v-else>/ </div>
+          </div>
+        </div>
+        <div style="margin-top:14px;">证据资料</div>
+        <div class="grayBg" v-for="(evidence, index) in dissentReplyAttachment" :key="'e'+index">
+          <p class="bold black"> {{evidence.evidenceName}}</p>
+          <p class="borderBottom" style="padding-top:9px;"></p>
+          <p style="padding:14px 0 0 0;">证据标题：</p>
+          <p class="black" style="margin-top:2px;">{{evidence.evidenceTitle}}</p>
+          <p style="margin-top:16px;">证明内容：</p>
+          <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
+          <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
+          <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;">
+            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'f'+ind">
+              <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
+              <span class="fileName">{{file.attachName}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flexInfoBox">
+          <div>
+            <div>事实和理由</div>
+            <div class="black mt2">{{arbiInfo.defenceRemark}}</div>
+          </div>
+        </div>
+      </div>
+    </van-collapse-item>
+  </van-collapse>
 </div>
 </template>
 <script>
+import util from '@/utils/util'
+import DICT from '@/const/dict'
 export default {
   name: 'ApplyInfo',
+  // props: {
+  //   dissentApplication: {
+  //     type: Array
+  //   }
+  // },
+  props: ['dissentApplication', 'dissentAttachment', 'dissentReplyApplication', 'arbiInfo'],
   data () {
     return {
-      arbiInfo: {}
+      activeNames: ['1', '2', '3', '4'],
+      util
+    }
+  },
+  methods: {
+    getstatus (val) {
+      var status = ''
+      DICT.arbStatus.map(el => {
+        if (el.value.split(',').map(el => +el).indexOf(val) > -1) {
+          status = el.label
+        }
+      })
+      return status
     }
   }
 }
 </script>
 <style lang="stylus" scoped>
-.tabItem
-  padding:17px 15px 14px 14px;
-  h3
-    font-size:15px;
-    font-weight:bold;
-    color:#000;
-    line-height:21px;
-  h3:before
-    content: "";
-    display inline-block
-    width:4px;
-    height:16px;
-    background-color:#1890FF;
-    border-radius:1px;
-    vertical-align:text-top;
-    margin-right:8px;
-  .borderBottom
-    border-bottom:1pt solid #F0F0F0
-  .icon
-    font-size:20px;
-  .fileName
-    margin-left:8px;
-    color:#000000;
-  .grayBg
-    background-color:#F6F7F9;
-    padding:15px 15px 14px 16px;
-    margin:14px 0;
-  .bold
-    font-weight:bold;
-  .black
-    color:#000000;
-  .flexInfoBox
-    display:flex;
-    position:relative;
-    box-sizing:border-box;
-    justify-content:space-between;
-    margin-top:16px;
-    .infoItem
-      width:47%;
-    .infoLine
-      border-right:1px solid #F0F0F0;
-      height:65%;
-      position:absolute;
-      left:0;
-      right:0;
-      top:0;
-      bottom:0;
-      margin:auto;
-      width:1px;
-    .mt2
-      margin-top:2px;
-  .certificates
-    img
-      width 79px;
-      margin-top:6px;
-      margin-right:9px;
-    img:nth-child(4)
-      margin-right:0;
-  /deep/.van-cell
-    padding:0;
-  /deep/.van-collapse-item__content
-    font-size: 15px;
-    padding:0;
-    line-height:21px;
-.jurisdictItem
-  margin 9px 0
-.info
-  display flex
-  margin 13px 0
-  div
-    flex 1
-    .infoDetail
-      color #333333
-  .infoLine
-    width 1px
-    height 30px
-    background #F0F0F0
-    display inline-block
-    position relative
-    top 5px
-  .infoRight
-    padding-left 9px
-  .infoLeft p,.infoRight p
-    margin-bottom 5px
-.titleInfo
-  color #9B9B9B
-  font-size 15px
-  margin-bottom 2px
-.reason
-  color #000000
-  font-size 15px
-  line-height 22px
+@import "../../stylus/caseDetails.styl";
 </style>

@@ -73,7 +73,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .tabItem
-  padding:17px 14px 14px 12px;
+  padding:17px 14px 14px 12px!important;
   font-size:14px;
   color:#24272B;
   .topTime
