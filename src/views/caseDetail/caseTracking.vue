@@ -54,7 +54,7 @@ export default {
               arr.push(ar)
             } else {
               console.log(arr[arr.length - 1])
-              if (this.histroyTaskInst[i].endTime.slice(0, 10) === arr[arr.length - 1][0].endTime.slice(0, 10)) {
+              if (this.histroyTaskInst[i].endTime.slice(0, 9) === arr[arr.length - 1][0].endTime.slice(0, 9)) {
                 arr[arr.length - 1].push(this.histroyTaskInst[i])
               } else {
                 const a = []
