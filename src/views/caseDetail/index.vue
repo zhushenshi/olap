@@ -690,7 +690,7 @@
           <case-tracking></case-tracking>
         </van-tab>
         <van-tab title="案件文书">
-          <case-tracking></case-tracking>
+          <case-document :caseDocumentInfo="caseDocumentInfo"></case-document>
         </van-tab>
         <van-tab title="组庭信息" v-if="arbiInfo.arbitralMergeHearDetailResponse">
           <div class="tabItem">
@@ -792,6 +792,7 @@ import mediateData from './mediateData.vue'// 调解资料
 import replyData from './replyData.vue'// 答辩资料
 import supplementData from './supplementData.vue'// 补充资料
 import videoData from './videoData.vue'// 网络会议资料
+import caseDocument from './caseDocument.vue'
 import { api } from '@/utils/api'
 import util from '@/utils/util'
 import DICT from '@/const/dict'
@@ -800,6 +801,8 @@ export default {
   name: 'CaseDetail',
   data () {
     return {
+      arbProcess: '',
+      caseDocumentInfo: {},
       id: '',
       arbiInfo: {},
       active: 0,
@@ -897,11 +900,16 @@ export default {
       }
     }
   },
-  components: { Header, applyInfo, caseTracking, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData },
+  components: { Header, applyInfo, caseTracking, caseDocument, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData },
   methods: {
     formatData () {
       const applyedArr = []
       const applyers = []
+      this.arbProcess = this.arbiInfo.arbProcess
+      this.caseDocumentInfo = {
+        arbitralInfoIds: [this.arbiInfo.id],
+        documentType: '1,2,3,4,5,6,7,8,9,12'
+      }
       this.arbitralMediationResponse = this.arbiInfo.arbitralMediationResponse
       this.arbitralRecordResponse = this.arbiInfo.arbitralRecordResponse || {}
       this.arbitralRecordResponse.tribunalInfo = this.getTribunalInfo()
