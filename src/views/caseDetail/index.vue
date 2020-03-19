@@ -687,7 +687,7 @@
           </div>
         </van-tab>
         <van-tab title="案件追踪">
-          <case-tracking></case-tracking>
+          <case-tracking :arbProcess="arbProcess"></case-tracking>
         </van-tab>
         <van-tab title="案件文书">
           <case-document :caseDocumentInfo="caseDocumentInfo"></case-document>
