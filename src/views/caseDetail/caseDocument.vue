@@ -1,76 +1,78 @@
 <template>
 <div class="tabItem">
-       <div v-for="(item,index) in documents" :key="index">
-         <h3>{{getProcessName(item[0].documentType)}}送达流程</h3>
-         <div  v-for="(value,inde) in item" :key="inde">
-           <div class="documentsList">
-             <div>{{getStatus(value.documentType)}}</div>
-             <div class="edit" @click="seeinfo(value)">查看</div>
-           </div>
-         </div>
-       </div>
-       <div v-if="show" class="popBox">
-         <div class="close" @click="close">
-            <span class="icon iconfont iconzhongcai_tuichu"></span>
-         </div>
-          <div class="documents">
-             <div>
-               <p class="title">文书送达详情</p>
-               <p class="documentsName">
-                 <span>文书名称：</span>
-                 <span>{{wsobj.documentName}}</span>
-                </p>
-                <p class="documentsName">
-                 <span>送达流程：</span>
-                 <span>{{wsobj.arbitralStatus}}</span>
-                </p>
-             </div>
-             <div class="documentsObj">
-               <span v-if="wsobj.userType == 1">申请人</span>
-               <span v-else-if="wsobj.userType == 2">被申请人</span>
-               <span v-else>仲裁员</span>
-             </div>
-              <div>
-               <p class="title">邮件送达</p>
-               <p class="documentsName">
-                 <span>送达地址：</span>
-                 <span>{{wsobj.emailAddress}}</span>
-                </p>
-                <p class="documentsName">
-                 <span>送达时间：</span>
-                 <span>{{wsobj.documentArrivedTime}}</span>
-                </p>
-             </div>
-             <div class="line"></div>
-              <div>
-                <p class="title">邮递送达</p>
-                <p class="documentsName">
-                  <span>送达地址：</span>
-                  <span>{{wsobj.expressAddress}}</span>
-                  </p>
-                  <p class="documentsName">
-                  <span>快递单号：</span>
-                  <span>{{wsobj.expressNumber}}</span>
-                  </p>
-                  <p class="documentsName">
-                  <span>送达时间：</span>
-                  <span>{{wsobj.expressTime}}</span>
-                  </p>
-             </div>
-             <div class="line"></div>
-             <div>
-               <p class="title">短信送达</p>
-               <p class="documentsName">
-                 <span>送达地址：</span>
-                 <span>{{wsobj.userPhone}}</span>
-                </p>
-                <p class="documentsName">
-                 <span>送达时间：</span>
-                 <span>{{wsobj.documentMessageArrivedTime}}</span>
-                </p>
-             </div>
-          </div>
+  <div v-for="(item,index) in documents" :key="index">
+    <h3>{{getProcessName(item.documentType)}}送达流程</h3>
+    <div  v-for="(value,inde) in item.list" :key="inde">
+      <div class="documentsList">
+        <div>{{value.fileName}}</div>
+        <div class="edit" @click="seeinfo(value)">查看</div>
       </div>
+    </div>
+  </div>
+  <div v-if="show" class="popBox">
+    <div class="close" @click="close">
+      <span class="icon iconfont iconzhongcai_tuichu"></span>
+    </div>
+    <div class="documents">
+        <div>
+          <p class="title">文书送达详情</p>
+          <p class="documentsName">
+            <span>文书名称：</span>
+            <span>{{wsobj.documentName}}</span>
+          </p>
+          <p class="documentsName">
+            <span>送达流程：</span>
+            <span>{{wsobj.arbitralStatus}}</span>
+          </p>
+        </div>
+        <div class="documentsObj" v-for="(ite,ind) in wsobj.list" :key="'i'+ind">
+          <span v-if="ite.userType == 1">申请人</span>
+          <span v-else-if="ite.userType == 2">被申请人</span>
+          <span v-else>仲裁员</span>
+        </div>
+        <div v-for="(ite,ind) in wsobj.list" :key="'i'+ind">
+          <div>
+            <p class="title">邮件送达</p>
+            <p class="documentsName">
+              <span>送达地址：</span>
+              <span>{{wsobj.emailAddress}}</span>
+            </p>
+            <p class="documentsName">
+              <span>送达时间：</span>
+              <span>{{wsobj.documentArrivedTime}}</span>
+            </p>
+          </div>
+          <div class="line"></div>
+          <div>
+            <p class="title">邮递送达</p>
+            <p class="documentsName">
+              <span>送达地址：</span>
+              <span>{{wsobj.expressAddress}}</span>
+              </p>
+              <p class="documentsName">
+              <span>快递单号：</span>
+              <span>{{wsobj.expressNumber}}</span>
+              </p>
+              <p class="documentsName">
+              <span>送达时间：</span>
+              <span>{{wsobj.expressTime}}</span>
+              </p>
+          </div>
+          <div class="line"></div>
+          <div>
+            <p class="title">短信送达</p>
+            <p class="documentsName">
+              <span>送达地址：</span>
+              <span>{{wsobj.userPhone}}</span>
+            </p>
+            <p class="documentsName">
+              <span>送达时间：</span>
+              <span>{{wsobj.documentMessageArrivedTime}}</span>
+            </p>
+          </div>
+        </div>
+    </div>
+  </div>
  <van-overlay :show="show" />
 </div>
 
@@ -102,46 +104,32 @@ export default {
       switch (documentType) {
         case '1':
           return '申请'
-          break
         case '2':
           return '立案'
-          break
         case '3':
           return '组庭'
-          break
         case '4':
           return '组庭'
-          break
         case '5':
           return '组庭'
-          break
         case '6':
           return '裁决'
-          break
         case '7':
           return '审核管辖权'
-          break
         case '8':
           return ''
-          break
         case '9':
           return ''
-          break
         case '10':
           return '管辖权异议'
-          break
         case '11':
           return '管辖权异议'
-          break
         case '12':
           return '管辖权异议'
-          break
         case '13':
           return '结案'
-          break
         case '14':
           return '管辖权异议'
-          break
         default:
           return ''
       }
@@ -150,49 +138,40 @@ export default {
       switch (documentType) {
         case '1':
           return '缴费通知书'
-          break
         case '2':
           return '立案通知书'
-          break
         case '3':
           return '仲裁员通知书'
-          break
         case '4':
           return '组庭开庭通知书'
-          break
         case '5':
           return '开庭笔录'
-          break
         case '6':
           return '裁决书'
-          break
         case '7':
           return '不予受理通知书'
-          break
         case '8':
           return '调解书'
-          break
         case '9':
           return '调解笔录'
-          break
         case '10':
           return '管辖权异议申请书'
-          break
         case '11':
           return '管辖权异议申请附件'
-          break
         case '12':
           return '管辖权异议决定书'
-          break
         case '13':
           return '委托执行书'
-          break
         case '14':
           return '管辖权异议资料'
-          break
         default:
           return ''
       }
+    },
+    getFiletName (documentName) {
+      const start = documentName.lastIndexOf('.') ? documentName.lastIndexOf('.') : 0
+      const end = documentName.lastIndexOf('-') ? documentName.lastIndexOf('-') + 1 : documentName.length
+      return documentName.substring(start, end)
     },
     close () {
       this.show = false
@@ -224,21 +203,94 @@ export default {
           this.list = res.data.data
           var arr = []
           for (let i = 0; i < this.list.length; i++) {
+            this.list[i].fileName = this.getFiletName(this.list[i].documentName)
             if (i === 0) {
-              const ar = []
-              ar.push(this.list[0])
-              arr.push(ar)
+              var obj = { list: [{ fileName: '', list: [] }], documentType: this.list[0].documentType }
+              obj.list[0].fileName = this.list[0].fileName
+              obj.list[0].list.push(this.list[0])
+              arr.push(obj)
             } else {
-              console.log(arr[arr.length - 1])
-              if (this.list[i].documentType === arr[arr.length - 1][0].documentType) {
-                arr[arr.length - 1].push(this.list[i])
-              } else {
-                const a = []
-                a.push(this.list[i])
-                arr.push(a)
+              const leng = arr.length
+              console.log(length)
+              for (let j = 0; j < leng; j++) {
+                if (this.list[i].documentType === arr[j].documentType) {
+                  const len = arr[j].list.length
+                  for (let k = 0; k < len; k++) {
+                    if (this.list[i].fileName === arr[j].list[k].fileName) {
+                      arr[j].list[k].list.push(this.list[i])
+                      break
+                    } else if (this.list[i].fileName !== arr[j].list[k].fileName && k === len - 1) {
+                      var ob = { fileName: this.list[i].fileName, list: [] }
+                      ob.list.push(this.list[i])
+                      arr[j].list.push(ob)
+                      break
+                    }
+                  }
+                } else if (this.list[i].documentType !== arr[j].documentType && j === leng - 1) {
+                  var o = { list: [{ fileName: '', list: [] }], documentType: this.list[i].documentType }
+                  o.list[0].fileName = this.list[i].fileName
+                  o.list[0].list.push(this.list[i])
+                  arr.push(o)
+                }
               }
             }
           }
+          // for (let i = 0; i < this.list.length; i++) {
+          //   this.list[i].fileName = this.getFiletName(this.list[i].documentName)
+          //   if (i === 0) {
+          //     var obj = { list: [{ fileName: '', list: [] }], documentType: this.list[0].documentType }
+          //     obj.list[0].fileName = this.list[0].fileName
+          //     obj.list[0].list.push(this.list[0])
+          //     arr.push(obj)
+          //     console.log(arr)
+          //   } else {
+          //     var length = arr.length
+          //     for (let j = 0; j < length; j++) {
+          //       if (this.list[i].documentType === arr[j].documentType) {
+          //         const len = arr[j].list.length
+          //         for (let k = 0; k < len; k++) {
+          //           if (this.list[i].fileName === arr[j].list[k].fileName) {
+          //             arr[j].list[k].list.push(this.list[i])
+          //           } else if (this.list[i].fileName !== arr[j].list[k].fileName && k === len - 1) {
+          //             var ob = { fileName: this.list[i].fileName, list: [] }
+          //             ob.list.push(this.list[i])
+          //             arr[j].list.push(ob)
+          //           }
+          //         }
+          //       } else if (this.list[i].documentType !== arr[j].documentType && j === length - 1) {
+          //         var o = { list: [{ fileName: '', list: [] }], documentType: this.list[i].documentType }
+          //         o.list[0].fileName = this.list[i].fileName
+          //         o.list[0].list.push(this.list[i])
+          //         arr.push(o)
+          //         console.log(arr)
+          //       }
+          //     }
+          //   }
+          // }
+          // for (let i = 0; i < this.list.length; i++) {
+          //   if (i === 0) {
+          //     var obj = { }
+          //     obj.list = []
+          //     obj.documentType = this.list[0].documentType
+          //     obj.list.push(this.list[0])
+          //     arr.push(obj)
+          //   } else {
+          //     var length = arr.length
+          //     for (let j = 0; j < length; j++) {
+          //       if (this.list[i].documentType === arr[j].documentType) {
+          //         arr[j].list.push(this.list[i])
+          //         break
+          //       } else if (this.list[i].documentType !== arr[j].documentType && j === length - 1) {
+          //         var ob = { }
+          //         ob.list = []
+          //         ob.documentType = this.list[i].documentType
+          //         ob.list.push(this.list[i])
+          //         arr.push(ob)
+          //         break
+          //       }
+          //     }
+          //   }
+          // }
           console.log(arr)
           this.documents = arr
           // res.data.data.forEach(item => {
