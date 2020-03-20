@@ -31,7 +31,10 @@
         </span>
        </p>
     </div>
-    <div class="filterCnt">
+   <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+  <van-list
+    v-model="loading" :finished="finished" finished-text="没有更多了" :offset=offset @load="onLoad">
+     <div class="filterCnt">
       <ul>
         <li v-for="(item,index) in filterList" :key="index" @click="intoDetail(item)">
             <p>
@@ -63,14 +66,17 @@
                 <div class="otherStatus" v-if="item.recallStatus === '1'">
                   <span class="recall">撤回</span>
                 </div>
-                <!-- <div class="otherStatus">
+                <div class="otherStatus">
                   <span class="recall">异议</span>
-                </div> -->
+                </div>
              </div>
           </div>
         </li>
       </ul>
     </div>
+  </van-list>
+</van-pull-refresh>
+
     </div>
     <div v-if="!filterList.length" class="noData">
       <img src="./../assets/imgs/zanwu-2.png"/>
@@ -99,11 +105,30 @@ export default {
       caseName: '',
       filterList: [],
       pageNo: 1,
-      pageSize: 99999999, // 每页多少条
-      formInline: {}
+      pageSize: 10, // 每页多少条
+      formInline: {},
+      loading: false,
+      finished: false,
+      refreshing: false,
+      offset: 100
     }
   },
   methods: {
+    onLoad () {
+      this.pageNo++
+      this.loading = true
+      this.getAllArbitralInfos()
+    },
+    onRefresh () {
+      // 清空列表数据
+      this.finished = false
+
+      // 重新加载数据
+      // 将 loading 设置为 true，表示处于加载状态
+      this.refreshing = true
+      this.pageNo = 1
+      this.getAllArbitralInfos()
+    },
     intoDetail (item) {
       console.log(item)
       this.$router.push({
@@ -155,7 +180,25 @@ export default {
             v.code = v.arbNumber || v.arbTemporaryNumber
             v.status = util.getStatus(v.arbStatus)
           })
-          this.filterList = tableData
+          if (this.filterList.length >= 40) {
+            this.finished = true
+          }
+          if (this.loading) { // 上拉加载
+            this.filterList = this.filterList.concat(tableData) // 上拉加载新数据添加到数组中
+            this.$nextTick(() => { // 在下次 DOM 更新循环结束之后执行延迟回调
+              this.loading = false // 关闭上拉加载中
+            })
+            if (tableData.length < 10) { // 没有更多数据
+              this.finished = true // 上拉加载完毕
+            }
+          }
+          if (this.refreshing) { // 关闭下拉刷新
+            this.refreshing = false // 关闭下拉刷新中
+            this.filterList = tableData // 重新给数据赋值
+            if (this.finished) { // 如果上拉加载完毕为true则设为false。解决上拉加载完毕后再下拉刷新就不会执行上拉加载问题
+              this.finished = false
+            }
+          }
         } else {
           this.filterList = []
         }
