@@ -5,7 +5,7 @@
     <div  v-for="(value,inde) in item.list" :key="inde">
       <div class="documentsList">
         <div>{{value.fileName}}</div>
-        <div class="edit" @click="seeinfo(value)">查看</div>
+        <div class="edit" @click="seeinfo(value,item.documentType)">查看</div>
       </div>
     </div>
   </div>
@@ -18,19 +18,20 @@
           <p class="title">文书送达详情</p>
           <p class="documentsName">
             <span>文书名称：</span>
-            <span>{{wsobj.documentName}}</span>
+            <span>{{detalis.fileName}}</span>
           </p>
           <p class="documentsName">
             <span>送达流程：</span>
-            <span>{{wsobj.arbitralStatus}}</span>
+            <span>{{getProcessName(documentTypeName)}}</span>
           </p>
         </div>
-        <div class="documentsObj" v-for="(ite,ind) in wsobj.list" :key="'i'+ind">
-          <span v-if="ite.userType == 1">申请人</span>
-          <span v-else-if="ite.userType == 2">被申请人</span>
-          <span v-else>仲裁员</span>
+        <div class="documentsObj">
+          <van-tabs v-model="active" @click="onClick">
+             <van-tab v-for="(val,index) in detalis.list" :key="index" :title="val.userType === 1 ? '被申请人' : val.userType === 2 ? '申请人' : '仲裁员'">
+            </van-tab>
+            </van-tabs>
         </div>
-        <div v-for="(ite,ind) in wsobj.list" :key="'i'+ind">
+        <div >
           <div>
             <p class="title">邮件送达</p>
             <p class="documentsName">
@@ -91,9 +92,12 @@ export default {
       documents: [],
       list: [],
       show: false,
+      detalis: [],
+      documentTypeName: '0',
       wsobj: {
         wslist: []
-      }
+      },
+      active: 0
     }
   },
   created () {
@@ -134,40 +138,6 @@ export default {
           return ''
       }
     },
-    getStatus (documentType) {
-      switch (documentType) {
-        case '1':
-          return '缴费通知书'
-        case '2':
-          return '立案通知书'
-        case '3':
-          return '仲裁员通知书'
-        case '4':
-          return '组庭开庭通知书'
-        case '5':
-          return '开庭笔录'
-        case '6':
-          return '裁决书'
-        case '7':
-          return '不予受理通知书'
-        case '8':
-          return '调解书'
-        case '9':
-          return '调解笔录'
-        case '10':
-          return '管辖权异议申请书'
-        case '11':
-          return '管辖权异议申请附件'
-        case '12':
-          return '管辖权异议决定书'
-        case '13':
-          return '委托执行书'
-        case '14':
-          return '管辖权异议资料'
-        default:
-          return ''
-      }
-    },
     getFiletName (documentName) {
       const start = documentName.lastIndexOf('.') ? documentName.lastIndexOf('.') : 0
       const end = documentName.lastIndexOf('-') ? documentName.lastIndexOf('-') + 1 : documentName.length
@@ -176,11 +146,16 @@ export default {
     close () {
       this.show = false
     },
-    seeinfo (val) { // 查看案件文书
+    seeinfo (val, documentType) { // 查看案件文书
+      this.wsobj = {}
       this.show = true
-      this.wsobj = val
-
-      console.log(val)
+      this.documentTypeName = documentType
+      this.detalis = val
+      this.active = 0
+      const result = this.detalis.list.find(ele => ele.userType === this.detalis.list[0].userType)
+      this.getData(result)
+    },
+    getData (val) {
       if (val.documentArrivedState === 1) {
         this.wsobj.arrivedType = '邮件送达'
         this.wsobj.emailAddress = val.userEmail
@@ -195,6 +170,18 @@ export default {
           this.wsobj.time += ' / '
         }
       }
+    },
+    onClick (name, title) {
+      let index = ''
+      if (title === '被申请人') {
+        index = 1
+      } else if (title === '申请人') {
+        index = 2
+      } else if (title === '仲裁员') {
+        index = 3
+      }
+      const result = this.detalis.list.find(ele => ele.userType === index)
+      this.getData(result)
     },
     queryDocuments () {
       // 文书
@@ -235,87 +222,8 @@ export default {
               }
             }
           }
-          // for (let i = 0; i < this.list.length; i++) {
-          //   this.list[i].fileName = this.getFiletName(this.list[i].documentName)
-          //   if (i === 0) {
-          //     var obj = { list: [{ fileName: '', list: [] }], documentType: this.list[0].documentType }
-          //     obj.list[0].fileName = this.list[0].fileName
-          //     obj.list[0].list.push(this.list[0])
-          //     arr.push(obj)
-          //     console.log(arr)
-          //   } else {
-          //     var length = arr.length
-          //     for (let j = 0; j < length; j++) {
-          //       if (this.list[i].documentType === arr[j].documentType) {
-          //         const len = arr[j].list.length
-          //         for (let k = 0; k < len; k++) {
-          //           if (this.list[i].fileName === arr[j].list[k].fileName) {
-          //             arr[j].list[k].list.push(this.list[i])
-          //           } else if (this.list[i].fileName !== arr[j].list[k].fileName && k === len - 1) {
-          //             var ob = { fileName: this.list[i].fileName, list: [] }
-          //             ob.list.push(this.list[i])
-          //             arr[j].list.push(ob)
-          //           }
-          //         }
-          //       } else if (this.list[i].documentType !== arr[j].documentType && j === length - 1) {
-          //         var o = { list: [{ fileName: '', list: [] }], documentType: this.list[i].documentType }
-          //         o.list[0].fileName = this.list[i].fileName
-          //         o.list[0].list.push(this.list[i])
-          //         arr.push(o)
-          //         console.log(arr)
-          //       }
-          //     }
-          //   }
-          // }
-          // for (let i = 0; i < this.list.length; i++) {
-          //   if (i === 0) {
-          //     var obj = { }
-          //     obj.list = []
-          //     obj.documentType = this.list[0].documentType
-          //     obj.list.push(this.list[0])
-          //     arr.push(obj)
-          //   } else {
-          //     var length = arr.length
-          //     for (let j = 0; j < length; j++) {
-          //       if (this.list[i].documentType === arr[j].documentType) {
-          //         arr[j].list.push(this.list[i])
-          //         break
-          //       } else if (this.list[i].documentType !== arr[j].documentType && j === length - 1) {
-          //         var ob = { }
-          //         ob.list = []
-          //         ob.documentType = this.list[i].documentType
-          //         ob.list.push(this.list[i])
-          //         arr.push(ob)
-          //         break
-          //       }
-          //     }
-          //   }
-          // }
           console.log(arr)
           this.documents = arr
-          // res.data.data.forEach(item => {
-          //   if (this.endName !== 'user' || (this.endName === 'user' && item.documentArrivedType)) {
-          //     item.arrivedType = ''
-          //     item.emailornumber = ''
-          //     item.time = ''
-          //     if (item.documentArrivedState === 1) {
-          //       item.arrivedType = '邮件送达'
-          //       item.emailornumber = item.userEmail
-          //       item.time = item.documentArrivedTime || ''
-          //     }
-          //     if (item.arbitralExpressRecordId) {
-          //       item.arrivedType += (item.arrivedType ? ' / 线下邮递' : '线下邮递')
-          //       item.emailornumber += (item.emailornumber ? (' / ' + item.expressNumber) : item.expressNumber)
-          //       if (item.arrivedTime) {
-          //         item.time += ' / ' + item.arrivedTime
-          //       } else if (item.time) {
-          //         item.time += ' / '
-          //       }
-          //     }
-          //     data.push(item)
-          //   }
-          // })
-          // this.documents = data
         }
       })
     }
@@ -351,6 +259,8 @@ export default {
   padding 20px 14px
   background #ffffff
   margin-top 36px
+  height: 90%;
+  overflow: scroll;
   p
     margin 10px 0
   .title
@@ -365,8 +275,6 @@ export default {
   .documentsObj
     color #198AFF
     margin 30px 0
-    border-bottom 2px solid #198AFF
-    width 20%
     text-align center
     line-height 40px
  .popBox {
@@ -395,4 +303,10 @@ export default {
   top: 10px;
   color #CCCCCC
   font-size 20px
+>>>[class*=van-hairline]::after{
+  border none
+  }
+>>>.van-tab{
+  flex none
+}
 </style>

@@ -63,9 +63,9 @@
                 <div class="otherStatus" v-if="item.recallStatus === '1'">
                   <span class="recall">撤回</span>
                 </div>
-                <div class="otherStatus">
+                <!-- <div class="otherStatus">
                   <span class="recall">异议</span>
-                </div>
+                </div> -->
              </div>
           </div>
         </li>
