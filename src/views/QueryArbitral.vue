@@ -66,9 +66,9 @@
                 <div class="otherStatus" v-if="item.recallStatus === '1'">
                   <span class="recall">撤回</span>
                 </div>
-                <div class="otherStatus">
+                <!-- <div class="otherStatus">
                   <span class="recall">异议</span>
-                </div>
+                </div> -->
              </div>
           </div>
         </li>
@@ -138,14 +138,17 @@ export default {
     },
     tabFilter (val) {
       this.activeName = val
+      this.filterList = []
       this.search()
     },
     fllter (val) {
       this.sortName = val
+      this.filterList = []
       this.getAllArbitralInfos()
     },
     fllters (val) {
       this.caseName = val
+      this.filterList = []
       this.getAllArbitralInfos()
     },
     search () { // 表单查询（搜索案件编号、案件名、申请人、被申请人。搜索字符长度不超过20个）
