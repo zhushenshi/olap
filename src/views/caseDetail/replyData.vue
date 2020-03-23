@@ -9,9 +9,8 @@
       </template>
       <div class="tabItemContainer">
         <div v-for="(evidence, index) in replyBrief" :key="'e'+index">
-          <div v-for="(file,i) in evidence.arbAttachmentDatas" :key="i">
-              <!-- pdf查看 -->
-            <span class="icon iconfont icon-pdf"></span>
+          <div v-for="(file,i) in evidence.arbAttachmentDatas" :key="i" @click="previewFile(file.attachName,file.attachUrlDes)">
+            <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
             <span class="fileName">{{file.attachName}}</span>
           </div>
         </div>
@@ -33,7 +32,7 @@
           <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
           <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
           <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;">
-            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'j'+ind">
+            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'j'+ind" @click="previewFile(file.attachName,file.attachUrlDes)">
               <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
               <span class="fileName">{{file.attachName}}</span>
             </div>
@@ -48,12 +47,18 @@
 import util from '@/utils/util'
 export default {
   name: 'ReplyData',
-  props: ['replyBrief', 'replyLists'],
+  props: ['replyBrief', 'replyLists', 'previewFile'],
   data () {
     return {
       activeNames: ['1', '2', '3', '4'],
       util
     }
+  },
+  methods: {
+    // previewFile (name, url) {
+    //   console.log()
+    //   this.$parent.previewFile(name, url)
+    // }
   }
 }
 </script>

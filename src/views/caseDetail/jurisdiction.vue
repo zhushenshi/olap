@@ -42,7 +42,7 @@
             <div v-if="dissentApplication&&dissentApplication.length>0&&dissentApplication[0].arbAttachmentDatas&&dissentApplication[0].arbAttachmentDatas.length>0">
               <div class="black mt2 fileBox" v-for="(evidence, index) in dissentApplication" :key="index">
                 <div v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'a'+ind">
-                  <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
+                  <span class="icon iconfont" :class="util.getFileIcon(file.attachName)" @click="previewFile(file.attachName,file.attachUrlDes)"></span>
                   <span class="fileName" :href="file.attachUrlDes">{{file.attachName}}</span>
                 </div>
               </div>
@@ -62,7 +62,7 @@
           <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
           <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
           <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;">
-            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'b'+ind">
+            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'b'+ind" @click="previewFile(file.attachName,file.attachUrlDes)">
               <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
               <span class="fileName">{{file.attachName}}</span>
             </div>
@@ -88,7 +88,7 @@
             <div>答辩书</div>
             <div v-if="dissentReplyApplication&&dissentReplyApplication.length>0&&dissentReplyApplication[0].arbAttachmentDatas&&dissentReplyApplication[0].arbAttachmentDatas.length>0">
               <div class="black mt2 fileBox" v-for="(evidence, index) in dissentReplyApplication" :key="'c'+index">
-                <div v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'d'+ind">
+                <div v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'d'+ind"  @click="previewFile(file.attachName,file.attachUrlDes)">
                   <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
                   <span class="fileName" :href="file.attachUrlDes">{{file.attachName}}</span>
                 </div>
@@ -107,7 +107,7 @@
           <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
           <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
           <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;">
-            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'f'+ind">
+            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'f'+ind"  @click="previewFile(file.attachName,file.attachUrlDes)">
               <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
               <span class="fileName">{{file.attachName}}</span>
             </div>
