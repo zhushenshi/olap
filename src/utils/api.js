@@ -378,6 +378,13 @@ const api = {
       data: params
     })
   },
+  getWorkList (params) { // APP端待办事项列表
+    return myAxios({
+      method: 'post',
+      url: '/olap-arbitral/api/app/getWorkList',
+      data: params
+    })
+  },
 
   // --------初始化案件参数---------<<<<<<<<<<
 

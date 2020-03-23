@@ -10,114 +10,197 @@
     </header>
     <section>
       <div class="tabContent clearfix">
-        <div class="tab fl" :class="type==='one'?'tabActive':''" @click="tabClick('one')">全部</div>
-        <div class="tab fl" :class="type==='two'?'tabActive':''" @click="tabClick('two')">裁决书</div>
-        <div class="tab fl" :class="type==='three'?'tabActive':''" @click="tabClick('three')">充值</div>
+        <div class="tab fl" :class="type===0?'tabActive':''" @click="tabClick(0)">全部</div>
+        <div class="tab fl" :class="type===1?'tabActive':''" @click="tabClick(1)">裁决书</div>
+        <div class="tab fl" :class="type===2?'tabActive':''" @click="tabClick(2)">充值</div>
       </div>
-      <div class="listContent">
-        <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-          <div class="itemBox" v-if="type==='one'">
-            <p class="topTime">2019年12月</p>
-            <div class="item">
-              <div class="left">
-                <div class="leftTop">12</div>
-                <div class="leftBottom">12:00</div>
-              </div>
-              <div class="right">
-                <div class="itemInfo">
-                  <div class="itemInfoRow itemInfoTop">
-                    <img src="./../assets/imgs/shenhe.png" alt="">
-                    <span>(2018)北国仲字第1号北国仲字第1号北国仲字第1号</span>
-                  </div>
-                  <div class="itemInfoRow">
-                    <span class="label">申请人：</span>
-                    <span>上海指旺信息科技有限公司</span>
-                  </div>
-                  <div class="itemInfoRow">
-                    <span class="label">申请时间：</span>
-                    <span>2020.02.02 12:00:00</span>
-                  </div>
-                </div>
-                <div class="operateBtn">审核判决书</div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="left">
-                <div class="leftTop">12</div>
-                <div class="leftBottom">12:00</div>
-              </div>
-              <div class="right">
-                <div class="itemInfo">
-                  <div class="itemInfoRow itemInfoTop">
-                    <img src="./../assets/imgs/shenhe.png" alt="">
-                    <span>(2018)北国仲字第1号北国仲字第1号北国仲字第1号</span>
-                  </div>
-                  <div class="itemInfoRow">
-                    <span class="label">批量编号：</span>
-                    <span>PL2795910109</span>
-                  </div>
-                  <div class="itemInfoRow">
-                    <span class="label">仲裁费：</span>
-                    <span>234.00元</span>
-                  </div>
-                </div>
-                <div class="operateBtn operateBtnRecharge">审核判决书</div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="left">
-                <div class="leftTop">12</div>
-                <div class="leftBottom">12:00</div>
-              </div>
-              <div class="right">
-                <div class="itemInfo">
-                  <div class="itemInfoRow itemInfoTop">
-                    <img src="./../assets/imgs/shenhe.png" alt="">
-                    <span>上海指旺信息科技有限公司</span>
-                  </div>
-                  <div class="itemInfoRow">
-                    <span class="label">案件编号：</span>
-                    <span>(2018)北国仲字第1号</span>
-                  </div>
-                  <div class="itemInfoRow">
-                    <span class="label">仲裁费：</span>
-                    <span>234.00元</span>
-                  </div>
-                </div>
-                <div class="operateBtn operateBtnRechargeSingle">审核判决书</div>
-              </div>
-            </div>
+      <div class="listContent" v-if="filterList.length">
+        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" :offset=offset @load="onLoad">
+           <div class="itemBox" v-for="(item,index) in filterList" :key="index">
+             <div  v-for="(value,ind) in item.yearData" :key="ind">
+               <p class="topTime">{{item.year}}年{{value.month}}</p>
+               <div v-for="(value1,index1) in value.monthData" :key="index1">
+                 <div v-for="(value2,index2) in value1.dataList" :key="index2">
+                  <div class="item" >
+                    <div class="left">
+                      <div class="leftTop">{{value1.day}}</div>
+                      <div class="leftBottom" v-if="value2.arbitralData">{{value2.arbitralData.createTime | formathm}}</div>
+                    </div>
+                    <div class="right">
+                      <div class="itemInfo">
+                        <div class="itemInfoRow itemInfoTop">
+                          <img src="./../assets/imgs/shenhe.png" alt="">
+                          <span v-if="value2.arbitralData">{{value2.arbitralData.arbNumber || value2.arbitralData.arbTemporaryNumber}}</span>
+                        </div>
+                        <div class="itemInfoRow">
+                          <span class="label">申请人：</span>
+                          <span v-if="value2.arbitralData">{{value2.arbitralData.arbProsecutorName}}</span>
+                        </div>
+                        <div class="itemInfoRow">
+                          <span class="label">申请时间：</span>
+                          <span v-if="value2.arbitralData">{{value2.arbitralData.createTime}}</span>
+                        </div>
+                      </div>
+                      <div class="operateBtn" >审核判决书</div>
+                    </div>
+                    </div>
+                  <div class="item" >
+                    <div class="left">
+                      <div class="leftTop">{{value1.day}}</div>
+                      <div class="leftBottom" v-if="value2.arbitralData">{{value2.arbitralData.createTime | formathm}}</div>
+                    </div>
+                    <div class="right">
+                        <div class="itemInfo">
+                        <div class="itemInfoRow itemInfoTop">
+                          <img src="./../assets/imgs/shenhe.png" alt="">
+                          <span v-if="value2.rechargeData">{{value2.rechargeData.applicant}}</span>
+                        </div>
+                         <div class="itemInfoRow">
+                          <span class="label">案件编号：</span>
+                           <span v-if="value2.rechargeData">{{value2.rechargeData.caseNumber}}</span>
+
+                        </div>
+                        <div class="itemInfoRow">
+                          <span class="label">仲裁费：</span>
+                          <span v-if="value2.rechargeData">{{value2.rechargeData.money}}元</span>
+                        </div>
+                      </div>
+                      <div class="operateBtn operateBtnRecharge">单案充值审核</div>
+                    </div>
+                     </div>
+                  <!-- <div class="item">
+                    <div class="left">
+                      <div class="leftTop">12</div>
+                      <div class="leftBottom">12:00</div>
+                    </div>
+                    <div class="right"  v-if="value2.type == 2">
+                      <div class="itemInfo">
+                        <div class="itemInfoRow itemInfoTop">
+                          <img src="./../assets/imgs/shenhe.png" alt="">
+                          <span>(2018)北国仲字第1号北国仲字第1号北国仲字第1号</span>
+                        </div>
+                         <div class="itemInfoRow">
+                          <span class="label">案件编号：</span>
+                          <span>(2018)北国仲字第1号</span>
+                        </div>
+                        <div class="itemInfoRow">
+                          <span class="label">仲裁费：</span>
+                          <span>234.00元</span>
+                        </div>
+                      </div>
+                      <div class="operateBtn operateBtnRecharge">审核判决书</div>
+                    </div>
+                  </div> -->
+                  <!-- <div class="item">
+                    <div class="left">
+                      <div class="leftTop">12</div>
+                      <div class="leftBottom">12:00</div>
+                    </div>
+                    <div class="right">
+                      <div class="itemInfo">
+                        <div class="itemInfoRow itemInfoTop">
+                          <img src="./../assets/imgs/shenhe.png" alt="">
+                          <span>上海指旺信息科技有限公司</span>
+                        </div>
+                        <div class="itemInfoRow">
+                          <span class="label">案件编号：</span>
+                          <span>(2018)北国仲字第1号</span>
+                        </div>
+                        <div class="itemInfoRow">
+                          <span class="label">仲裁费：</span>
+                          <span>234.00元</span>
+                        </div>
+                      </div>
+                      <div class="operateBtn operateBtnRechargeSingle">审核判决书</div>
+                    </div>
+                  </div> -->
           </div>
-          <div class="noData" v-if="type!=='one'">
+          </div>
+          </div>
+          </div>
+          </van-list>
+        </van-pull-refresh>
+      </div>
+       <div class="noData" v-if="!filterList.length">
             <img src="./../assets/imgs/noData@2x.png" alt="">
             <p>无任何记录</p>
-          </div>
-        </van-pull-refresh>
-      </div>
-      <!-- <div class="listContent">
-        <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-        </van-pull-refresh>
-      </div> -->
+       </div>
     </section>
   </div>
 </template>
 <script>
+import { api } from '@/utils/api'
 export default {
   data () {
     return {
-      isLoading: '',
-      type: 'one'
+      type: 0,
+      filterList: [],
+      pageNo: 1,
+      pageSize: 10, // 每页多少条
+      loading: false,
+      finished: false,
+      refreshing: false,
+      offset: 100
     }
   },
   methods: {
     tabClick (val) {
       this.type = val
+      this.pageNo = 1
+      this.getData()
+    },
+    onLoad () {
+      this.pageNo++
+      this.loading = true
+      this.getData()
     },
     onRefresh () {
-      this.isLoading = false
+      // 清空列表数据
+      this.finished = false
+      // 重新加载数据
+      // 将 loading 设置为 true，表示处于加载状态
+      this.refreshing = true
+      this.pageNo = 1
+      this.getData()
+    },
+    getData () {
+      const params = Object.assign({
+        pageNo: this.pageNo,
+        pageSize: this.pageSize,
+        type: this.type
+      })
+      api.getWorkList(params).then(res => {
+        if (res.data.code === '1') {
+          const list = res.data.list
+          this.filterList = list
+          if (this.filterList.length >= 40) {
+            this.finished = true
+          }
+          if (this.loading) { // 上拉加载
+            // this.filterList = this.filterList.concat(list) // 上拉加载新数据添加到数组中
+            this.$nextTick(() => { // 在下次 DOM 更新循环结束之后执行延迟回调
+              this.loading = false // 关闭上拉加载中
+            })
+            if (list.length < 10) { // 没有更多数据
+              this.finished = true // 上拉加载完毕
+            }
+          }
+          if (this.refreshing) { // 关闭下拉刷新
+            this.refreshing = false // 关闭下拉刷新中
+            this.filterList = list // 重新给数据赋值
+            if (this.finished) { // 如果上拉加载完毕为true则设为false。解决上拉加载完毕后再下拉刷新就不会执行上拉加载问题
+              this.finished = false
+            }
+          }
+        } else {
+          this.filterList = []
+        }
+      })
     }
   },
   created () {
+    this.getData()
   }
 }
 </script>

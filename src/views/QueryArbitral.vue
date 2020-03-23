@@ -76,7 +76,6 @@
     </div>
   </van-list>
 </van-pull-refresh>
-
     </div>
     <div v-if="!filterList.length" class="noData">
       <img src="./../assets/imgs/zanwu-2.png"/>
