@@ -17,7 +17,7 @@
           <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
           <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
           <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;">
-            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'j'+ind">
+            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'j'+ind" @click="previewFile(file.attachName,api.getImgURL(file.attachUrlDes))">
               <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
               <span class="fileName">{{file.attachName}}</span>
             </div>
@@ -41,7 +41,7 @@
           <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
           <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
           <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;">
-            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'j'+ind">
+            <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'j'+ind" @click="previewFile(file.attachName,api.getImgURL(file.attachUrlDes))">
               <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
               <span class="fileName">{{file.attachName}}</span>
             </div>
@@ -54,13 +54,15 @@
 </template>
 <script>
 import util from '@/utils/util'
+import { api } from '@/utils/api'
 export default {
   name: 'supplementData',
-  props: ['supplementaryArrs', 'supplementaryArrb'],
+  props: ['supplementaryArrs', 'supplementaryArrb', 'previewFile'],
   data () {
     return {
       activeNames: ['1', '2', '3', '4'],
-      util
+      util,
+      api
     }
   }
 }

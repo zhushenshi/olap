@@ -14,7 +14,7 @@ export default {
     //   }
     // }
     // alert(localStorage.getItem('token'))
-    localStorage.setItem('adminAccessToken', this.getCookie('token'))
+    // localStorage.setItem('adminAccessToken', this.getCookie('token'))
     if (localStorage.getItem('adminAccessToken')) {
       this.$store.commit('set_admin_token', localStorage.getItem('adminAccessToken'))
       this.$store.commit('set_admin_name', localStorage.getItem('adminName'))

@@ -23,7 +23,7 @@
           <div class="flexInfoBox">
             <div>
               <div class="fileBox">撤回申请书</div>
-              <div class="black mt2 fileBox" v-if="arbRecallApplyInfoResponse.recallPetitionName">
+              <div class="black mt2 fileBox" v-if="arbRecallApplyInfoResponse.recallPetitionName" @click="previewFile(arbRecallApplyInfoResponse.recallPetitionName,arbRecallApplyInfoResponse.recallPetitionUrl)">
                 <span class="icon iconfont" :class="util.getFileIcon(arbRecallApplyInfoResponse.recallPetitionName)"></span>
                 <span class="fileName" :href="arbRecallApplyInfoResponse.recallPetitionUrl">{{arbRecallApplyInfoResponse.recallPetitionName}}</span>
               </div>
@@ -67,7 +67,7 @@ import util from '@/utils/util'
 import DICT from '@/const/dict'
 export default {
   name: 'ApplyInfo',
-  props: ['arbRecallApplyInfoResponse'],
+  props: ['arbRecallApplyInfoResponse', 'previewFile'],
   data () {
     return {
       activeNames: ['1'], // 调解资料

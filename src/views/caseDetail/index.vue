@@ -49,10 +49,10 @@
                 </template>
                 <div class="tabItemContainer">
                   <div v-for="(item,index) in arbitrationApplication" :key="index">
-                    <div v-for="(file,i) in item.arbAttachmentDatas" :key="i">
+                    <div v-for="(file,i) in item.arbAttachmentDatas" :key="i" @click="previewFile(file.attachName,file.attachUrlDes)">
                         <!-- pdf查看 -->
-                      <span class="icon iconfont icon-pdf"></span>
-                      <span class="fileName">{{file.attachName}}</span>
+                      <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
+                      <span class="fileName" :href="file.attachUrlDes">{{file.attachName}}</span>
                     </div>
                   </div>
                 </div>
@@ -75,7 +75,7 @@
                     <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
                     <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
                     <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;">
-                      <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'j'+ind">
+                      <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'j'+ind" @click="previewFile(file.attachName,file.attachUrlDes)">
                         <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
                         <span class="fileName">{{file.attachName}}</span>
                       </div>
@@ -154,6 +154,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.pIdAttachForntDes))"
                             :src="api.getImgURL(item.pIdAttachForntDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -163,6 +164,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.pIdAttachRearDes))"
                             :src="api.getImgURL(item.pIdAttachRearDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -229,6 +231,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.coLicenceAttachDes))"
                             :src="api.getImgURL(item.coLicenceAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -238,6 +241,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.coIdPaperAttachDes))"
                             :src="api.getImgURL(item.coIdPaperAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -247,6 +251,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.coIdAttachForntDes))"
                             :src="api.getImgURL(item.coIdAttachForntDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -256,6 +261,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.coIdAttachRearDes))"
                             :src="api.getImgURL(item.coIdAttachRearDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -304,6 +310,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentLawyerAttachDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentLawyerAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -313,6 +320,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentProxyAttachDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentProxyAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -322,6 +330,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentCounselAttachDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentCounselAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -331,6 +340,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachForntDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachForntDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -340,6 +350,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachRearDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachRearDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -349,6 +360,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentJobAttachDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentJobAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -358,6 +370,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentContractAttachDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentContractAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -438,6 +451,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.pIdAttachForntDes))"
                             :src="api.getImgURL(item.pIdAttachForntDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -447,6 +461,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.pIdAttachRearDes))"
                             :src="api.getImgURL(item.pIdAttachRearDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -513,6 +528,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.coLicenceAttachDes))"
                             :src="api.getImgURL(item.coLicenceAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -522,6 +538,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.coIdPaperAttachDes))"
                             :src="api.getImgURL(item.coIdPaperAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -531,6 +548,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.coIdAttachForntDes))"
                             :src="api.getImgURL(item.coIdAttachForntDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -540,6 +558,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.coIdAttachRearDes))"
                             :src="api.getImgURL(item.coIdAttachRearDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -588,6 +607,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentLawyerAttachDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentLawyerAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -597,6 +617,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentProxyAttachDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentProxyAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -606,6 +627,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentCounselAttachDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentCounselAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -615,6 +637,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachForntDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachForntDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -624,6 +647,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachRearDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentIdAttachRearDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -633,6 +657,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentJobAttachDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentJobAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -642,6 +667,7 @@
                           <van-image
                             class="certificatesImgBox"
                             fit="contain"
+                            @click="previewFile('',api.getImgURL(item.arbitralAgentInfoResponse.agentContractAttachDes))"
                             :src="api.getImgURL(item.arbitralAgentInfoResponse.agentContractAttachDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
@@ -761,30 +787,35 @@
           </div>
         </van-tab>
         <van-tab title="答辩资料" v-if="replyBrief.length||replyLists.length">
-          <reply-data :replyBrief="replyBrief" :replyLists="replyLists"></reply-data>
+          <reply-data :replyBrief="replyBrief" :replyLists="replyLists" :previewFile="previewFile"></reply-data>
         </van-tab>
         <van-tab title="补充资料" v-if="supplementaryArrs.length||supplementaryArrb.length">
-          <supplement-data :supplementaryArrs="supplementaryArrs" :supplementaryArrb="supplementaryArrb"></supplement-data>
+          <supplement-data :supplementaryArrs="supplementaryArrs" :supplementaryArrb="supplementaryArrb" :previewFile="previewFile"></supplement-data>
         </van-tab>
-        <van-tab title="网络会议资料">
+        <van-tab title="网络会议资料" v-if="false">
           <video-data></video-data>
         </van-tab>
         <van-tab title="调解资料" v-if="arbitralMediationResponse">
-          <mediate-data :arbitralMediationResponse="arbitralMediationResponse" :conciliationEvidence="conciliationEvidence"></mediate-data>
+          <mediate-data :arbitralMediationResponse="arbitralMediationResponse" :conciliationEvidence="conciliationEvidence" :previewFile="previewFile"></mediate-data>
         </van-tab>
-        <van-tab title="撤回资料" v-if="arbRecallApplyInfoResponse">
+        <van-tab title="撤回资料" v-if="arbRecallApplyInfoResponse" :previewFile="previewFile">
           <withdraw-data :arbRecallApplyInfoResponse="arbRecallApplyInfoResponse"></withdraw-data>
         </van-tab>
-        <van-tab title="管辖权异议资料" v-if="dissentApplication.length>0">
+        <van-tab title="管辖权异议资料" v-if="dissentApplication&&dissentApplication.length>0" :previewFile="previewFile">
           <jurisdiction :dissentApplication="dissentApplication" :dissentAttachment="dissentAttachment" :arbiInfo="arbiInfo" :dissentReplyApplication="dissentReplyApplication"></jurisdiction>
         </van-tab>
       </van-tabs>
     </section>
+    <van-popup v-model="previewFileShow" closeable>
+      <div style="width:100vw;height:100vh;">
+        <iframe :src="'./PDF/web/viewer.html?file=/olap-file/fast/file/downloadPdfFile?pdfUrl=YI+fm3g75gm7y0ZcX1TLd7vJIHMPnfl8wSrejE+6G6zaXLJkrIy5AmaVaPYEs5ssK9ZYD4gINF47N1FxnOdgwwXkRm5sXgJNOh8OIv+E9BE='" frameborder="0" style="width:100%;height:90%;margin-top:50px;"></iframe>
+      </div>
+    </van-popup>
   </div>
 </template>
 <script>
+/* eslint-disable */ 
 import Header from '@/components/Header.vue'
-import applyInfo from './applyInfo.vue'
 import caseTracking from './caseTracking.vue'// 案件追踪
 import jurisdiction from './jurisdiction.vue'// 管辖权异议资料
 import withdrawData from './withdrawData.vue'// c撤回资料
@@ -796,11 +827,15 @@ import caseDocument from './caseDocument.vue'
 import { api } from '@/utils/api'
 import util from '@/utils/util'
 import DICT from '@/const/dict'
-
+import { ImagePreview } from 'vant'
+// import { convertToHtml } from 'mammoth'
+// import downloadFileTool from '@/utils/downloadFile'
 export default {
   name: 'CaseDetail',
   data () {
     return {
+      baseUrl: location.origin,
+      previewFileShow: false,
       arbProcess: '',
       caseDocumentInfo: {},
       id: '',
@@ -900,8 +935,46 @@ export default {
       }
     }
   },
-  components: { Header, applyInfo, caseTracking, caseDocument, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData },
+  components: { Header, caseTracking, caseDocument, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData },
   methods: {
+    // downFile (documentGeneratorUrlDes, documentName) {
+    //   api.downloadOtherFile({
+    //     filePath: documentGeneratorUrlDes,
+    //     fileName: documentName
+    //   }).then(res => {
+    //     if (res.data instanceof Blob) {
+    //       // this.$set(this.attachment, 'pdfURL', window.URL.createObjectURL(res.data))
+    //       downloadFileTool(res.data, '仲裁申请书.doc')
+    //       var blob = res.data
+    //       console.log(blob)
+    //       // console.log('=======================')
+    //       // var reader = new FileReader()
+    //       // var buffer = null
+    //       // reader.onload = function () {
+    //       //   console.log(this.result)
+    //       //   buffer = this.result
+    //       //   var a = convertToHtml(buffer)
+    //       //   console.log(a)
+    //       // }
+    //       // reader.readAsArrayBuffer(blob)
+    //     }
+    //   })
+    // },
+    previewFile (fileName, url) {
+      var lastName = fileName.substring(fileName.lastIndexOf('.')).toLowerCase()
+      console.log(url)
+      if (lastName === '.pdf') {
+        this.previewFileShow = !this.previewFileShow
+      } else if (lastName === '.png' || lastName === '.jpg' || lastName === '') {
+        ImagePreview({
+          images: [
+            url
+          ]
+        })
+      } else {
+        this.$Toast({ message: '暂不支持', position: 'bottom' })
+      }
+    },
     formatData () {
       const applyedArr = []
       const applyers = []
@@ -1233,9 +1306,9 @@ export default {
     }
   },
   created () {
-    console.log(this.$route.query.id)
     this.id = this.$route.query.id
     this.getData()
+    // this.downFile('/olap-file/fast/file/downloadPdfFile?pdfUrl=YI+fm3g75gkbLTqGafDt8pNb6shu1tErwSrejE+6G6zw4gtVr3gIlsNEL4U5jIeQ9YHRR4dkP/udYfIrj5QZZOs9H+KYXESjqACbHs1fhwc=', '测试文件')
   }
 }
 </script>
