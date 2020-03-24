@@ -18,13 +18,13 @@
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list v-model="loading" :finished="finished" finished-text="没有更多了" :offset=offset @load="onLoad">
            <div class="itemBox" v-for="(item,index) in filterList" :key="index">
-             <div  v-for="(value,ind) in item.yearData" :key="ind">
+             <div v-for="(value,ind) in item.yearData" :key="ind">
                <p class="topTime">{{item.year}}年{{value.month}}</p>
                <div v-for="(value1,index1) in value.monthData" :key="index1">
+                 <div class="leftTop">{{value1.day}}</div>
                  <div v-for="(value2,index2) in value1.dataList" :key="index2">
-                  <div class="item" >
+                  <div class="item" v-if="type!=2 && value2.rechargeData ==null" @click="goToDetail(value2.arbitralData.id)">
                     <div class="left">
-                      <div class="leftTop">{{value1.day}}</div>
                       <div class="leftBottom" v-if="value2.arbitralData">{{value2.arbitralData.createTime | formathm}}</div>
                     </div>
                     <div class="right">
@@ -45,10 +45,10 @@
                       <div class="operateBtn" >审核判决书</div>
                     </div>
                     </div>
-                  <div class="item" >
+                  <div class="item"  v-if="type!=1 && value2.arbitralData ==null" @click="goToDetail(value2.rechargeData.id)">
                     <div class="left">
-                      <div class="leftTop">{{value1.day}}</div>
-                      <div class="leftBottom" v-if="value2.arbitralData">{{value2.arbitralData.createTime | formathm}}</div>
+                      <!-- <div class="leftTop">{{value1.day}}</div> -->
+                      <div class="leftBottom" v-if="value2.rechargeData">{{value2.rechargeData.createTime | formathm}}</div>
                     </div>
                     <div class="right">
                         <div class="itemInfo">
@@ -68,53 +68,7 @@
                       </div>
                       <div class="operateBtn operateBtnRecharge">单案充值审核</div>
                     </div>
-                     </div>
-                  <!-- <div class="item">
-                    <div class="left">
-                      <div class="leftTop">12</div>
-                      <div class="leftBottom">12:00</div>
-                    </div>
-                    <div class="right"  v-if="value2.type == 2">
-                      <div class="itemInfo">
-                        <div class="itemInfoRow itemInfoTop">
-                          <img src="./../assets/imgs/shenhe.png" alt="">
-                          <span>(2018)北国仲字第1号北国仲字第1号北国仲字第1号</span>
-                        </div>
-                         <div class="itemInfoRow">
-                          <span class="label">案件编号：</span>
-                          <span>(2018)北国仲字第1号</span>
-                        </div>
-                        <div class="itemInfoRow">
-                          <span class="label">仲裁费：</span>
-                          <span>234.00元</span>
-                        </div>
-                      </div>
-                      <div class="operateBtn operateBtnRecharge">审核判决书</div>
-                    </div>
-                  </div> -->
-                  <!-- <div class="item">
-                    <div class="left">
-                      <div class="leftTop">12</div>
-                      <div class="leftBottom">12:00</div>
-                    </div>
-                    <div class="right">
-                      <div class="itemInfo">
-                        <div class="itemInfoRow itemInfoTop">
-                          <img src="./../assets/imgs/shenhe.png" alt="">
-                          <span>上海指旺信息科技有限公司</span>
-                        </div>
-                        <div class="itemInfoRow">
-                          <span class="label">案件编号：</span>
-                          <span>(2018)北国仲字第1号</span>
-                        </div>
-                        <div class="itemInfoRow">
-                          <span class="label">仲裁费：</span>
-                          <span>234.00元</span>
-                        </div>
-                      </div>
-                      <div class="operateBtn operateBtnRechargeSingle">审核判决书</div>
-                    </div>
-                  </div> -->
+                </div>
           </div>
           </div>
           </div>
@@ -173,7 +127,7 @@ export default {
       api.getWorkList(params).then(res => {
         if (res.data.code === '1') {
           const list = res.data.list
-          this.filterList = list
+          this.filterList = res.data.list
           if (this.filterList.length >= 40) {
             this.finished = true
           }
@@ -196,6 +150,12 @@ export default {
         } else {
           this.filterList = []
         }
+      })
+    },
+    goToDetail (id) {
+      this.$router.push({
+        path: '/toDoList/auditArbitralDetail',
+        query: { id: id }
       })
     }
   },
@@ -317,4 +277,8 @@ export default {
       img
         width:128px;
         margin-bottom:8px;
+.leftTop{
+ font-size:24px
+ position absolute
+}
 </style>
