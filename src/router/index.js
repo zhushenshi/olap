@@ -26,6 +26,16 @@ const routes = [
     component: () => import('../views/AuditArbitralDetail.vue')
   },
   {
+    path: '/toDoList/rechargeDetail', // 充值审核
+    name: 'rechargeDetail',
+    component: () => import('../views/RechargeDetail.vue')
+  },
+  {
+    path: '/toDoList/RechargExamine', // 充值审核审核
+    name: 'RechargExamine',
+    component: () => import('../views/RechargExamine.vue')
+  },
+  {
     path: '/toDoList/examine', // 审核裁决书
     name: 'examine',
     component: () => import('../views/Examine.vue')

@@ -1957,6 +1957,13 @@ const api = {
       data
     })
   },
+  rechargeAuditNp (params) { //  预充值审核-南平
+    return myAxios({
+      method: 'post',
+      url: '/olap-user/api/arbitralFund/np_RechargeAudit',
+      data: params
+    })
+  },
   allocateArbitralInfo (data) { //  管辖权异议【核对决定书】审核不通过
     return myAxios({
       method: 'post',

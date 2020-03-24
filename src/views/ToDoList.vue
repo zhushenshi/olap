@@ -16,12 +16,12 @@
       </div>
       <div class="listContent" v-if="filterList.length">
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" :offset=offset @load="onLoad">
+          <van-list v-model="loadMore" :finished="finished" finished-text="没有更多了" :offset=offset @load="onLoad">
            <div class="itemBox" v-for="(item,index) in filterList" :key="index">
              <div v-for="(value,ind) in item.yearData" :key="ind">
                <p class="topTime">{{item.year}}年{{value.month}}</p>
                <div v-for="(value1,index1) in value.monthData" :key="index1">
-                 <div class="leftTop">{{value1.day}}</div>
+                 <div class="leftTop" v-if="value1">{{value1.day}}</div>
                  <div v-for="(value2,index2) in value1.dataList" :key="index2">
                   <div class="item" v-if="type!=2 && value2.rechargeData ==null" @click="goToDetail(value2.arbitralData.id)">
                     <div class="left">
@@ -45,7 +45,7 @@
                       <div class="operateBtn" >审核判决书</div>
                     </div>
                     </div>
-                  <div class="item"  v-if="type!=1 && value2.arbitralData ==null" @click="goToDetail(value2.rechargeData.id)">
+                  <div class="item"  v-if="type!=1 && value2.arbitralData ==null" @click="goToRecharge(value2.rechargeData)">
                     <div class="left">
                       <!-- <div class="leftTop">{{value1.day}}</div> -->
                       <div class="leftBottom" v-if="value2.rechargeData">{{value2.rechargeData.createTime | formathm}}</div>
@@ -59,7 +59,6 @@
                          <div class="itemInfoRow">
                           <span class="label">案件编号：</span>
                            <span v-if="value2.rechargeData">{{value2.rechargeData.caseNumber}}</span>
-
                         </div>
                         <div class="itemInfoRow">
                           <span class="label">仲裁费：</span>
@@ -92,7 +91,7 @@ export default {
       filterList: [],
       pageNo: 1,
       pageSize: 10, // 每页多少条
-      loading: false,
+      loadMore: false,
       finished: false,
       refreshing: false,
       offset: 100
@@ -106,7 +105,7 @@ export default {
     },
     onLoad () {
       this.pageNo++
-      this.loading = true
+      this.loadMore = true
       this.getData()
     },
     onRefresh () {
@@ -131,10 +130,10 @@ export default {
           if (this.filterList.length >= 40) {
             this.finished = true
           }
-          if (this.loading) { // 上拉加载
+          if (this.loadMore) { // 上拉加载
             // this.filterList = this.filterList.concat(list) // 上拉加载新数据添加到数组中
             this.$nextTick(() => { // 在下次 DOM 更新循环结束之后执行延迟回调
-              this.loading = false // 关闭上拉加载中
+              this.loadMore = false // 关闭上拉加载中
             })
             if (list.length < 10) { // 没有更多数据
               this.finished = true // 上拉加载完毕
@@ -156,6 +155,14 @@ export default {
       this.$router.push({
         path: '/toDoList/auditArbitralDetail',
         query: { id: id }
+      })
+    },
+    goToRecharge (value) {
+      console.log(value)
+       const rechargeData=JSON.stringify(value)
+      this.$router.push({
+        path: '/toDoList/rechargeDetail',
+        query: { rechargeData: rechargeData }
       })
     }
   },

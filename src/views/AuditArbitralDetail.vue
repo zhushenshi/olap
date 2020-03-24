@@ -119,7 +119,7 @@ export default {
   components: { Header },
   methods: {
     rightMethod () {
-      this.$router.push({ name: 'examine' })
+      this.$router.push({ name: 'examine', params: { arbiInfo: this.arbiInfo } })
     },
     tabClick (val) {
       this.type = val

@@ -2,7 +2,7 @@
   <div class="wrapper">
     <img src="../../src/assets/imgs/Done@2x.png" alt="">
     <div>审核成功</div>
-    <van-button round type="info" block color="#1890FF" class="mybtn">返回待办</van-button>
+    <van-button round type="info" block color="#1890FF" class="mybtn" @click="goTopage()">返回待办</van-button>
   </div>
 </template>
 <script>
@@ -13,6 +13,9 @@ export default {
     }
   },
   methods: {
+    goTopage(){
+        this.$router.push({ path: '/toDoList' })
+    }
   },
   created () {
   }
