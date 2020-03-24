@@ -80,16 +80,20 @@ export default {
     getParams () {
       const htmlString = this.arbiInfo.arbitralRecordResponse.arbitralAwardContext
       if (htmlString.indexOf('ql-editor') > -1) {
+        // eslint-disable-next-line
         this.arbitralAwardContext = htmlString.match(/<div class=\'ql-editor\'>([\s\S]*?)<\/div>/)[1].replace(/(&#160;){4,}/g, '&nbsp;&nbsp;&nbsp;&nbsp;')
       } else if (htmlString.indexOf('<body>') > -1) {
+        // eslint-disable-next-line
         this.arbitralAwardContext = htmlString.match(/<body>([\s\S]*?)<\/body>/)[1]
       } else {
         this.arbitralAwardContext = htmlString
       }
       let paramString = this.arbitralAwardContext
+      // eslint-disable-next-line
       paramString = paramString.replace(/<br>/g, '<br \/>').replace(/&nbsp;/g, '&#160;').replace(/(?=[^>]*(?=<))\s/g, '&#160;')
       paramString = paramString.replace(/〇/g, '<span class="ql-font-SimSun">〇</span>')
       if (htmlString.indexOf('ql-editor') > -1) {
+        // eslint-disable-next-line
         paramString = htmlString.replace(/<div class=\'ql-editor\'>([\s\S]*?)<\/div>/, `<div class='ql-editor'>${paramString}</div>`)
       } else if (htmlString.indexOf('<body>') > -1) {
         paramString = htmlString.replace(/<body>([\s\S]*?)<\/body>/, `<body>${paramString}</body>`)
