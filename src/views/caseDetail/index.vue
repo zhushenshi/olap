@@ -808,7 +808,8 @@
     </section>
     <van-popup v-model="previewFileShow" closeable>
       <div style="width:100vw;height:100vh;">
-        <iframe :src="'./PDF/web/viewer.html?file=/olap-file/fast/file/downloadPdfFile?pdfUrl=YI+fm3g75gm7y0ZcX1TLd7vJIHMPnfl8wSrejE+6G6zaXLJkrIy5AmaVaPYEs5ssK9ZYD4gINF47N1FxnOdgwwXkRm5sXgJNOh8OIv+E9BE='" frameborder="0" style="width:100%;height:90%;margin-top:50px;"></iframe>
+        <iframe :src="'./PDF/web/viewer.html?file='+pdfUrl" frameborder="0" style="width:100%;height:90%;margin-top:50px;"></iframe>
+        <!-- <iframe :src="'./PDF/web/viewer.html?file=/olap-file/fast/file/downloadPdfFile?pdfUrl=YI+fm3g75gm7y0ZcX1TLd7vJIHMPnfl8wSrejE+6G6zaXLJkrIy5AmaVaPYEs5ssK9ZYD4gINF47N1FxnOdgwwXkRm5sXgJNOh8OIv+E9BE='" frameborder="0" style="width:100%;height:90%;margin-top:50px;"></iframe> -->
       </div>
     </van-popup>
   </div>
@@ -932,7 +933,8 @@ export default {
       wsobj: {
         wslist: [],
         sdlc: ''
-      }
+      },
+      pdfUrl:''      
     }
   },
   components: { Header, caseTracking, caseDocument, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData },
@@ -962,9 +964,9 @@ export default {
     // },
     previewFile (fileName, url) {
       var lastName = fileName.substring(fileName.lastIndexOf('.')).toLowerCase()
-      console.log(url)
       if (lastName === '.pdf') {
         this.previewFileShow = !this.previewFileShow
+        this.pdfUrl=url
       } else if (lastName === '.png' || lastName === '.jpg' || lastName === '') {
         ImagePreview({
           images: [

@@ -11,7 +11,6 @@ const myAxios = axios.create({
 // http请求拦截器
 myAxios.interceptors.request.use(config => {
   // 加载圈
-  // console.log(store.state.admin)
   const { adminAccessToken } = store.state.admin
   if (adminAccessToken) {
     if (localStorage.getItem('adminAccessToken') === adminAccessToken) {

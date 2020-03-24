@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Header :back="back" right="确认" :rightMethod='back'>审核裁决书</Header>
+    <Header right="确认" :rightMethod='rightMethod'>审核裁决书</Header>
     <div class="examineTop">
       <img src="../assets/imgs/examine@2x.png" alt="">
       <p>请提交您的审核</p>
@@ -8,8 +8,10 @@
     <div class="examine">
       <div class="examineTitle">选择审核结果</div>
       <div class="btnBox">
-        <van-button round type="info" block plain  hairline class="myBtn passActiveBtn" color="#1890FF">通过</van-button>
-        <van-button round type="info" block plain  hairline class="myBtn refuseActiveBtn" color="#BCBCBC">不通过</van-button>
+        <!-- <van-button round type="info" block plain  hairline class="myBtn passActiveBtn" color="#1890FF">通过</van-button> -->
+        <!-- <van-button round type="info" block plain  hairline class="myBtn refuseActiveBtn" color="#BCBCBC">不通过</van-button> -->
+        <van-button round type="info" block plain  hairline :class="{'myBtn':true,passActiveBtn:false}" color="#1890FF">通过</van-button>
+        <van-button round type="info" block plain  hairline :class="{'myBtn':true,refuseActiveBtn:false}" color="#BCBCBC">不通过</van-button>
       </div>
       <div class="examineTitle">录入审核意见(选填)</div>
       <div>
@@ -35,7 +37,7 @@ export default {
   },
   components: { Header },
   methods: {
-    back () {
+    rightMethod () {
 
     }
   },

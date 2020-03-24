@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "13655112",
+      "name": "仲裁_气泡-角",
+      "font_class": "zhongcai_qipao-jiao",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
       "icon_id": "13555309",
       "name": "仲裁_图片",
       "font_class": "zhongcai_tupian",

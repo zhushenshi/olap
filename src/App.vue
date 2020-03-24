@@ -13,7 +13,7 @@ export default {
     //     window.location.reload()
     //   }
     // }
-    // alert(localStorage.getItem('token'))
+    // alert(this.getCookie('token'))
     // localStorage.setItem('adminAccessToken', this.getCookie('token'))
     if (localStorage.getItem('adminAccessToken')) {
       this.$store.commit('set_admin_token', localStorage.getItem('adminAccessToken'))

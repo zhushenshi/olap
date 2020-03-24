@@ -67,6 +67,7 @@ export default {
           if (res.data.code === '100020') { // 登录成功
             this.$store.commit('set_admin_token', res.data.data.access_token)
             this.$store.commit('set_admin_name', res.data.data.realname)
+            this.setCookie('token', res.data.data.access_token)
             this.$router.push({ path: 'home' })
             localStorage.oldpath = '/admin/home/workbench'
             localStorage.index = 0//
@@ -80,6 +81,12 @@ export default {
           this.$Indicator.close()
         })
       }
+    },
+    setCookie (name, value) {
+      var time = 24 * 60 * 60 * 1000
+      var exp = new Date().setHours(0, 0, 0, 0)
+      var expires = new Date(exp + time)
+      document.cookie = name + '=' + escape(value) + ';expires=' + expires.toGMTString() + ';path=/'
     },
     refreshCode () {
       var uuid = util.uuidfn()

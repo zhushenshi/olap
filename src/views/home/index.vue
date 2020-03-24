@@ -4,7 +4,7 @@
       <home-header></home-header>
       <section>
         <div class="courtTrial">
-          <img src="./../../assets/imgs/home/courtTrial.png" alt="">
+          <img src="./../../assets/imgs/home/courtTrial.png" alt="" @click="$router.push('/queryArbitral')">
         </div>
         <home-progress></home-progress>
         <home-case-num></home-case-num>
