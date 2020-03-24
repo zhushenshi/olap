@@ -78,8 +78,6 @@ export default {
       }
     },
     getParams () {
-      // 替换无法被freemarker识别的符号
-    //  console.log(this.arbiInfo.arbitralRecordResponse.arbitralAwardContext)
       const htmlString = this.arbiInfo.arbitralRecordResponse.arbitralAwardContext
       if (htmlString.indexOf('ql-editor') > -1) {
         this.arbitralAwardContext = htmlString.match(/<div class=\'ql-editor\'>([\s\S]*?)<\/div>/)[1].replace(/(&#160;){4,}/g, '&nbsp;&nbsp;&nbsp;&nbsp;')

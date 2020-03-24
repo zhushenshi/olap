@@ -159,7 +159,7 @@ export default {
     },
     goToRecharge (value) {
       console.log(value)
-       const rechargeData=JSON.stringify(value)
+      const rechargeData = JSON.stringify(value)
       this.$router.push({
         path: '/toDoList/rechargeDetail',
         query: { rechargeData: rechargeData }

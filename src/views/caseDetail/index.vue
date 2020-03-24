@@ -812,6 +812,11 @@
         <!-- <iframe :src="'./PDF/web/viewer.html?file=/olap-file/fast/file/downloadPdfFile?pdfUrl=YI+fm3g75gm7y0ZcX1TLd7vJIHMPnfl8wSrejE+6G6zaXLJkrIy5AmaVaPYEs5ssK9ZYD4gINF47N1FxnOdgwwXkRm5sXgJNOh8OIv+E9BE='" frameborder="0" style="width:100%;height:90%;margin-top:50px;"></iframe> -->
       </div>
     </van-popup>
+    <van-popup v-model="previewFileShow1" closeable>
+      <div style="width:100vw;height:100vh;">
+        <!-- <iframe :src="'./PDF/web/viewer.html?file=/olap-file/fast/file/downloadPdfFile?pdfUrl=YI+fm3g75gm7y0ZcX1TLd7vJIHMPnfl8wSrejE+6G6zaXLJkrIy5AmaVaPYEs5ssK9ZYD4gINF47N1FxnOdgwwXkRm5sXgJNOh8OIv+E9BE='" frameborder="0" style="width:100%;height:90%;margin-top:50px;"></iframe> -->
+      </div>
+    </van-popup>
   </div>
 </template>
 <script>
@@ -829,12 +834,13 @@ import { api } from '@/utils/api'
 import util from '@/utils/util'
 import DICT from '@/const/dict'
 import { ImagePreview } from 'vant'
-// import { convertToHtml } from 'mammoth'
+import { convertToHtml } from 'mammoth'
 // import downloadFileTool from '@/utils/downloadFile'
 export default {
   name: 'CaseDetail',
   data () {
     return {
+      previewFileShow1:false,
       baseUrl: location.origin,
       previewFileShow: false,
       arbProcess: '',
@@ -974,7 +980,28 @@ export default {
           ]
         })
       } else {
+        console.log(url)
         this.$Toast({ message: '暂不支持', position: 'bottom' })
+        // this.previewFileShow1=true
+        // api.downloadOtherFile({
+        //   pdfUrl: url
+        // }).then(res => {
+        //   console.log(res)
+        //   if (res.data instanceof Blob) {
+        //     var blob = res.data
+        //     console.log(blob)
+        //     console.log('=======================')
+        //     var reader = new FileReader()
+        //     var buffer = null
+        //     reader.onload = function () {
+        //       console.log(this.result)
+        //       buffer = this.result
+        //       var a = convertToHtml({buffer:buffer})
+        //       console.log(a)
+        //     }
+        //     reader.readAsArrayBuffer(blob)
+        //   }
+        // })        
       }
     },
     formatData () {
@@ -1254,9 +1281,12 @@ export default {
           if (/\.jpg|\.png|\.jpeg/.test(lastName) === true) {
             attach.downloadUrl = api.getImgURL(attach.attachUrlDes)
             attach.imgSrc = attach.downloadUrl
-          } else { // pdf
+          } else if(/\.pdf/.test(lastName)=== true) { // pdf
             attach.downloadUrl = api.getPdfURL(attach.attachUrlDes)
             attach.imgSrc = util.getIcon(attach.attachName)
+          }else{
+            attach.downloadUrl = api.getPdfURL(attach.attachUrlDes)
+            attach.imgSrc = util.getIcon(attach.attachName)            
           }
         } else {
 
@@ -1272,8 +1302,10 @@ export default {
               const lastName = file.attachName.substring(file.attachName.lastIndexOf('.')).toLowerCase()
               if (/\.jpg|\.png|\.jpeg/.test(lastName) === true) {
                 file.attachUrlDes = api.getImgURL(file.attachUrlDes)
-              } else { // pdf
+              } else if(/\.pdf/.test(lastName)=== true){ // pdf
                 file.attachUrlDes = api.getPdfURL(file.attachUrlDes)
+              }else{
+                file.attachUrlDes = file.attachUrlDes
               }
             })
           } else if (item.attachName || item.documentName) {
@@ -1282,8 +1314,10 @@ export default {
             const lastName = attachName.substring(attachName.lastIndexOf('.')).toLowerCase()
             if (/\.jpg|\.png|\.jpeg/.test(lastName) === true) {
               item.attachUrlDes = api.getImgURL(attachUrlDes)
-            } else { // pdf
+            } else if(/\.pdf/.test(lastName)=== true){ // pdf
               item.attachUrlDes = api.getPdfURL(attachUrlDes)
+            }else{
+              item.attachUrlDes = attachUrlDes
             }
           }
         })

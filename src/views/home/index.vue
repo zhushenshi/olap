@@ -31,6 +31,7 @@ export default {
 <style lang="stylus" scoped>
 .wrapper
     background: #f0f0f0;
+    padding-bottom:50px;
     section
     .courtTrial
       margin-top:8px;
