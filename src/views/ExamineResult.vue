@@ -13,8 +13,8 @@ export default {
     }
   },
   methods: {
-    goTopage(){
-        this.$router.push({ path: '/toDoList' })
+    goTopage () {
+      this.$router.push({ path: '/toDoList' })
     }
   },
   created () {
