@@ -1,43 +1,106 @@
 <template>
   <div class="wrapper">
     <Header>案件详情</Header>
-    <section class="casseBaseInfo">
-      <div class="caseBaseInfoBox">
-        <div class="arbNumber">编号：{{arbiInfo.arbNumber || arbiInfo.arbTemporaryNumber}}</div>
-        <div class="arbInfo">
-          <span class="label">申请人：</span>
-          <span>{{arbiInfo.arbProsecutorName}}</span>
+    <transition name="fade">
+      <section class="casseBaseInfo">
+        <div class="caseBaseInfoBox" v-if="loading">
+          <div class="arbNumber">
+            <div class="skeleton"></div>
+          </div>
+          <div class="arbInfo">
+            <div class="skeleton widthPercent70"></div>
+          </div>
+          <div class="arbInfo">
+            <div class="skeleton widthPercent70"></div>
+          </div>
+          <div class="caseBaseInfoTable">
+            <div class="caseBaseInfoItem">
+              <div class="skeleton" style="margin-right:16px;"></div>
+            </div>
+            <div class="caseBaseInfoItem">
+              <div class="skeleton" style="margin:0 8px 0 8px"></div>
+            </div>
+            <div class="caseBaseInfoItem">
+              <div class="skeleton" style="margin-left:16px;"></div>
+            </div>
+          </div>
+          <div class="caseBaseInfoTable">
+            <div class="caseBaseInfoItem">
+              <div class="skeleton" style="margin-right:16px;"></div>
+            </div>
+            <div class="caseBaseInfoItem">
+              <div class="skeleton" style="margin:0 8px 0 8px"></div>
+            </div>
+            <div class="caseBaseInfoItem">
+              <div class="skeleton" style="margin-left:16px;"></div>
+            </div>
+          </div>
         </div>
-        <div class="arbInfo">
-          <span class="label">案件状态：</span>
-          <span class="arbStatus" v-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==4">{{arbiInfo.status}}<i>(已撤回)</i></span>
-          <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==2">{{arbiInfo.status}}<i>(撤回中)</i></span>
-          <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==70">已<i>(撤回)</i>结案</span>
-          <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==71">已<i>(撤回)</i>归档</span>
-          <span class="arbStatus" v-else>{{arbiInfo.status}}</span>
+        <div class="caseBaseInfoBox" v-else>
+          <div class="arbNumber">编号：{{arbiInfo.arbNumber || arbiInfo.arbTemporaryNumber}}</div>
+          <div class="arbInfo">
+            <span class="label">申请人：</span>
+            <span>{{arbiInfo.arbProsecutorName}}</span>
+          </div>
+          <div class="arbInfo">
+            <span class="label">案件状态：</span>
+            <span class="arbStatus" v-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==4">{{arbiInfo.status}}<i>(已撤回)</i></span>
+            <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==2">{{arbiInfo.status}}<i>(撤回中)</i></span>
+            <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==70">已<i>(撤回)</i>结案</span>
+            <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==71">已<i>(撤回)</i>归档</span>
+            <span class="arbStatus" v-else>{{arbiInfo.status}}</span>
 
+          </div>
+          <div class="caseBaseInfoTable">
+            <div class="caseBaseInfoItem">
+              <span class="label">案由</span>
+              <br>
+              <span class="text">{{arbiInfo.arbName}}</span>
+            </div>
+            <div class="caseBaseInfoItem">
+              <span class="label">申请日期</span>
+              <br>
+              <span class="text">{{arbiInfo.createTime}}</span>
+            </div>
+            <div class="caseBaseInfoItem">
+              <span class="label">标的额</span>
+              <br>
+              <span class="text">{{arbiInfo.arbDisputeMoney}}</span>
+            </div>
+          </div>
         </div>
-        <div class="caseBaseInfoTable">
-          <div class="caseBaseInfoItem">
-            <span class="label">案由</span>
-            <br>
-            <span class="text">{{arbiInfo.arbName}}</span>
+      </section>
+    </transition>
+    <section class="caseDetail">
+      <div v-if="loading">
+        <div style="padding:0 15px 14px 0;">
+          <div class="clearfix" style="padding:15px 15px 14px 14px;">
+            <div class="skeleton fl" style="width:21%;height:30px;margin-right:5%;"></div>
+            <div class="skeleton fl" style="width:21%;height:30px;margin-right:5%;"></div>
+            <div class="skeleton fl" style="width:21%;height:30px;margin-right:5%;"></div>
+            <div class="skeleton fl" style="width:21%;height:30px;"></div>
           </div>
-          <div class="caseBaseInfoItem">
-            <span class="label">申请日期</span>
-            <br>
-            <span class="text">{{arbiInfo.createTime}}</span>
+          <div>
+            <van-skeleton
+              :row="2"
+              :row-width="['30%','60%']"
+            />
           </div>
-          <div class="caseBaseInfoItem">
-            <span class="label">标的额</span>
-            <br>
-            <span class="text">{{arbiInfo.arbDisputeMoney}}</span>
+          <div style="margin-top:15px;">
+            <van-skeleton
+              :row="4"
+              :row-width="['30%','90%','100%','90%']"
+            />
+          </div>
+          <div style="margin-top:15px;">
+            <van-skeleton
+              :row="6"
+              :row-width="['30%','90%','100%','90%','100%','100%']"
+            />
           </div>
         </div>
       </div>
-    </section>
-    <section class="caseDetail">
-      <van-tabs :border="false" :ellipsis="false">
+      <van-tabs :border="false" :ellipsis="false" v-else>
         <van-tab title="申请信息">
           <div class="tabItem">
             <van-collapse v-model="activeNames1" bind:change="onChange">
@@ -872,7 +935,7 @@ export default {
         coIdPaperAttachUrl: ''
       },
       step: 0,
-      loading: false,
+      loading: true,
       id: '', // 案件id
       tabName: '1',
       arbiInfo: {
@@ -921,7 +984,7 @@ export default {
       uploadUrl: api.uploadURL,
       fileList: [],
       mime: ['.jpeg', '.jpg', '.png', '.pdf', '.doc', '.docx', '.docm'],
-      arbRecallApplyInfoResponse: {},
+      arbRecallApplyInfoResponse: '',
       show: false,
       DICT,
       arbitralMediationResponse: {
@@ -1326,6 +1389,7 @@ export default {
     getData () {
       api.getArbitralInfoDetail({ arbitralId: this.id }).then(res => {
         if (res.data.code === '1') {
+          this.loading=false
           this.arbiInfo = res.data
           this.arbRecallApplyInfoResponse = res.data.arbRecallApplyInfoResponse
           this.arbitralLiveInfoResponse = res.data.arbitralLiveInfoResponse || {}

@@ -1,18 +1,39 @@
 <template>
 <div class="tabItem">
-  <div class="itemBox" v-for="(item,index) in arr" :key="index">
-    <p class="topTime">{{item[0].endTime | formatm}}</p>
-    <div class="item" v-for="(ite,inde) in item" :key="inde">
-      <div class="left">
-        <div class="leftTop">{{ite.endTime | formatDay}}</div>
-        <div class="leftBottom">{{ite.endTime | formathm}}</div>
-      </div>
-      <div class="right">
-        <p>{{ite.index}}：{{ite.taskName}}</p>
-        <p class="text">{{ite.assignee}}</p>
+  <transition name="fade">
+    <div v-if="loading">
+      <div class="itemBox" v-for="item in 2" :key="item">
+        <div class="topTime" v-show="item==1">
+          <div class="skeleton" style="width:21%;height:18px;margin:auto;"></div>
+        </div>
+        <div class="item">
+          <div class="left">
+            <div class="leftTop"><div class="skeleton" style="width:20px;height:20px;"></div></div>
+            <div class="leftBottom"><div class="skeleton" style="width:20px;height:20px;"></div></div>
+          </div>
+          <div class="right">
+            <p></p>
+            <p class="text"></p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+    <div v-else>
+      <div class="itemBox" v-for="(item,index) in arr" :key="index">
+        <p class="topTime">{{item[0].endTime | formatm}}</p>
+        <div class="item" v-for="(ite,inde) in item" :key="inde">
+          <div class="left">
+            <div class="leftTop">{{ite.endTime | formatDay}}</div>
+            <div class="leftBottom">{{ite.endTime | formathm}}</div>
+          </div>
+          <div class="right">
+            <p>{{ite.index}}：{{ite.taskName}}</p>
+            <p class="text">{{ite.assignee}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
 </div>
 </template>
 <script>
@@ -28,7 +49,8 @@ export default {
     return {
       type: 'one',
       histroyTaskInst: [],
-      arr: []
+      arr: [],
+      loading: true
     }
   },
   created () {
@@ -40,6 +62,7 @@ export default {
       api.getHistroyTaskInst({
         arbProcess: this.arbProcess
       }).then((res) => {
+        this.loading = false
         if (res.data.code === '1') {
           this.histroyTaskInst = res.data.data
           const len = this.histroyTaskInst.length

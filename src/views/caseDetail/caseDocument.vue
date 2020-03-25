@@ -1,14 +1,21 @@
 <template>
 <div class="tabItem">
-  <div v-for="(item,index) in documents" :key="index">
-    <h3>{{getProcessName(item.documentType)}}送达流程</h3>
-    <div  v-for="(value,inde) in item.list" :key="inde">
-      <div class="documentsList">
-        <div>{{value.fileName}}</div>
-        <div class="edit" @click="seeinfo(value,item.documentType)">查看</div>
+  <transition name="fade">
+    <div v-if="loading">
+      <van-skeleton title :row="10" />
+    </div>
+    <div v-else>
+      <div v-for="(item,index) in documents" :key="index">
+        <h3 class="title">{{getProcessName(item.documentType)}}送达流程</h3>
+        <div  v-for="(value,inde) in item.list" :key="inde">
+          <div class="documentsList">
+            <div>{{value.fileName}}</div>
+            <div class="edit" @click="seeinfo(value,item.documentType)">查看</div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
   <div v-if="show" class="popBox">
     <div class="close" @click="close">
       <span class="icon iconfont iconzhongcai_tuichu"></span>
@@ -97,7 +104,8 @@ export default {
       wsobj: {
         wslist: []
       },
-      active: 0
+      active: 0,
+      loading: true
     }
   },
   created () {
@@ -186,6 +194,7 @@ export default {
     queryDocuments () {
       // 文书
       api.queryArbitralDocumentBatch(this.caseDocumentInfo).then((res) => {
+        this.loading = false
         if (res.data.code === '1') {
           this.list = res.data.data
           var arr = []
@@ -238,7 +247,7 @@ export default {
     font-weight:bold;
     color:#000;
     line-height:21px;
-  h3:before
+  h3.title:before
     content: "";
     display inline-block
     width:4px;
