@@ -174,8 +174,9 @@ export default {
       })
       delete params.status
       this.loading = true
+      this.$Indicator.open()
       api.getAllArbitralInfos(params).then(res => {
-        // this.loading = false
+        this.$Indicator.close()
         if (res.data.code === '1') {
           const tableData = res.data.list
           tableData.forEach(v => {

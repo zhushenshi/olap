@@ -123,8 +123,10 @@ export default {
         pageSize: this.pageSize,
         type: this.type
       })
+      this.$Indicator.open()
       api.getWorkList(params).then(res => {
         if (res.data.code === '1') {
+          this.$Indicator.close()
           const list = res.data.list
           this.filterList = res.data.list
           if (this.filterList.length >= 40) {
@@ -147,6 +149,7 @@ export default {
             }
           }
         } else {
+          this.$Indicator.close()
           this.filterList = []
         }
       })
@@ -159,7 +162,7 @@ export default {
     },
     goToRecharge (value) {
       console.log(value)
-       const rechargeData=JSON.stringify(value)
+      const rechargeData = JSON.stringify(value)
       this.$router.push({
         path: '/toDoList/rechargeDetail',
         query: { rechargeData: rechargeData }
