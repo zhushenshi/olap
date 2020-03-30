@@ -893,6 +893,7 @@ import 'vant/lib/popup/style'
 import 'vant/lib/collapse/style'
 import 'vant/lib/collapse-item/style'
 import 'vant/lib/image/style'
+import 'vant/lib/image-preview/style'
 
 import Header from '@/components/Header.vue'
 import caseTracking from './caseTracking.vue'// 案件追踪

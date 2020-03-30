@@ -1,105 +1,105 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/views/home'
+// import Home from '@/views/home'
 
 Vue.use(VueRouter)
 
 const routes = [
+  // {
+  //   path: '/login',
+  //   name: 'Login',
+  //   component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
+  // },
+  // {
+  //   path: '/portal',
+  //   name: 'Portal',
+  //   component: () => import('../views/Portal.vue'),
+  //   redirect: '/portal/home',
+  //   children: [
+  //     {
+  //       path: '/portal/home',
+  //       name: 'Home',
+  //       component: () => import('../views/home')
+  //     },
+  //     {
+  //       path: '/portal/toDoList',
+  //       name: 'toDoList',
+  //       component: () => import('../views/ToDoList.vue')
+  //     },
+  //     { // 案件查询
+  //       path: '/portal/queryArbitral',
+  //       name: 'QueryArbitral',
+  //       component: () => import('../views/home')
+  //     }
+  //   ]
+  // },
   {
     path: '/',
-    name: 'Portal',
-    component: () => import('../views/Portal.vue'),
-    redirect: '/portal/home',
-    children: [
-      {
-        path: '/portal/home',
-        name: 'Home',
-        component: Home
-      },
-      {
-        path: '/portal/toDoList',
-        name: 'toDoList',
-        component: () => import('../views/ToDoList.vue')
-      },
-      { // 案件查询
-        path: '/portal/queryArbitral',
-        name: 'QueryArbitral',
-        component: () => import('../views/QueryArbitral.vue')
-      }
-    ]
+    redirect: '/home'
   },
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: Home
-  // },
   {
     path: '/home',
     name: 'Home',
-    component: Home
+    component: () => import(/* webpackChunkName: "home" */ '../views/home')
   },
   {
     path: '/toDoList',
     name: 'toDoList',
-    component: () => import('../views/ToDoList.vue')
+    component: () => import(/* webpackChunkName: "ToDoList" */ '../views/ToDoList.vue')
   },
   {
     path: '/toDoList/auditArbitralDetail', // 审核裁决书
     name: 'auditArbitralDetail',
-    component: () => import('../views/AuditArbitralDetail.vue')
+    component: () => import(/* webpackChunkName: "auditArbitralDetail" */'../views/AuditArbitralDetail.vue')
   },
   {
     path: '/toDoList/rechargeDetail', // 充值审核
     name: 'rechargeDetail',
-    component: () => import('../views/RechargeDetail.vue')
+    component: () => import(/* webpackChunkName: "rechargeDetail" */'../views/RechargeDetail.vue')
   },
   {
     path: '/toDoList/RechargExamine', // 充值审核审核
     name: 'RechargExamine',
-    component: () => import('../views/RechargExamine.vue')
+    component: () => import(/* webpackChunkName: "RechargExamine" */ '../views/RechargExamine.vue')
   },
   {
     path: '/toDoList/examine', // 审核裁决书
     name: 'examine',
-    component: () => import('../views/Examine.vue')
+    component: () => import(/* webpackChunkName: "examine" */ '../views/Examine.vue')
   },
   {
     path: '/toDoList/examine/examineResult', // 审核结果
     name: 'examineResult',
-    component: () => import('../views/ExamineResult.vue')
+    component: () => import(/* webpackChunkName: "examineResult" */'../views/ExamineResult.vue')
   },
   {
     path: '/toDoList/auditRecharge', // 充值审核
     name: 'auditRecharge ',
-    component: () => import('../views/AuditRecharge.vue')
+    component: () => import(/* webpackChunkName: "auditRecharge" */ '../views/AuditRecharge.vue')
   },
   {
     path: '/caseDetails', // 案件详情
     name: 'CaseDetails ',
-    component: () => import('../views/caseDetail')
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+    component: () => import(/* webpackChunkName: "caseDetail" */ '../views/caseDetail')
   },
   { // 案件查询
     path: '/queryArbitral',
     name: 'QueryArbitral',
-    component: () => import('../views/QueryArbitral.vue')
+    component: () => import(/* webpackChunkName: "QueryArbitral" */ '../views/QueryArbitral.vue')
   },
   {
     path: '/queryArbitral/search',
     name: 'Search',
-    component: () => import('../views/Search.vue')
+    component: () => import(/* webpackChunkName: "Search" */ '../views/Search.vue')
+  },
+  {
+    path: '/404',
+    name: 'NotFound',
+    component: () => import(/* webpackChunkName: "NotFound" */ '../views/NotFound.vue')
+  },
+  {
+    path: '*', // 此处需置于最底部
+    redirect: '/404'
   }
 ]
 
