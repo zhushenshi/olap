@@ -155,6 +155,7 @@ export default {
       this.show = false
     },
     seeinfo (val, documentType) { // 查看案件文书
+      console.log(val)
       this.wsobj = {}
       this.show = true
       this.documentTypeName = documentType
@@ -188,6 +189,7 @@ export default {
       } else if (title === '仲裁员') {
         index = 3
       }
+      this.wsobj = {}
       const result = this.detalis.list.find(ele => ele.userType === index)
       this.getData(result)
     },
