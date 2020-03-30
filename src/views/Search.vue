@@ -10,15 +10,19 @@
         <input v-model="form.createTime" readonly @click="openPicker" placeholder="请选择申请时间"/>
         <img src="./../assets/imgs/arrow.png"/>
       </div>
-       <mt-datetime-picker ref="picker"  v-model="pickerValue"
+       <datetime-picker ref="picker"  v-model="pickerValue"
           type="date"
           @confirm="handleConfirm">
-        </mt-datetime-picker>
+        </datetime-picker>
     </div>
   </div>
 </template>
 <script>
 import Header from '@/components/Header.vue'
+import { DatetimePicker } from 'mint-ui'
+import 'mint-ui/lib/picker/style.css'
+import 'mint-ui/lib/popup/style.css'
+import 'mint-ui/lib/datetime-picker/style.css'
 export default {
   data () {
     return {
@@ -28,7 +32,7 @@ export default {
       pickerValue: new Date()
     }
   },
-  components: { Header },
+  components: { Header, DatetimePicker },
   methods: {
     back () {
       this.$router.push('/queryArbitral')

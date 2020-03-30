@@ -16,7 +16,7 @@
           <p class="caseText">正常结案总数占比</p>
           <p class="caseNum">{{datainfo.closeCountProportion}}</p>
           <div class="caseChartBox">
-            <van-progress  pivot-text=""  color="#1890FF"  :percentage="datainfo.closeCountProportion&&parseInt(datainfo.closeCountProportion)" stroke-width="16"/>
+            <Progress  pivot-text=""  color="#1890FF"  :percentage="datainfo.closeCountProportion&&parseInt(datainfo.closeCountProportion)" stroke-width="16"/>
           </div>
           <p class="casePs">*本统计以当年数据统计</p>
           <div class="caseMonthNum clearfix">
@@ -54,7 +54,7 @@
           <p class="caseText">仲裁费总额</p>
           <p class="caseNum">{{datainfo.arbitrateMoneyTotal|money}}</p>
           <div class="caseChartBox">
-            <van-progress  pivot-text=""  color="#F5391B"  track-color="#1890FF" :percentage="(parseInt(datainfo.waitPaymentTotal)/(parseInt(datainfo.waitPaymentTotal)+parseInt(datainfo.paymentTotal)))?parseInt(datainfo.waitPaymentTotal)/(parseInt(datainfo.waitPaymentTotal)+parseInt(datainfo.paymentTotal))*100:0" stroke-width="16"/>
+            <Progress  pivot-text=""  color="#F5391B"  track-color="#1890FF" :percentage="(parseInt(datainfo.waitPaymentTotal)/(parseInt(datainfo.waitPaymentTotal)+parseInt(datainfo.paymentTotal)))?parseInt(datainfo.waitPaymentTotal)/(parseInt(datainfo.waitPaymentTotal)+parseInt(datainfo.paymentTotal))*100:0" stroke-width="16"/>
           </div>
           <p class="casePs">*本统计以当年数据统计</p>
           <div class="caseMonthNum clearfix">
@@ -68,6 +68,7 @@
 </template>
 <script>
 import SvgLine from '@/components/SvgLine.vue'
+import { Progress } from 'vant'
 import { api } from '@/utils/api'
 export default {
   data () {
@@ -89,7 +90,7 @@ export default {
       listarr: []
     }
   },
-  components: { SvgLine },
+  components: { SvgLine, Progress },
   methods: {
     getData () {
       api.getArbTotalCountInfo().then(res => {

@@ -1,8 +1,8 @@
 <template>
 <div class="tabItem">
-  <van-collapse v-model="activeNames" bind:change="onChange">
-    <!-- <van-collapse-item :name="index+100" :is-link="false" :border="false" v-for="(item,index) in applyedArr" :key="'i'+index" > -->
-    <van-collapse-item name="1" :is-link="false" :border="false">
+  <collapse v-model="activeNames" bind:change="onChange">
+    <!-- <collapse-item :name="index+100" :is-link="false" :border="false" v-for="(item,index) in applyedArr" :key="'i'+index" > -->
+    <collapse-item name="1" :is-link="false" :border="false">
       <template slot="title">
         <div style="padding:15px 0 0px 0;">
           <h3>{{'调解资料'}}</h3>
@@ -52,16 +52,18 @@
           </div>
         </div>
       </div>
-    </van-collapse-item>
-  </van-collapse>
+    </collapse-item>
+  </collapse>
 </div>
 </template>
 <script>
 import util from '@/utils/util'
 import DICT from '@/const/dict'
+import { Collapse, CollapseItem } from 'vant'
 export default {
   name: 'MediateData',
   props: ['arbitralMediationResponse', 'conciliationEvidence', 'previewFile'],
+  components: { Collapse, CollapseItem },
   data () {
     return {
       activeNames: ['1'],

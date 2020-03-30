@@ -2,16 +2,19 @@
   <div class="wrapper">
     <img src="../../src/assets/imgs/Done@2x.png" alt="">
     <div>审核成功</div>
-    <van-button round type="info" block color="#1890FF" class="mybtn" @click="goTopage()">返回待办</van-button>
+    <Button round type="info" block color="#1890FF" class="mybtn" @click="goTopage()">返回待办</Button>
   </div>
 </template>
 <script>
+import { Button } from 'vant'
+import 'vant/lib/button/style'
 export default {
   data () {
     return {
       message: ''
     }
   },
+  components: { Button },
   methods: {
     goTopage () {
       this.$router.push({ path: '/toDoList' })

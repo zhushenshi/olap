@@ -71,7 +71,7 @@ export default {
   },
   money: val => {
     var regExpInfo = /(\d{1,3})(?=(\d{3})+(?:$|\.))/g
-    if (val != '' && val) {
+    if (val !== '' && val) {
       return parseFloat(('' + val).replace(/,/g, ''))
         .toFixed(2)
         .replace(regExpInfo, '$1,')
@@ -98,6 +98,7 @@ export default {
       { value: [70, 71], label: '结案' }
     ]
     arr.map(el => {
+      // eslint-disable-next-line
       if (el.value.filter(ele => ele == val).length > 0) {
         state = el.label
       }

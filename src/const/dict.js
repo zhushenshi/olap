@@ -52,8 +52,8 @@ const DICT = {
   ],
   timeLimits: ['立案', '答辩', '裁决', '缴费'],
   getArbStatusName: (num) => {
-	  if (!num) {
-	    return ''
+    if (!num) {
+      return ''
     }
     const temp = DICT.arbTypes.filter((item, i) => { return i !== 0 }).find(val => {
       const range = val.arbStatus.split(',')

@@ -3,7 +3,7 @@
     <header>
         <div class="headerTopBox">
           <div class="title">工作台</div>
-          <div class="avatar">
+          <div class="avatar" @click="popPersonalCenter">
             <img src="./../../assets/imgs/home/avatar.png" alt="">
           </div>
         </div>
@@ -40,6 +40,20 @@ export default {
         this.moneyinfo = res.data
       }
     })
+  },
+  methods: {
+    popPersonalCenter () {
+      var ua = navigator.userAgent.toLowerCase()
+      if (/iphone|ipad|ipod/.test(ua)) {
+        if (window.webkit && window.webkit.messageHandlers) {
+          window.webkit.messageHandlers.popPersonalCenter.postMessage([''])
+        } else {}
+      } else if (/android/.test(ua)) {
+        if (window.object && typeof (window.object.popPersonalCenter) === 'function') {
+          window.object.popPersonalCenter()
+        }
+      }
+    }
   }
 }
 </script>

@@ -7,9 +7,32 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Portal',
+    component: () => import('../views/Portal.vue'),
+    redirect: '/portal/home',
+    children: [
+      {
+        path: '/portal/home',
+        name: 'Home',
+        component: Home
+      },
+      {
+        path: '/portal/toDoList',
+        name: 'toDoList',
+        component: () => import('../views/ToDoList.vue')
+      },
+      { // 案件查询
+        path: '/portal/queryArbitral',
+        name: 'QueryArbitral',
+        component: () => import('../views/QueryArbitral.vue')
+      }
+    ]
   },
+  // {
+  //   path: '/',
+  //   name: 'Home',
+  //   component: Home
+  // },
   {
     path: '/home',
     name: 'Home',

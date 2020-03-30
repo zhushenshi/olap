@@ -8,14 +8,14 @@
     <div class="examine">
       <div class="examineTitle">选择审核结果</div>
       <div class="btnBox">
-        <!-- <van-button round type="info" block plain  hairline class="myBtn passActiveBtn" color="#1890FF">通过</van-button> -->
-        <!-- <van-button round type="info" block plain  hairline class="myBtn refuseActiveBtn" color="#BCBCBC">不通过</van-button> -->
-        <van-button round type="info" block plain  hairline :class="{'myBtn':true,'passActiveBtn':passActiveBtn}" color="#1890FF" @click="review('10',reviewTextarea)">通过</van-button>
-        <van-button round type="info" block plain  hairline :class="{'myBtn':true,'refuseActiveBtn':refuseActiveBtn}" color="#BCBCBC" @click="review('11',reviewTextarea)">不通过</van-button>
+        <!-- <Button round type="info" block plain  hairline class="myBtn passActiveBtn" color="#1890FF">通过</Button> -->
+        <!-- <Button round type="info" block plain  hairline class="myBtn refuseActiveBtn" color="#BCBCBC">不通过</Button> -->
+        <Button round type="info" block plain  hairline :class="{'myBtn':true,'passActiveBtn':passActiveBtn}" color="#1890FF" @click="review('10',reviewTextarea)">通过</Button>
+        <Button round type="info" block plain  hairline :class="{'myBtn':true,'refuseActiveBtn':refuseActiveBtn}" color="#BCBCBC" @click="review('11',reviewTextarea)">不通过</Button>
       </div>
       <div class="examineTitle">录入审核意见(选填)</div>
       <div>
-        <van-field
+        <Field
           class="myTextArea"
           v-model="reviewTextarea"
           rows="3"
@@ -29,6 +29,9 @@
 </template>
 <script>
 import Header from '@/components/Header.vue'
+import { Button, Field } from 'vant'
+import 'vant/lib/button/style'
+import 'vant/lib/field/style'
 import { api } from '@/utils/api'
 export default {
   data () {
@@ -40,7 +43,7 @@ export default {
       refuseActiveBtn: false
     }
   },
-  components: { Header },
+  components: { Header, Button, Field },
   methods: {
     rightMethod () {
       const params = Object.assign({}, this.arbiInfo, {
