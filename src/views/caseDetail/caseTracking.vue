@@ -40,7 +40,7 @@
 </template>
 <script>
 import { api } from '@/utils/api'
-import { PullRefresh, List } from 'vant'
+import { PullRefresh } from 'vant'
 import 'vant/lib/pull-refresh/style'
 export default {
   name: 'CaseTracking',
@@ -58,7 +58,7 @@ export default {
       refreshing: false
     }
   },
-  components: { PullRefresh, List },
+  components: { PullRefresh },
   created () {
     this.getHistroyTaskInst()
     console.log(this.arbProcess, '77777')
