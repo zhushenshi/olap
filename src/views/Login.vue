@@ -73,7 +73,7 @@ export default {
             this.$store.commit('set_admin_token', res.data.data.access_token)
             this.$store.commit('set_admin_name', res.data.data.realname)
             this.setCookie('token', res.data.data.access_token)
-            this.$router.push({ path: 'home' })
+            this.$router.push({ path: '/portal/home' })
             localStorage.oldpath = '/admin/home/workbench'
             localStorage.index = 0//
             localStorage.roleId = res.data.data.roleId//

@@ -5,34 +5,34 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path: '/login',
-  //   name: 'Login',
-  //   component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
-  // },
-  // {
-  //   path: '/portal',
-  //   name: 'Portal',
-  //   component: () => import('../views/Portal.vue'),
-  //   redirect: '/portal/home',
-  //   children: [
-  //     {
-  //       path: '/portal/home',
-  //       name: 'Home',
-  //       component: () => import('../views/home')
-  //     },
-  //     {
-  //       path: '/portal/toDoList',
-  //       name: 'toDoList',
-  //       component: () => import('../views/ToDoList.vue')
-  //     },
-  //     { // 案件查询
-  //       path: '/portal/queryArbitral',
-  //       name: 'QueryArbitral',
-  //       component: () => import('../views/home')
-  //     }
-  //   ]
-  // },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
+  },
+  {
+    path: '/portal',
+    name: 'Portal',
+    component: () => import('../views/Portal.vue'),
+    redirect: '/portal/home',
+    children: [
+      {
+        path: '/portal/home',
+        name: 'Home',
+        component: () => import(/* webpackChunkName: "portal/Home" */ '../views/home')
+      },
+      {
+        path: '/portal/toDoList',
+        name: 'toDoList',
+        component: () => import(/* webpackChunkName: "portal/toDoList" */ '../views/ToDoList.vue')
+      },
+      { // 案件查询
+        path: '/portal/queryArbitral',
+        name: 'QueryArbitral',
+        component: () => import(/* webpackChunkName: "portal/queryArbitral" */ '../views/QueryArbitral')
+      }
+    ]
+  },
   {
     path: '/',
     redirect: '/home'
