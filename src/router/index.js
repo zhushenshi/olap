@@ -6,6 +6,10 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    redirect: '/home'
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
@@ -32,10 +36,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "portal/queryArbitral" */ '../views/QueryArbitral')
       }
     ]
-  },
-  {
-    path: '/',
-    redirect: '/home'
   },
   {
     path: '/home',

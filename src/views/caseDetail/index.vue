@@ -529,7 +529,7 @@
                             :src="api.getImgURL(item.pIdAttachRearDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
-                          <p>身份证明</p>
+                          <p>身份证反面</p>
                         </div>
                       </div>
                     </div>
@@ -862,11 +862,11 @@
         <Tab title="调解资料" v-if="arbitralMediationResponse">
           <mediate-data :arbitralMediationResponse="arbitralMediationResponse" :conciliationEvidence="conciliationEvidence" :previewFile="previewFile"></mediate-data>
         </Tab>
-        <Tab title="撤回资料" v-if="arbRecallApplyInfoResponse" :previewFile="previewFile">
-          <withdraw-data :arbRecallApplyInfoResponse="arbRecallApplyInfoResponse"></withdraw-data>
+        <Tab title="撤回资料" v-if="arbRecallApplyInfoResponse">
+          <withdraw-data :arbRecallApplyInfoResponse="arbRecallApplyInfoResponse" :previewFile="previewFile"></withdraw-data>
         </Tab>
-        <Tab title="管辖权异议资料" v-if="dissentApplication&&dissentApplication.length>0" :previewFile="previewFile">
-          <jurisdiction :dissentApplication="dissentApplication" :dissentAttachment="dissentAttachment" :arbiInfo="arbiInfo" :dissentReplyApplication="dissentReplyApplication"></jurisdiction>
+        <Tab title="管辖权异议资料" v-if="dissentApplication&&dissentApplication.length>0">
+          <jurisdiction :dissentApplication="dissentApplication" :dissentAttachment="dissentAttachment" :previewFile="previewFile" :arbiInfo="arbiInfo" :dissentReplyApplication="dissentReplyApplication"></jurisdiction>
         </Tab>
       </Tabs>
     </section>
