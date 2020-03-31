@@ -23,7 +23,7 @@
           <div class="flexInfoBox">
             <div>
               <div class="fileBox">撤回申请书</div>
-              <div class="black mt2 fileBox" v-if="arbRecallApplyInfoResponse.recallPetitionName" @click="previewFile(arbRecallApplyInfoResponse.recallPetitionName,arbRecallApplyInfoResponse.recallPetitionUrl)">
+              <div class="black mt2 fileBox" v-if="arbRecallApplyInfoResponse.recallPetitionName" @click="previewFile(arbRecallApplyInfoResponse.recallPetitionName,api.getImgURL(arbRecallApplyInfoResponse.recallPetitionUrl))">
                 <span class="icon iconfont" :class="util.getFileIcon(arbRecallApplyInfoResponse.recallPetitionName)"></span>
                 <span class="fileName" :href="arbRecallApplyInfoResponse.recallPetitionUrl">{{arbRecallApplyInfoResponse.recallPetitionName}}</span>
               </div>
@@ -66,6 +66,7 @@
 import { Collapse, CollapseItem } from 'vant'
 import util from '@/utils/util'
 import DICT from '@/const/dict'
+import { api } from '@/utils/api'
 export default {
   name: 'ApplyInfo',
   props: ['arbRecallApplyInfoResponse', 'previewFile'],
@@ -74,7 +75,8 @@ export default {
     return {
       activeNames: ['1'], // 调解资料
       util,
-      DICT
+      DICT,
+      api
     }
   }
 }
