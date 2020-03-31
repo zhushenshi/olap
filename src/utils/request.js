@@ -17,13 +17,13 @@ myAxios.interceptors.request.use(config => {
     if (localStorage.getItem('adminAccessToken') === adminAccessToken) {
       config.headers.Authorization = adminAccessToken
     } else if (localStorage.getItem('adminAccessToken')) {
-      this.$Toast({ message: '权限错误', position: 'bottom' })
+      Vue.prototype.$Toast({ message: '权限错误', position: 'bottom' })
       return false
     }
   }
   return config
 }, error => {
-  this.$Toast({ message: '加载超时', position: 'bottom' })
+  Vue.prototype.$Toast({ message: '加载超时', position: 'bottom' })
   return Promise.reject(error)
 })
 // http响应拦截器
@@ -36,16 +36,26 @@ myAxios.interceptors.response.use(res => {
       Notify({ type: 'primary', message: error.response.data ? error.response.data.message : '登录失效' })
       // commit('setExpireStatus', true)
       store.commit('set_admin_token', '')
-      var ua = navigator.userAgent.toLowerCase()
-      if (/iphone|ipad|ipod/.test(ua)) {
-        if (window.webkit && window.webkit.messageHandlers) {
-          window.webkit.messageHandlers.loginOut.postMessage([''])
-        } else {}
-      } else if (/android/.test(ua)) {
-        if (window.object && typeof (window.object.loginOut) === 'function') {
-          window.object.loginOut()
-        }
+      localStorage.setItem('adminAccessToken', '')
+      var setCookie = function (name, value) {
+        var time = 24 * 60 * 60 * 1000
+        var exp = new Date().setHours(0, 0, 0, 0)
+        var expires = new Date(exp + time)
+        document.cookie = name + '=' + escape(value) + ';expires=' + expires.toGMTString() + ';path=/'
       }
+      setCookie('token', '')
+      setTimeout(() => {
+        var ua = navigator.userAgent.toLowerCase()
+        if (/iphone|ipad|ipod/.test(ua)) {
+          if (window.webkit && window.webkit.messageHandlers) {
+            window.webkit.messageHandlers.loginOut.postMessage([''])
+          } else {}
+        } else if (/android/.test(ua)) {
+          if (window.object && typeof (window.object.loginOut) === 'function') {
+            window.object.loginOut()
+          }
+        }
+      }, 1500)
     } else if (error.response.status === 500) {
       Notify({ type: 'primary', message: '500服务器错误' })
     } else if (error.response.status === 504) {

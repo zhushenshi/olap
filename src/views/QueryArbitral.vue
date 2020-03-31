@@ -261,10 +261,11 @@ export default {
   overflow-x scroll
   overflow-y hidden
   ul
-     display flex
+     white-space nowrap
      li
-      flex 1
+      display:inline-block;
       margin 0 8px
+      border:1pt solid rgba(255,255,255,0);
       span
         color #727272
         font-size 14px
@@ -350,7 +351,7 @@ export default {
             max-width: 90px;
             color #1890FF
             font-size 12px
-            border 1px solid #C5E3FF
+            border 1pt solid #C5E3FF
             border-radius 10px
             padding 2px 5px
           .otherStatus

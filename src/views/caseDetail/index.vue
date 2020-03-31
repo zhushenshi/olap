@@ -1054,8 +1054,20 @@ export default {
           ]
         })
       } else {
-        console.log(url)
-        this.$Toast({ message: '暂不支持', position: 'bottom' })
+        url=api.getDocURL(url)
+        var ua = navigator.userAgent.toLowerCase()
+        if (/iphone|ipad|ipod/.test(ua)) {
+          if (window.webkit && window.webkit.messageHandlers) {
+            window.webkit.messageHandlers.loadDoc .postMessage([url])
+          } else {}
+        } else if (/android/.test(ua)) {
+          if (window.object && typeof (window.object.loadDoc) === 'function') {
+            window.object.loadDoc (url)
+          }
+        }
+        // this.$Toast({ message: '暂不支持', position: 'bottom' })
+        // loadDoc 
+
         // this.previewFileShow1=true
         // api.downloadOtherFile({
         //   pdfUrl: url
@@ -1398,7 +1410,7 @@ export default {
       }
     },
     getData () {
-      api.getArbitralInfoDetail({ arbitralId: this.id }).then(res => {
+      api.getArbitralInfoDetailBySys({ arbitralId: this.id }).then(res => {
         if (res.data.code === '1') {
           this.loading=false
           this.arbiInfo = res.data

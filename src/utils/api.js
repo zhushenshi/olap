@@ -35,6 +35,11 @@ const api = {
       return baseURL + '/olap-file/fast/file/downloadPdfFile?pdfUrl=' + url // 预览pdf附件
     } else { return '' }
   },
+  getDocURL (url) {
+    if (typeof url === 'string' && url !== '') {
+      return baseURL + '/olap-file/fast/file/downloadDocFile?filePath=' + url // 预览doc附件
+    } else { return '' }
+  },
   getCodeUrl (uuid) { // 验证码url
     return '/olap-auth/verifycode/' + uuid
   },
