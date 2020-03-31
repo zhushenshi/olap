@@ -46,6 +46,7 @@
             <span class="label">案件状态：</span>
             <span class="arbStatus" v-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==4">{{arbiInfo.status}}<i>(已撤回)</i></span>
             <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==2">{{arbiInfo.status}}<i>(撤回中)</i></span>
+            <span class="arbStatus" v-else-if="arbiInfo.decisionStatus&&arbiInfo.decisionStatus >= 1&&arbiInfo.decisionStatus < 60">{{arbiInfo.status}}(管辖权异议)</span>
             <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==70">已<i>(撤回)</i>结案</span>
             <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==71">已<i>(撤回)</i>归档</span>
             <span class="arbStatus" v-else>{{arbiInfo.status}}</span>
@@ -1105,7 +1106,7 @@ export default {
         sts = this.arbiInfo.arbStatus// 案件目前状态
       }
 
-      this.arbiInfo.status = util.getStatus(this.arbiInfo.arbStatus)// 案件目前状态
+      this.arbiInfo.status = util.getStatus(sts)// 案件目前状态
       const n = Number(sts)
       this.arbiInfo.step = this.arbTypes.findIndex(item => {
         const range = item.arbStatus.split(',')
