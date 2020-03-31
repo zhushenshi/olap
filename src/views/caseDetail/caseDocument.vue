@@ -53,7 +53,7 @@
           <div class="line"></div>
           <div>
             <p class="title">邮递送达</p>
-            <p class="documentsName">
+            <p class="documentsName address">
               <span>送达地址：</span>
               <span>{{wsobj.expressAddress}}</span>
               </p>
@@ -171,20 +171,21 @@ export default {
       this.getData(result)
     },
     getData (val) {
-      if (val.documentArrivedState === 1) {
-        this.wsobj.arrivedType = '邮件送达'
-        this.wsobj.emailAddress = val.userEmail
-        this.wsobj.documentArrivedTime = val.documentArrivedTime || ''
-      }
-      if (val.arbitralExpressRecordId) {
-        this.wsobj.arrivedType += (val.arrivedType ? ' / 线下邮递' : '线下邮递')
-        this.wsobj.emailornumber += (val.emailornumber ? (' / ' + val.expressNumber) : val.expressNumber)
-        if (val.arrivedTime) {
-          this.wsobj.time += ' / ' + val.arrivedTime
-        } else if (val.time) {
-          this.wsobj.time += ' / '
+      console.log(val)
+      this.wsobj.documentName = val.documentName
+      val.arrivedType.split('/').map(el => {
+        if (el === '快递送达') {
+          this.wsobj.expressAddress = val.expressAddress
+          this.wsobj.expressNumber = val.expressNumber
+          this.wsobj.expressTime = val.expressTime + '--' + val.arrivedTime
+        } else if (el === '邮件送达') {
+          this.wsobj.emailAddress = val.userEmail
+          this.wsobj.documentArrivedTime = val.documentArrivedTime
+        } else {
+          this.wsobj.userPhone = val.userPhone
+          this.wsobj.documentMessageArrivedTime = val.documentMessageArrivedTime
         }
-      }
+      })
     },
     onClick (name, title) {
       let index = ''
