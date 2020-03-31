@@ -375,7 +375,7 @@ export default {
   color #727272
   font-size 14px
   margin-top 80px
-  min-height 600px
+  // min-height 600px
 .filterRs
   margin 0 auto
   position relative
