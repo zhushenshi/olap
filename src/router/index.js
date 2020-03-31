@@ -22,17 +22,17 @@ const routes = [
     children: [
       {
         path: '/portal/home',
-        name: 'Home',
+        name: 'portalHome',
         component: () => import(/* webpackChunkName: "portal/Home" */ '../views/home')
       },
       {
         path: '/portal/toDoList',
-        name: 'toDoList',
+        name: 'portalToDoList',
         component: () => import(/* webpackChunkName: "portal/toDoList" */ '../views/ToDoList.vue')
       },
       { // 案件查询
         path: '/portal/queryArbitral',
-        name: 'QueryArbitral',
+        name: 'portalQueryArbitral',
         component: () => import(/* webpackChunkName: "portal/queryArbitral" */ '../views/QueryArbitral')
       }
     ]
