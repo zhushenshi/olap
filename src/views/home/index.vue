@@ -3,8 +3,9 @@
     <div class="page-home">
       <home-header></home-header>
       <section>
-        <div class="courtTrial">
-          <img src="./../../assets/imgs/home/courtTrial.png" alt="" @click="$router.push('/queryArbitral')">
+        <div class="courtTrial" @click="enterMeetting">
+          <!-- <img src="./../../assets/imgs/home/courtTrial.png" alt="" @click="$router.push('/queryArbitral')"> -->
+          <img src="./../../assets/imgs/home/courtTrial.png" alt="">
         </div>
         <home-progress></home-progress>
         <home-case-num></home-case-num>
@@ -25,13 +26,27 @@ import homeCaseMap from './homeCaseMap.vue'
 
 export default {
   name: 'Home',
-  components: { homeHeader, homeProgress, homeCaseNum, homeCasePay, homeCasePercent, homeCaseMap }
+  components: { homeHeader, homeProgress, homeCaseNum, homeCasePay, homeCasePercent, homeCaseMap },
+  methods: {
+    enterMeetting () {
+      var ua = navigator.userAgent.toLowerCase()
+      if (/iphone|ipad|ipod/.test(ua)) {
+        if (window.webkit && window.webkit.messageHandlers) {
+          window.webkit.messageHandlers.enterMeetting.postMessage([''])
+        } else {}
+      } else if (/android/.test(ua)) {
+        if (window.object && typeof (window.object.enterMeetting) === 'function') {
+          window.object.enterMeetting()
+        }
+      }
+    }
+  }
 }
 </script>
 <style lang="stylus" scoped>
 .wrapper
     background: #f0f0f0;
-    padding-bottom:50px;
+    padding-bottom:70px;
     section
     .courtTrial
       margin-top:8px;

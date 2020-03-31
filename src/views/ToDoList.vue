@@ -3,7 +3,7 @@
     <header>
         <div class="headerBox">
           <div class="title">待办事项</div>
-          <div class="avatar">
+          <div class="avatar" @click="popPersonalCenter">
             <img src="./../assets/imgs/home/avatar.png" alt="">
           </div>
         </div>
@@ -15,8 +15,8 @@
         <div class="tab fl" :class="type===2?'tabActive':''" @click="tabClick(2)">充值</div>
       </div>
       <div class="listContent" v-if="filterList.length">
-        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-          <van-list v-model="loadMore" :finished="finished" finished-text="没有更多了" :offset=offset @load="onLoad">
+        <pull-refresh v-model="refreshing" @refresh="onRefresh">
+          <List v-model="loadMore" :finished="finished" finished-text="没有更多了" :offset=offset @load="onLoad">
            <div class="itemBox" v-for="(item,index) in filterList" :key="index">
              <div v-for="(value,ind) in item.yearData" :key="ind">
                <p class="topTime">{{item.year}}年{{value.month}}</p>
@@ -72,8 +72,8 @@
           </div>
           </div>
           </div>
-          </van-list>
-        </van-pull-refresh>
+          </List>
+        </pull-refresh>
       </div>
        <div class="noData" v-if="!filterList.length">
             <img src="./../assets/imgs/noData@2x.png" alt="">
@@ -84,6 +84,9 @@
 </template>
 <script>
 import { api } from '@/utils/api'
+import { PullRefresh, List } from 'vant'
+import 'vant/lib/pull-refresh/style'
+import 'vant/lib/list/style'
 export default {
   data () {
     return {
@@ -97,6 +100,7 @@ export default {
       offset: 100
     }
   },
+  components: { PullRefresh, List },
   methods: {
     tabClick (val) {
       this.type = val
@@ -167,6 +171,18 @@ export default {
         path: '/toDoList/rechargeDetail',
         query: { rechargeData: rechargeData }
       })
+    },
+    popPersonalCenter () {
+      var ua = navigator.userAgent.toLowerCase()
+      if (/iphone|ipad|ipod/.test(ua)) {
+        if (window.webkit && window.webkit.messageHandlers) {
+          window.webkit.messageHandlers.popPersonalCenter.postMessage([''])
+        } else {}
+      } else if (/android/.test(ua)) {
+        if (window.object && typeof (window.object.popPersonalCenter) === 'function') {
+          window.object.popPersonalCenter()
+        }
+      }
     }
   },
   created () {

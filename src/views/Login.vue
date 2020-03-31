@@ -6,29 +6,32 @@
       <div class="tab fl" :class="type==='tel'?'tabActive':''" @click="type='tel'">手机号登录</div>
     </div>
     <div class="form" v-if="type==='account'">
-      <div class="formItem"><van-field v-model="loginForm.username" placeholder="用户名/手机号/邮箱" /></div>
-      <div class="formItem"><van-field v-model="loginForm.password" placeholder="密码" /></div>
+      <div class="formItem"><Field v-model="loginForm.username" placeholder="用户名/手机号/邮箱" /></div>
+      <div class="formItem"><Field v-model="loginForm.password" placeholder="密码" /></div>
       <div class="formItem">
         <img :src="captchaUrl" alt="" class="smsBtn" @click="refreshCode">
-        <van-field v-model="loginForm.kaptcha" placeholder="验证码"/>
+        <Field v-model="loginForm.kaptcha" placeholder="验证码"/>
       </div>
     </div>
     <div class="form" v-if="type==='tel'">
-      <div class="formItem"><van-field v-model="value" placeholder="输入手机号" /></div>
+      <div class="formItem"><Field v-model="value" placeholder="输入手机号" /></div>
       <div class="formItem">
-        <van-button block type="primary" class="smsBtn" :color="'rgba(255,255,255,0.64)'">发送验证码</van-button>
-        <van-field v-model="value" placeholder="验证码"/>
+        <Button block type="primary" class="smsBtn" :color="'rgba(255,255,255,0.64)'">发送验证码</Button>
+        <Field v-model="value" placeholder="验证码"/>
       </div>
     </div>
     <div class="btn">
-      <van-button type="primary" block color="#FFFFFF" class="myBtn" @click="login">登录</van-button>
+      <Button type="primary" block color="#FFFFFF" class="myBtn" @click="login">登录</Button>
     </div>
   </div>
 </template>
 <script>
+import JSEncrypt from '@/utils/jsencrypt'
 import { api } from '@/utils/api'
 import util from '@/utils/util'
-
+import { Button, Field } from 'vant'
+import 'vant/lib/button/style'
+import 'vant/lib/field/style'
 export default {
   data () {
     return {
@@ -44,10 +47,12 @@ export default {
 
     }
   },
+  components: { Button, Field },
   methods: {
     login () {
-      this.$JSEncrypt.setPublicKey('MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCPfoCRJo068xVcIhYnigpb4sxMjSKlkXVZIgl0vTdkdda+Qu8n4VxiLv6P8mHPi9WLZENJQd4kSM6gvSMpm2PtkNRY7aLceTrroPd6tAjKxsa8hvClAFy97OEcpOzi+WqxL8ERSeZ62Rai3fVjIbMP4b1tXaPiUxoPGgdJ74/l/QIDAQAB')
-      var loginFormPwd = this.$JSEncrypt.encrypt(this.loginForm.password)
+      var $JSEncrypt = new JSEncrypt()
+      $JSEncrypt.setPublicKey('MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCPfoCRJo068xVcIhYnigpb4sxMjSKlkXVZIgl0vTdkdda+Qu8n4VxiLv6P8mHPi9WLZENJQd4kSM6gvSMpm2PtkNRY7aLceTrroPd6tAjKxsa8hvClAFy97OEcpOzi+WqxL8ERSeZ62Rai3fVjIbMP4b1tXaPiUxoPGgdJ74/l/QIDAQAB')
+      var loginFormPwd = $JSEncrypt.encrypt(this.loginForm.password)
       if (!this.loginForm.username) {
         this.$Toast({ message: '请填写用户名', position: 'bottom' })
       } else if (!this.loginForm.password) {
@@ -68,7 +73,7 @@ export default {
             this.$store.commit('set_admin_token', res.data.data.access_token)
             this.$store.commit('set_admin_name', res.data.data.realname)
             this.setCookie('token', res.data.data.access_token)
-            this.$router.push({ path: 'home' })
+            this.$router.push({ path: '/portal/home' })
             localStorage.oldpath = '/admin/home/workbench'
             localStorage.index = 0//
             localStorage.roleId = res.data.data.roleId//

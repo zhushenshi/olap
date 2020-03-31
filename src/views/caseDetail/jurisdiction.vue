@@ -1,7 +1,7 @@
 <template>
 <div class="tabItem">
-  <van-collapse v-model="activeNames" bind:change="onChange">
-    <van-collapse-item name="1" :is-link="false" :border="false">
+  <collapse v-model="activeNames" bind:change="onChange">
+    <collapse-item name="1" :is-link="false" :border="false">
       <template slot="title">
         <div style="padding:15px 0 0 0;">
           <h3>基本信息</h3>
@@ -28,8 +28,8 @@
           </div>
         </div>
       </div>
-    </van-collapse-item>
-    <van-collapse-item name="2" :is-link="false" :border="false">
+    </collapse-item>
+    <collapse-item name="2" :is-link="false" :border="false">
       <template slot="title">
         <div style="padding:15px 0 0 0;">
           <h3>被申请人异议资料</h3>
@@ -75,8 +75,8 @@
           </div>
         </div>
       </div>
-    </van-collapse-item>
-    <van-collapse-item name="2" :is-link="false" :border="false" v-if="dissentReplyApplication.length>0">
+    </collapse-item>
+    <collapse-item name="2" :is-link="false" :border="false" v-if="dissentReplyApplication.length>0">
       <template slot="title">
         <div style="padding:15px 0 0 0;">
           <h3>申请人答辩资料</h3>
@@ -120,11 +120,13 @@
           </div>
         </div>
       </div>
-    </van-collapse-item>
-  </van-collapse>
+    </collapse-item>
+  </collapse>
 </div>
 </template>
 <script>
+import { Collapse, CollapseItem } from 'vant'
+
 import util from '@/utils/util'
 import DICT from '@/const/dict'
 export default {
@@ -135,6 +137,7 @@ export default {
   //   }
   // },
   props: ['dissentApplication', 'dissentAttachment', 'dissentReplyApplication', 'arbiInfo'],
+  components: { Collapse, CollapseItem },
   data () {
     return {
       activeNames: ['1', '2', '3', '4'],

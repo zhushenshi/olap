@@ -1,7 +1,7 @@
 <template>
 <div class="tabItem">
-  <van-collapse v-model="activeNames" bind:change="onChange">
-    <van-collapse-item name="1" :is-link="false" :border="false">
+  <collapse v-model="activeNames" bind:change="onChange">
+    <collapse-item name="1" :is-link="false" :border="false">
       <template slot="title">
         <div style="padding:15px 0 14px 0;">
           <h3>答辩书</h3>
@@ -15,8 +15,8 @@
           </div>
         </div>
       </div>
-    </van-collapse-item>
-    <van-collapse-item name="2" :is-link="false" :border="false">
+    </collapse-item>
+    <collapse-item name="2" :is-link="false" :border="false">
       <template slot="title">
         <div style="padding:15px 0 14px 0;">
           <h3>证据资料</h3>
@@ -39,15 +39,17 @@
           </div>
         </div>
       </div>
-    </van-collapse-item>
-  </van-collapse>
+    </collapse-item>
+  </collapse>
 </div>
 </template>
 <script>
 import util from '@/utils/util'
+import { Collapse, CollapseItem } from 'vant'
 export default {
   name: 'ReplyData',
   props: ['replyBrief', 'replyLists', 'previewFile'],
+  components: { Collapse, CollapseItem },
   data () {
     return {
       activeNames: ['1', '2', '3', '4'],

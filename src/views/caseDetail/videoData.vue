@@ -1,7 +1,7 @@
 <template>
 <div class="tabItem">
-  <van-collapse v-model="activeNames" bind:change="onChange">
-    <van-collapse-item name="1" :is-link="false" :border="false">
+  <collapse v-model="activeNames" bind:change="onChange">
+    <collapse-item name="1" :is-link="false" :border="false">
       <template slot="title">
         <div style="padding:15px 0 14px 0;">
           <h3>网络会议信息</h3>
@@ -26,8 +26,8 @@
           </div>
         </div>
       </div>
-    </van-collapse-item>
-    <van-collapse-item name="2" :is-link="false" :border="false">
+    </collapse-item>
+    <collapse-item name="2" :is-link="false" :border="false">
       <template slot="title">
         <div style="padding:15px 0 14px 0;">
           <h3>网络会议视频</h3>
@@ -49,15 +49,17 @@
           </div>
         </div>
       </div>
-    </van-collapse-item>
-  </van-collapse>
+    </collapse-item>
+  </collapse>
 </div>
 </template>
 <script>
+import { Collapse, CollapseItem } from 'vant'
 import util from '@/utils/util'
 export default {
   name: 'VideoData',
   props: ['supplementaryArrs', 'supplementaryArrb'],
+  components: { Collapse, CollapseItem },
   data () {
     return {
       activeNames: ['1', '2', '3', '4'],

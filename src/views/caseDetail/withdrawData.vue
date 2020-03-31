@@ -1,7 +1,7 @@
 <template>
 <div class="tabItem">
-  <van-collapse v-model="activeNames" bind:change="onChange">
-    <van-collapse-item name="1" :is-link="false" :border="false">
+  <collapse v-model="activeNames" bind:change="onChange">
+    <collapse-item name="1" :is-link="false" :border="false">
       <template slot="title">
         <div style="padding:15px 0 0px 0;">
           <h3>{{'撤回资料'}}</h3>
@@ -58,16 +58,18 @@
           </div>
         </div>
       </div>
-    </van-collapse-item>
-  </van-collapse>
+    </collapse-item>
+  </collapse>
 </div>
 </template>
 <script>
+import { Collapse, CollapseItem } from 'vant'
 import util from '@/utils/util'
 import DICT from '@/const/dict'
 export default {
   name: 'ApplyInfo',
   props: ['arbRecallApplyInfoResponse', 'previewFile'],
+  components: { Collapse, CollapseItem },
   data () {
     return {
       activeNames: ['1'], // 调解资料

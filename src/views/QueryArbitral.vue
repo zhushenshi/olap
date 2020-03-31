@@ -31,8 +31,8 @@
         </span>
        </p>
     </div>
-   <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-  <van-list
+   <pull-refresh v-model="refreshing" @refresh="onRefresh">
+  <List
     v-model="loading" :finished="finished" finished-text="没有更多了" :offset=offset @load="onLoad">
      <div class="filterCnt">
       <ul>
@@ -74,8 +74,8 @@
         </li>
       </ul>
     </div>
-  </van-list>
-</van-pull-refresh>
+  </List>
+</pull-refresh>
     </div>
     <div v-if="!filterList.length" class="noData">
       <img src="./../assets/imgs/zanwu-2.png"/>
@@ -87,6 +87,9 @@
   </div>
 </template>
 <script>
+import { PullRefresh, List } from 'vant'
+import 'vant/lib/pull-refresh/style'
+import 'vant/lib/list/style'
 import DICT from '@/const/dict'
 import { api } from '@/utils/api'
 import util from '@/utils/util'
@@ -112,6 +115,7 @@ export default {
       offset: 100
     }
   },
+  components: { PullRefresh, List },
   methods: {
     onLoad () {
       this.pageNo++

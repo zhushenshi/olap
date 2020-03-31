@@ -60,8 +60,8 @@ const util = {
     if (num.length > 2) {
       return num
     }
-    var china = new Array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九')
-    var arr = new Array()
+    var china = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九']
+    var arr = []
     var english = num.split('')
     for (var i = 0; i < english.length; i++) {
       arr[i] = china[english[i]]
@@ -231,9 +231,9 @@ const util = {
     return array
   },
   sortfn (val, item, _this) {
-    if (val.order == 'descending') {
+    if (val.order === 'descending') {
       _this.$refs.datalist.paramsFilter[item] = 2
-    } else if (val.order == 'ascending') {
+    } else if (val.order === 'ascending') {
       _this.$refs.datalist.paramsFilter[item] = 1
     } else {
       _this.$refs.datalist.paramsFilter[item] = ''

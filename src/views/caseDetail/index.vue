@@ -81,30 +81,30 @@
             <div class="skeleton fl" style="width:21%;height:30px;"></div>
           </div>
           <div>
-            <van-skeleton
+            <Skeleton
               :row="2"
               :row-width="['30%','60%']"
             />
           </div>
           <div style="margin-top:15px;">
-            <van-skeleton
+            <Skeleton
               :row="4"
               :row-width="['30%','90%','100%','90%']"
             />
           </div>
           <div style="margin-top:15px;">
-            <van-skeleton
+            <Skeleton
               :row="6"
               :row-width="['30%','90%','100%','90%','100%','100%']"
             />
           </div>
         </div>
       </div>
-      <van-tabs :border="false" :ellipsis="false" v-else>
-        <van-tab title="申请信息">
+      <Tabs :border="false" :ellipsis="false" v-else>
+        <Tab title="申请信息">
           <div class="tabItem">
-            <van-collapse v-model="activeNames1" bind:change="onChange">
-              <van-collapse-item name="1" :is-link="false" :border="false">
+            <Collapse v-model="activeNames1" bind:change="onChange">
+              <collapse-item name="1" :is-link="false" :border="false">
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
                     <h3>仲裁申请书</h3>
@@ -119,8 +119,8 @@
                     </div>
                   </div>
                 </div>
-              </van-collapse-item>
-              <van-collapse-item name="2" :is-link="false" :border="false">
+              </collapse-item>
+              <collapse-item name="2" :is-link="false" :border="false">
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
                     <h3>证据资料<span v-if="ismany">({{arbiInfo.arbDebtCount}}个债权)</span></h3>
@@ -146,8 +146,8 @@
                   </div>
                   <!-- <p class="borderBottom" style="margin-top:14px;"></p> -->
                 </div>
-              </van-collapse-item>
-              <van-collapse-item :name="index+3" :is-link="false" :border="false" v-for="(item,index) in applyers" :key="'h'+index" >
+              </collapse-item>
+              <collapse-item :name="index+3" :is-link="false" :border="false" v-for="(item,index) in applyers" :key="'h'+index" >
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
                     <h3>{{'申请人信息'+util.exchangeIndex(index+1)}}</h3>
@@ -443,8 +443,8 @@
                     </div>
                   </div>
                 </div>
-              </van-collapse-item>
-              <van-collapse-item :name="index+100" :is-link="false" :border="false" v-for="(item,index) in applyedArr" :key="'i'+index" >
+              </collapse-item>
+              <collapse-item :name="index+100" :is-link="false" :border="false" v-for="(item,index) in applyedArr" :key="'i'+index" >
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
                     <h3>{{'被申请人信息'+util.exchangeIndex(index+1)}}</h3>
@@ -740,8 +740,8 @@
                     </div>
                   </div>
                 </div>
-              </van-collapse-item>
-              <van-collapse-item name="1000" :is-link="false" :border="false">
+              </collapse-item>
+              <collapse-item name="1000" :is-link="false" :border="false">
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
                     <h3>仲裁请求</h3>
@@ -771,20 +771,20 @@
                     </div>
                   </div>
                 </div>
-              </van-collapse-item>
-            </van-collapse>
+              </collapse-item>
+            </Collapse>
           </div>
-        </van-tab>
-        <van-tab title="案件追踪">
+        </Tab>
+        <Tab title="案件追踪">
           <case-tracking :arbProcess="arbProcess"></case-tracking>
-        </van-tab>
-        <van-tab title="案件文书">
+        </Tab>
+        <Tab title="案件文书">
           <case-document :caseDocumentInfo="caseDocumentInfo"></case-document>
-        </van-tab>
-        <van-tab title="组庭信息" v-if="arbiInfo.arbitralMergeHearDetailResponse">
+        </Tab>
+        <Tab title="组庭信息" v-if="arbiInfo.arbitralMergeHearDetailResponse">
           <div class="tabItem">
-            <van-collapse v-model="activeNames2" bind:change="onChange">
-              <van-collapse-item name="1" :is-link="false" :border="false">
+            <Collapse v-model="activeNames2" bind:change="onChange">
+              <collapse-item name="1" :is-link="false" :border="false">
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
                     <h3>组庭信息</h3>
@@ -845,45 +845,56 @@
                     </div>
                   </div>
                 </div>
-              </van-collapse-item>
-            </van-collapse>
+              </collapse-item>
+            </Collapse>
           </div>
-        </van-tab>
-        <van-tab title="答辩资料" v-if="replyBrief.length||replyLists.length">
+        </Tab>
+        <Tab title="答辩资料" v-if="replyBrief.length||replyLists.length">
           <reply-data :replyBrief="replyBrief" :replyLists="replyLists" :previewFile="previewFile"></reply-data>
-        </van-tab>
-        <van-tab title="补充资料" v-if="supplementaryArrs.length||supplementaryArrb.length">
+        </Tab>
+        <Tab title="补充资料" v-if="supplementaryArrs.length||supplementaryArrb.length">
           <supplement-data :supplementaryArrs="supplementaryArrs" :supplementaryArrb="supplementaryArrb" :previewFile="previewFile"></supplement-data>
-        </van-tab>
-        <van-tab title="网络会议资料" v-if="false">
+        </Tab>
+        <Tab title="网络会议资料" v-if="false">
           <video-data></video-data>
-        </van-tab>
-        <van-tab title="调解资料" v-if="arbitralMediationResponse">
+        </Tab>
+        <Tab title="调解资料" v-if="arbitralMediationResponse">
           <mediate-data :arbitralMediationResponse="arbitralMediationResponse" :conciliationEvidence="conciliationEvidence" :previewFile="previewFile"></mediate-data>
-        </van-tab>
-        <van-tab title="撤回资料" v-if="arbRecallApplyInfoResponse" :previewFile="previewFile">
+        </Tab>
+        <Tab title="撤回资料" v-if="arbRecallApplyInfoResponse" :previewFile="previewFile">
           <withdraw-data :arbRecallApplyInfoResponse="arbRecallApplyInfoResponse"></withdraw-data>
-        </van-tab>
-        <van-tab title="管辖权异议资料" v-if="dissentApplication&&dissentApplication.length>0" :previewFile="previewFile">
+        </Tab>
+        <Tab title="管辖权异议资料" v-if="dissentApplication&&dissentApplication.length>0" :previewFile="previewFile">
           <jurisdiction :dissentApplication="dissentApplication" :dissentAttachment="dissentAttachment" :arbiInfo="arbiInfo" :dissentReplyApplication="dissentReplyApplication"></jurisdiction>
-        </van-tab>
-      </van-tabs>
+        </Tab>
+      </Tabs>
     </section>
-    <van-popup v-model="previewFileShow" closeable>
+    <Popup v-model="previewFileShow" closeable>
       <div style="width:100vw;height:100vh;">
         <iframe :src="'./PDF/web/viewer.html?file='+pdfUrl" frameborder="0" style="width:100%;height:90%;margin-top:50px;"></iframe>
         <!-- <iframe :src="'./PDF/web/viewer.html?file=/olap-file/fast/file/downloadPdfFile?pdfUrl=YI+fm3g75gm7y0ZcX1TLd7vJIHMPnfl8wSrejE+6G6zaXLJkrIy5AmaVaPYEs5ssK9ZYD4gINF47N1FxnOdgwwXkRm5sXgJNOh8OIv+E9BE='" frameborder="0" style="width:100%;height:90%;margin-top:50px;"></iframe> -->
       </div>
-    </van-popup>
-    <van-popup v-model="previewFileShow1" closeable>
+    </Popup>
+    <Popup v-model="previewFileShow1" closeable>
       <div style="width:100vw;height:100vh;">
         <!-- <iframe :src="'./PDF/web/viewer.html?file=/olap-file/fast/file/downloadPdfFile?pdfUrl=YI+fm3g75gm7y0ZcX1TLd7vJIHMPnfl8wSrejE+6G6zaXLJkrIy5AmaVaPYEs5ssK9ZYD4gINF47N1FxnOdgwwXkRm5sXgJNOh8OIv+E9BE='" frameborder="0" style="width:100%;height:90%;margin-top:50px;"></iframe> -->
       </div>
-    </van-popup>
+    </Popup>
   </div>
 </template>
 <script>
 /* eslint-disable */ 
+import { Skeleton, Tab, Tabs ,Popup,Collapse, CollapseItem } from 'vant'
+import VanImage from 'vant/lib/image'
+import 'vant/lib/skeleton/style'
+import 'vant/lib/tab/style'
+import 'vant/lib/tabs/style'
+import 'vant/lib/popup/style'
+import 'vant/lib/collapse/style'
+import 'vant/lib/collapse-item/style'
+import 'vant/lib/image/style'
+import 'vant/lib/image-preview/style'
+
 import Header from '@/components/Header.vue'
 import caseTracking from './caseTracking.vue'// 案件追踪
 import jurisdiction from './jurisdiction.vue'// 管辖权异议资料
@@ -1006,7 +1017,7 @@ export default {
       pdfUrl:''      
     }
   },
-  components: { Header, caseTracking, caseDocument, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData },
+  components: { Header, caseTracking, caseDocument, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData,Skeleton, Tab, Tabs ,Popup ,Collapse, CollapseItem ,VanImage},
   methods: {
     // downFile (documentGeneratorUrlDes, documentName) {
     //   api.downloadOtherFile({

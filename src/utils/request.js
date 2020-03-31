@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { Toast, Notify } from 'vant'
-import Router from '../router/index'
+import { Notify } from 'vant'
 import { baseURL } from '@/utils/config'
 import store from '../store'
+import 'vant/lib/notify/style/index'
 
 const myAxios = axios.create({
   baseURL: baseURL,
@@ -16,30 +16,34 @@ myAxios.interceptors.request.use(config => {
     if (localStorage.getItem('adminAccessToken') === adminAccessToken) {
       config.headers.Authorization = adminAccessToken
     } else if (localStorage.getItem('adminAccessToken')) {
-      Toast({ message: '权限错误', position: 'bottom' })
+      this.$Toast({ message: '权限错误', position: 'bottom' })
       return false
     }
   }
   return config
 }, error => {
-  // 加载圈消失
-  Toast({ message: '加载超时', position: 'bottom' })
+  this.$Toast({ message: '加载超时', position: 'bottom' })
   return Promise.reject(error)
 })
 // http响应拦截器
 myAxios.interceptors.response.use(res => {
-  // 加载圈消失
   return res
 }, error => {
-  // 加载圈消失
   if (error && error.response) {
     if (error.response.status === 401) { /// / token过期或被顶掉
       Notify({ type: 'primary', message: error.response.data ? error.response.data.message : '登录失效' })
       // commit('setExpireStatus', true)
-      // commit('set_admin_token', '')
-      Router.replace({
-        path: '/login'
-      })
+      store.commit('set_admin_token', '')
+      var ua = navigator.userAgent.toLowerCase()
+      if (/iphone|ipad|ipod/.test(ua)) {
+        if (window.webkit && window.webkit.messageHandlers) {
+          window.webkit.messageHandlers.loginOut.postMessage([''])
+        } else {}
+      } else if (/android/.test(ua)) {
+        if (window.object && typeof (window.object.loginOut) === 'function') {
+          window.object.loginOut()
+        }
+      }
     } else if (error.response.status === 500) {
       Notify({ type: 'primary', message: '500服务器错误' })
     } else if (error.response.status === 504) {

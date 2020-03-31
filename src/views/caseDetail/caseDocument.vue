@@ -2,7 +2,7 @@
 <div class="tabItem">
   <transition name="fade">
     <div v-if="loading">
-      <van-skeleton title :row="10" />
+      <Skeleton title :row="10" />
     </div>
     <div v-else>
       <div v-for="(item,index) in documents" :key="index">
@@ -33,10 +33,10 @@
           </p>
         </div>
         <div class="documentsObj">
-          <van-tabs v-model="active" @click="onClick">
-             <van-tab v-for="(val,index) in detalis.list" :key="index" :title="val.userType === 1 ? '被申请人' : val.userType === 2 ? '申请人' : '仲裁员'">
-            </van-tab>
-            </van-tabs>
+          <Tabs v-model="active" @click="onClick">
+             <Tab v-for="(val,index) in detalis.list" :key="index" :title="val.userType === 1 ? '被申请人' : val.userType === 2 ? '申请人' : '仲裁员'">
+            </Tab>
+            </Tabs>
         </div>
         <div >
           <div>
@@ -81,11 +81,16 @@
         </div>
     </div>
   </div>
- <van-overlay :show="show" />
+ <Overlay :show="show" />
 </div>
 
 </template>
 <script>
+import { Overlay, Skeleton, Tab, Tabs } from 'vant'
+import 'vant/lib/overlay/style'
+import 'vant/lib/skeleton/style'
+import 'vant/lib/tab/style'
+import 'vant/lib/tabs/style'
 import { api } from '@/utils/api'
 export default {
   name: 'caseDocument',
@@ -94,6 +99,7 @@ export default {
       type: Object
     }
   },
+  components: { Overlay, Skeleton, Tab, Tabs },
   data () {
     return {
       documents: [],
@@ -317,7 +323,7 @@ export default {
 >>>[class*=van-hairline]::after{
   border none
   }
->>>.van-tab{
+>>>.Tab{
   flex none
 }
 </style>
