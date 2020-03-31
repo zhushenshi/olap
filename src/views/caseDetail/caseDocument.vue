@@ -323,7 +323,10 @@ export default {
 >>>[class*=van-hairline]::after{
   border none
   }
->>>.Tab{
+>>>.van-tab{
+  flex none
+}
+>>>.van-tabs__nav{
   flex none
 }
 </style>
