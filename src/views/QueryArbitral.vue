@@ -66,9 +66,9 @@
                 <div class="otherStatus" v-if="item.recallStatus === '1'">
                   <span class="recall">撤回</span>
                 </div>
-                <!-- <div class="otherStatus">
+                <div class="otherStatus"  v-if="item.decisionStatus&&item.decisionStatus >= 1&&item.decisionStatus < 60">
                   <span class="recall">异议</span>
-                </div> -->
+                </div>
              </div>
           </div>
         </li>
@@ -371,6 +371,7 @@ export default {
   color #727272
   font-size 14px
   margin-top 80px
+  min-height 600px
 .filterRs
   margin 0 auto
   position relative

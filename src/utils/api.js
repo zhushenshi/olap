@@ -2210,7 +2210,7 @@ const api = {
     return myAxios({
       method: 'post',
       url: '/olap-arbitral/getArbIndexHeadInfo',
-      data: params
+      params: params
     })
   },
   queryDictCodes (params) { // 财务中心 头部数据

@@ -35,7 +35,7 @@ export default {
     }
   },
   created () {
-    api.getArbIndexHeadInfo().then(res => {
+    api.getArbIndexHeadInfo({ arbStatus: 2 }).then(res => {
       if (res.data.code === '1') {
         this.moneyinfo = res.data
       }
