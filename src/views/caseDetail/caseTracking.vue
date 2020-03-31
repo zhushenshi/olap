@@ -1,43 +1,47 @@
 <template>
 <div class="tabItem">
   <transition name="fade">
-    <div v-if="loading">
-      <div class="itemBox" v-for="item in 2" :key="item">
-        <div class="topTime" v-show="item==1">
-          <div class="skeleton" style="width:21%;height:18px;margin:auto;"></div>
-        </div>
-        <div class="item">
-          <div class="left">
-            <div class="leftTop"><div class="skeleton" style="width:20px;height:20px;"></div></div>
-            <div class="leftBottom"><div class="skeleton" style="width:20px;height:20px;"></div></div>
+    <pull-refresh v-model="refreshing" @refresh="onRefresh">
+      <div v-if="loading">
+        <div class="itemBox" v-for="item in 2" :key="item">
+          <div class="topTime" v-show="item==1">
+            <div class="skeleton" style="width:21%;height:18px;margin:auto;"></div>
           </div>
-          <div class="right">
-            <p></p>
-            <p class="text"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-else>
-      <div class="itemBox" v-for="(item,index) in arr" :key="index">
-        <p class="topTime">{{item[0].endTime | formatm}}</p>
-        <div class="item" v-for="(ite,inde) in item" :key="inde">
-          <div class="left">
-            <div class="leftTop">{{ite.endTime | formatDay}}</div>
-            <div class="leftBottom">{{ite.endTime | formathm}}</div>
-          </div>
-          <div class="right">
-            <p>{{ite.index}}：{{ite.taskName}}</p>
-            <p class="text">{{ite.assignee}}</p>
+          <div class="item">
+            <div class="left">
+              <div class="leftTop"><div class="skeleton" style="width:20px;height:20px;"></div></div>
+              <div class="leftBottom"><div class="skeleton" style="width:20px;height:20px;"></div></div>
+            </div>
+            <div class="right">
+              <p></p>
+              <p class="text"></p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div v-else>
+        <div class="itemBox" v-for="(item,index) in arr" :key="index">
+          <p class="topTime">{{item[0].endTime | formatm}}</p>
+          <div class="item" v-for="(ite,inde) in item" :key="inde">
+            <div class="left">
+              <div class="leftTop">{{ite.endTime | formatDay}}</div>
+              <div class="leftBottom">{{ite.endTime | formathm}}</div>
+            </div>
+            <div class="right">
+              <p>{{ite.index}}：{{ite.taskName}}</p>
+              <p class="text">{{ite.assignee}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </pull-refresh>
   </transition>
 </div>
 </template>
 <script>
 import { api } from '@/utils/api'
+import { PullRefresh, List } from 'vant'
+import 'vant/lib/pull-refresh/style'
 export default {
   name: 'CaseTracking',
   props: {
@@ -50,14 +54,20 @@ export default {
       type: 'one',
       histroyTaskInst: [],
       arr: [],
-      loading: true
+      loading: true,
+      refreshing: false
     }
   },
+  components: { PullRefresh, List },
   created () {
     this.getHistroyTaskInst()
     console.log(this.arbProcess, '77777')
   },
   methods: {
+    onRefresh () {
+      this.refreshing = true
+      this.getHistroyTaskInst()
+    },
     getHistroyTaskInst () { // 案件追踪
       api.getHistroyTaskInst({
         arbProcess: this.arbProcess
@@ -85,6 +95,10 @@ export default {
                 arr.push(a)
               }
             }
+          }
+          if (this.refreshing) { // 关闭下拉刷新
+            this.refreshing = false // 关闭下拉刷新中
+            this.arr = arr// 重新给数据赋值
           }
           console.log(arr)
           this.arr = arr
