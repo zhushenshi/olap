@@ -29,6 +29,7 @@ myAxios.interceptors.request.use(config => {
 myAxios.interceptors.response.use(res => {
   return res
 }, error => {
+  this.$Indicator.close()
   if (error && error.response) {
     if (error.response.status === 401) { /// / token过期或被顶掉
       Notify({ type: 'primary', message: error.response.data ? error.response.data.message : '登录失效' })
