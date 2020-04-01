@@ -390,7 +390,7 @@ export default {
   position relative
   top 5px
 .noData
-  color #727272
+  color #bcbcbc
   font-size 14px
   margin-top 80px
   // min-height 600px
