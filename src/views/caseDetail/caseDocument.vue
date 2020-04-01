@@ -53,18 +53,21 @@
           <div class="line"></div>
           <div>
             <p class="title">邮递送达</p>
-            <p class="documentsName address">
-              <span>送达地址：</span>
-              <span>{{wsobj.expressAddress}}</span>
+              <p class="documentsName address">
+                <span>送达地址：</span>
+                <span>{{wsobj.expressAddress}}</span>
               </p>
               <p class="documentsName">
               <span>快递单号：</span>
               <span>{{wsobj.expressNumber}}</span>
               </p>
-              <p class="documentsName">
-              <span>送达时间：</span>
-              <span>{{wsobj.expressTime}}</span>
-              </p>
+              <div class="documentsNames">
+                <div class="arrivedTime">送达时间：</div>
+                <div>
+                  <span class="express">{{wsobj.expressTime}}(寄)</span>
+                  <span class="express">{{wsobj.arrivedTime}}(送)</span>
+                </div>
+              </div>
           </div>
           <div class="line"></div>
           <div>
@@ -174,14 +177,18 @@ export default {
       console.log(val)
       this.wsobj.documentName = val.documentName
       val.arrivedType.split('/').map(el => {
+        console.log(el)
         if (el === '快递送达') {
           this.wsobj.expressAddress = val.expressAddress
           this.wsobj.expressNumber = val.expressNumber
-          this.wsobj.expressTime = val.expressTime + '--' + val.arrivedTime
-        } else if (el === '邮件送达') {
+          this.wsobj.expressTime = val.expressTime
+          this.wsobj.arrivedTime = val.arrivedTime
+        }
+        if (el === '邮件送达') {
           this.wsobj.emailAddress = val.userEmail
           this.wsobj.documentArrivedTime = val.documentArrivedTime
-        } else {
+        }
+        if (el === '短信送达') {
           this.wsobj.userPhone = val.userPhone
           this.wsobj.documentMessageArrivedTime = val.documentMessageArrivedTime
         }
@@ -330,4 +337,14 @@ export default {
 >>>.van-tabs__nav{
   flex none
 }
+.documentsNames
+  overflow hidden
+  .arrivedTime
+    color #000000
+  div
+    float left
+    .express
+        display inherit
+        color #727272
+        margin 0 0 10px 0
 </style>
