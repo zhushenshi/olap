@@ -6,9 +6,12 @@
         <span class="searchIcon" @click="goIntoPage('/queryArbitral/search')">
             <img src="./../assets/imgs/search.png"/>
         </span>
+        <span v-if="this.$route.params.form" class="searchIcon" @click="reset()">
+            <img src="./../assets/imgs/reset.png"/>
+        </span>
       </p>
     </div>
-    <div class="caseStatus">
+    <div class="caseStatus" v-if="caseStatusShow">
       <ul>
         <li v-for="item in arbTypes" :key="item.value"  @click="tabFilter(item.value)">
             <span :class="{'activeClass': activeName == item.value}">{{item.label}}</span>
@@ -82,7 +85,6 @@
       <p>无任何记录</p>
     </div>
     <div>
-
     </div>
   </div>
 </template>
@@ -112,7 +114,8 @@ export default {
       loading: false,
       finished: false,
       refreshing: false,
-      offset: 100
+      offset: 100,
+      caseStatusShow: true
     }
   },
   components: { PullRefresh, List },
@@ -156,6 +159,12 @@ export default {
     },
     search () { // 表单查询（搜索案件编号、案件名、申请人、被申请人。搜索字符长度不超过20个）
       this.pageNo = 1
+      this.getAllArbitralInfos()
+    },
+    reset () {
+      console.log(this.formInline)
+      this.formInline = {}
+      this.caseStatusShow = true
       this.getAllArbitralInfos()
     },
     goIntoPage (url) {
@@ -206,6 +215,12 @@ export default {
               this.finished = false
             }
           }
+          console.log(this.filterList)
+          if (this.activeName === 0 && this.filterList.length === 0) {
+            this.caseStatusShow = false
+          } else {
+            this.caseStatusShow = true
+          }
         } else {
           this.filterList = []
         }
@@ -219,7 +234,6 @@ export default {
     if (this.$route.params.form) {
       this.formInline = this.$route.params.form
     }
-
     this.getAllArbitralInfos()
   }
 }
