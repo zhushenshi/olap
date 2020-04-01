@@ -123,7 +123,7 @@ export default {
                     }
                   }
                 } else if (this.list[i].endTime !== arr[j].endTime && j === leng - 1) {
-                  var o = { list: [{ fileName: '', list: [] }], endTime: this.list[i].endTime }
+                  var o = { list: [{ fileName: '', list: [] }], endTime: endTimes }
                   o.list[0].fileName = this.list[i].fileName
                   o.list[0].list.push(this.list[i])
                   arr.push(o)
