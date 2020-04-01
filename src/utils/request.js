@@ -30,8 +30,10 @@ myAxios.interceptors.request.use(config => {
 myAxios.interceptors.response.use(res => {
   return res
 }, error => {
+  console.log(error)
   Vue.prototype.$Indicator.close()
   if (error && error.response) {
+    Vue.prototype.$Toast({ message: error.response.status, position: 'bottom' })
     if (error.response.status === 401) { /// / token过期或被顶掉
       Notify({ type: 'primary', message: error.response.data ? error.response.data.message : '登录失效' })
       // commit('setExpireStatus', true)
@@ -64,6 +66,8 @@ myAxios.interceptors.response.use(res => {
       Notify({ type: 'primary', message: '408请求超时' })
     } else if (error.response.status === 404) {
       Notify({ type: 'primary', message: '404错误' })
+    } else {
+      Vue.prototype.$Toast({ message: '接口返回错误', position: 'bottom' })
     }
   }
   return Promise.reject(error)
