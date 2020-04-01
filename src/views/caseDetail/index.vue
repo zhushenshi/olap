@@ -777,7 +777,7 @@
           </div>
         </Tab>
         <Tab title="案件追踪">
-          <case-tracking :arbProcess="arbProcess"></case-tracking>
+          <case-tracking :arbProcess="arbProcess" @add-comment="getData"></case-tracking>
         </Tab>
         <Tab title="案件文书">
           <case-document :caseDocumentInfo="caseDocumentInfo"></case-document>

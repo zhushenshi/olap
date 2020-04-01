@@ -21,17 +21,23 @@
       </div>
       <div v-else>
         <div class="itemBox" v-for="(item,index) in arr" :key="index">
-          <p class="topTime">{{item[0].endTime | formatm}}</p>
-          <div class="item" v-for="(ite,inde) in item" :key="inde">
-            <div class="left">
-              <div class="leftTop">{{ite.endTime | formatDay}}</div>
-              <div class="leftBottom">{{ite.endTime | formathm}}</div>
-            </div>
-            <div class="right">
-              <p>{{ite.index}}：{{ite.taskName}}</p>
-              <p class="text">{{ite.assignee}}</p>
-            </div>
+          <p class="topTime">{{item.endTime}}</p>
+          <div v-for="(value1,index1) in item.list" :key="index1">
+             <div class="fileName">{{value1.fileName}}</div>
+             <div  v-for="(ite,inde) in value1" :key="inde">
+             <div v-for="(value,ind) in ite" :key="ind">
+               <div   class="item" v-if="value.taskName" >
+                <div class="left">
+                  <div class="leftBottom">{{value.endTime | formathm}}</div>
+                </div>
+                <div class="right" >
+                  <p>{{value.index}}：{{value.taskName}}</p>
+                  <p class="text">{{value.assignee}}</p>
+                </div>
+                </div>
           </div>
+          </div>
+            </div>
         </div>
       </div>
     </pull-refresh>
@@ -55,17 +61,27 @@ export default {
       histroyTaskInst: [],
       arr: [],
       loading: true,
-      refreshing: false
+      refreshing: false,
+      list: []
     }
   },
   components: { PullRefresh },
   created () {
     this.getHistroyTaskInst()
-    console.log(this.arbProcess, '77777')
+    console.log(this.arbProcess)
   },
   methods: {
+    addComment () {
+    // 添加完评论后发射监听事件，param是要添加的那条评论消息
+      this.$emit('add-comment')
+    },
     onRefresh () {
       this.refreshing = true
+      if (this.refreshing) { // 关闭下拉刷新
+        this.addComment()
+        console.log('pppp')
+        this.refreshing = false // 关闭下拉刷新中
+      }
       this.getHistroyTaskInst()
     },
     getHistroyTaskInst () { // 案件追踪
@@ -80,28 +96,43 @@ export default {
             v.index = '第' + (len - i) + '步'
           })
           var arr = []
-          for (let i = 0; i < this.histroyTaskInst.length; i++) {
+          this.list = this.histroyTaskInst
+          for (let i = 0; i < this.list.length; i++) {
+            var endTime = this.list[i].endTime
+            var endTimes = endTime.slice(0, 7)
+            this.list[i].fileName = endTime.slice(8, 11)
             if (i === 0) {
-              const ar = []
-              ar.push(this.histroyTaskInst[0])
-              arr.push(ar)
+              var obj = { list: [{ fileName: '', list: [] }], endTime: endTimes }
+              obj.list[0].fileName = this.list[0].fileName
+              obj.list[0].list.push(this.list[0])
+              arr.push(obj)
             } else {
-              console.log(arr[arr.length - 1])
-              if (this.histroyTaskInst[i].endTime.slice(0, 8) === arr[arr.length - 1][0].endTime.slice(0, 8)) {
-                arr[arr.length - 1].push(this.histroyTaskInst[i])
-              } else {
-                const a = []
-                a.push(this.histroyTaskInst[i])
-                arr.push(a)
+              const leng = arr.length
+              for (let j = 0; j < leng; j++) {
+                if (endTimes === arr[j].endTime) {
+                  const len = arr[j].list.length
+                  for (let k = 0; k < len; k++) {
+                    if (this.list[i].fileName === arr[j].list[k].fileName) {
+                      arr[j].list[k].list.push(this.list[i])
+                      break
+                    } else if (this.list[i].fileName !== arr[j].list[k].fileName && k === len - 1) {
+                      var ob = { fileName: this.list[i].fileName, list: [] }
+                      ob.list.push(this.list[i])
+                      arr[j].list.push(ob)
+                      break
+                    }
+                  }
+                } else if (this.list[i].endTime !== arr[j].endTime && j === leng - 1) {
+                  var o = { list: [{ fileName: '', list: [] }], endTime: this.list[i].endTime }
+                  o.list[0].fileName = this.list[i].fileName
+                  o.list[0].list.push(this.list[i])
+                  arr.push(o)
+                }
               }
             }
           }
-          if (this.refreshing) { // 关闭下拉刷新
-            this.refreshing = false // 关闭下拉刷新中
-            this.arr = arr// 重新给数据赋值
-          }
-          console.log(arr)
           this.arr = arr
+          console.log(this.arr)
         }
       })
     }
@@ -150,4 +181,6 @@ export default {
     img
       width:128px;
       margin-bottom:8px;
+.fileName
+  position absolute
 </style>
