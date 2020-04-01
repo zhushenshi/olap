@@ -232,7 +232,7 @@
                             :src="api.getImgURL(item.pIdAttachRearDes)">
                             <template v-slot:error>加载失败</template>
                           </van-image>
-                          <p>身份证明</p>
+                          <p>身份证反面</p>
                         </div>
                       </div>
                     </div>

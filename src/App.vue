@@ -13,8 +13,11 @@ export default {
     //     window.location.reload()
     //   }
     // }
-    // alert(this.getCookie('token'))
-    localStorage.setItem('adminAccessToken', this.getCookie('token'))
+    var token = this.getCookie('token1') + this.getCookie('token2') + this.getCookie('token3')
+    this.setCookie('token1', '')
+    this.setCookie('token2', '')
+    this.setCookie('token3', '')
+    localStorage.setItem('adminAccessToken', token)
     if (localStorage.getItem('adminAccessToken')) {
       this.$store.commit('set_admin_token', localStorage.getItem('adminAccessToken'))
       this.$store.commit('set_admin_name', localStorage.getItem('adminName'))
