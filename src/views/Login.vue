@@ -72,7 +72,6 @@ export default {
           if (res.data.code === '100020') { // 登录成功
             this.$store.commit('set_admin_token', res.data.data.access_token)
             console.log(res.data.data.access_token.length)
-
             this.$store.commit('set_admin_name', res.data.data.realname)
             // var a = res.data.data.access_token.length
             // this.setCookie('token1', res.data.data.access_token.slice(0, Math.floor(a / 3)))

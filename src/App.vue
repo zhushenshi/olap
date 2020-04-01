@@ -6,21 +6,17 @@
 <script>
 export default {
   created () {
-    // var token
-    // if (token === null) {
-    //   token = localStorage.getItem('token')
-    //   if (token === null) {
-    //     window.location.reload()
-    //   }
-    // }
-    var token = this.getCookie('token1') + this.getCookie('token2') + this.getCookie('token3')
-    this.setCookie('token1', '')
-    this.setCookie('token2', '')
-    this.setCookie('token3', '')
-    localStorage.setItem('adminAccessToken', token)
-    if (localStorage.getItem('adminAccessToken')) {
-      this.$store.commit('set_admin_token', localStorage.getItem('adminAccessToken'))
-      this.$store.commit('set_admin_name', localStorage.getItem('adminName'))
+    var ua = navigator.userAgent.toLowerCase()
+    if (/android/.test(ua)) {
+      var token = this.getCookie('token1') + this.getCookie('token2') + this.getCookie('token3')
+      this.setCookie('token1', '')
+      this.setCookie('token2', '')
+      this.setCookie('token3', '')
+      localStorage.setItem('adminAccessToken', token)
+      if (localStorage.getItem('adminAccessToken')) {
+        this.$store.commit('set_admin_token', localStorage.getItem('adminAccessToken'))
+        this.$store.commit('set_admin_name', localStorage.getItem('adminName'))
+      }
     }
     // 设置 rem 函数
     function setRem () {
