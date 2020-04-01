@@ -6,7 +6,7 @@
         <span class="searchIcon" @click="goIntoPage('/queryArbitral/search')">
             <img src="./../assets/imgs/search.png"/>
         </span>
-        <span v-if="this.$route.params.form" class="searchIcon" @click="reset()">
+        <span v-if="showReset" class="searchIcon" @click="reset()">
             <img src="./../assets/imgs/reset.png"/>
         </span>
       </p>
@@ -115,7 +115,8 @@ export default {
       finished: false,
       refreshing: false,
       offset: 100,
-      caseStatusShow: true
+      caseStatusShow: true,
+      showReset: false
     }
   },
   components: { PullRefresh, List },
@@ -164,6 +165,7 @@ export default {
     reset () {
       console.log(this.formInline)
       this.formInline = {}
+      this.showReset = false
       this.caseStatusShow = true
       this.getAllArbitralInfos()
     },
@@ -233,6 +235,7 @@ export default {
   created () {
     if (this.$route.params.form) {
       this.formInline = this.$route.params.form
+      this.showReset = true
     }
     this.getAllArbitralInfos()
   }
