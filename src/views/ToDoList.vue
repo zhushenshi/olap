@@ -75,11 +75,11 @@
                         </div> -->
                         <div class="itemInfoRow">
                           <span class="label">充值金额：</span>
-                          <span v-if="value2.rechargeData">{{value2.rechargeData.money}}元</span>
+                          <span v-if="value2.rechargeData">{{value2.rechargeData.money?value2.rechargeData.money:'0'}}元</span>
                         </div>
                         <div  class="itemInfoRow">
                           <span class="label">充值时间：</span>
-                          <span v-if="value2.rechargeData">{{value2.rechargeData.capitalTime}}元</span>
+                          <span v-if="value2.rechargeData">{{value2.rechargeData.capitalTime}}</span>
 
                         </div>
                       </div>
