@@ -1,8 +1,8 @@
 <template>
-  <div>
-  <div class="header">
+  <div class="Myheader">
+  <div class="header" :style="{backgroundColor:bgColor}">
     <div class="headerContent">
-      <span class="icon iconfont iconzhongcai_zuo left" @click="goBack"></span>
+      <span class="icon iconfont iconzhongcai_zuo left" @click="goBack" v-if="backShow"></span>
       <div class="title">
         <slot></slot>
       </div>
@@ -18,6 +18,10 @@ export default {
     back: {
       type: Function
     },
+    backShow: {
+      type: Boolean,
+      default: true
+    },
     right: {
       type: String,
       default: ''
@@ -27,6 +31,10 @@ export default {
       default: () => {
         console.log('测试')
       }
+    },
+    bgColor: {
+      type: String,
+      default: '#ffffff'
     }
   },
   data () {
@@ -48,12 +56,13 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
+.Myheader
+  color:#24272B;
+  // background-color:#FFFFFF;
 .header
   height:64px;
   padding-top:20px;
   font-size:18px;
-  color:#24272B;
-  background-color:#FFFFFF;
   position:fixed;
   right:0;
   left:0;

@@ -207,13 +207,8 @@ export default {
   mounted () {
     const This = this
     window.onscroll = function () {
-      var a = document.documentElement.scrollTop || document.body.scrollTop// 滚动条y轴上的距离
-      var b = document.documentElement.clientHeight || document.body.clientHeight// 可视区域的高度
-      var c = document.documentElement.scrollHeight || document.body.scrollHeight// 可视化的高度与溢出的距离（总高度）
-      console.log(a, b, c)
-      // This.titleFonSize = 0.8 - ((53 - a) / 53 * 0.32) + 'rem'
-      // 0.48rem
-      if (a > 53) {
+      var topHeight = document.documentElement.scrollTop || document.body.scrollTop// 滚动条y轴上的距离
+      if (topHeight > 53) {
         This.titleFonSize = 0.48 + 'rem'
         This.headerShow = true
       } else {
@@ -221,6 +216,9 @@ export default {
         This.titleFonSize = 0.8 + 'rem'
       }
     }
+  },
+  destroyed () {
+    window.onscroll = null
   }
 }
 </script>
@@ -242,6 +240,7 @@ export default {
         height:42px;
         font-weight:500;
         color:#ffffff;
+        transition:all liner 2s
       .avatar
         height:37px;
         width:37px;
