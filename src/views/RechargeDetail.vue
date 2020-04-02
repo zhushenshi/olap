@@ -12,11 +12,11 @@
         </div>
         <div class="arbInfo">
           <span class="label">充值时间：</span>
-          <span>{{arbiInfo.createTime}}</span>
+          <span>{{arbiInfo.capitalTime}}</span>
         </div>
         <div class="arbInfo">
           <span class="label">备注：</span>
-          <span>{{arbiInfo.advice}}</span>
+          <span>{{arbiInfo.remark}}</span>
         </div>
         <div class="caseStatus" v-if="arbiInfo.result=='0'">
           待审核
