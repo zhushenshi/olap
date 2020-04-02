@@ -61,6 +61,7 @@ export default {
             this.$router.push({ name: 'examineResult' })
           } else {
             this.$Toast({ message: res.data.msg, position: 'bottom' })
+            this.$router.push({ name: 'portalToDoList' })
           }
         })
       }
