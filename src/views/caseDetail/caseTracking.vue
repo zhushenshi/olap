@@ -23,7 +23,7 @@
         <div class="itemBox" v-for="(item,index) in arr" :key="index">
           <p class="topTime">{{item.endTime}}</p>
           <div v-for="(value1,index1) in item.list" :key="index1">
-             <div class="fileName">{{value1.fileName}}</div>
+             <div class="fileName">{{value1.fileName.replace(/\b(0+)/gi,"")}}</div>
              <div  v-for="(ite,inde) in value1" :key="inde">
              <div v-for="(value,ind) in ite" :key="ind">
                <div   class="item" v-if="value.taskName" >
@@ -123,7 +123,7 @@ export default {
                     }
                   }
                 } else if (this.list[i].endTime !== arr[j].endTime && j === leng - 1) {
-                  var o = { list: [{ fileName: '', list: [] }], endTime: this.list[i].endTime }
+                  var o = { list: [{ fileName: '', list: [] }], endTime: endTimes }
                   o.list[0].fileName = this.list[i].fileName
                   o.list[0].list.push(this.list[i])
                   arr.push(o)
@@ -183,4 +183,5 @@ export default {
       margin-bottom:8px;
 .fileName
   position absolute
+  left 10px
 </style>

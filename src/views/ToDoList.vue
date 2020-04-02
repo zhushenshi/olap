@@ -34,7 +34,7 @@
              <div v-for="(value,ind) in item.yearData" :key="ind">
                <p class="topTime">{{item.year}}年{{value.month}}</p>
                <div v-for="(value1,index1) in value.monthData" :key="index1">
-                 <div class="leftTop" v-if="value1">{{value1.day}}</div>
+                 <div class="leftTop" v-if="value1">{{value1.day.replace(/\b(0+)/gi,"")}}</div>
                  <div v-for="(value2,index2) in value1.dataList" :key="index2">
                   <div class="item" v-if="type!=2 && value2.rechargeData ==null" @click="goToDetail(value2.arbitralData.id)">
                     <div class="left">
@@ -120,6 +120,7 @@ export default {
     tabClick (val) {
       this.type = val
       this.pageNo = 1
+      this.filterList = []
       this.getData()
     },
     onLoad () {
