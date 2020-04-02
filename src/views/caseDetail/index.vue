@@ -1113,9 +1113,6 @@ export default {
       if (this.arbiInfo.arbStopStatus == 3 && this.arbiInfo.arbStatus == 4) {
         sts = this.arbRecallApplyInfoResponse.applyRecallProcedure
         this.stopStep = this.arbTypes.length - 1 // 撤回成功显示流程为结案
-      } else if (this.arbiInfo.arbStopStatus == 5) {
-        sts = this.arbiInfo.arbitralStatus // 取管辖权异议时案件所处的状态
-        this.stopStep = this.arbTypes.length - 1 // 异议成功显示流程为结案
       } else {
         sts = this.arbiInfo.arbStatus// 案件目前状态
       }
