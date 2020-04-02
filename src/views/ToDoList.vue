@@ -1,19 +1,32 @@
 <template>
   <div class="wrapper">
-    <header>
+    <header class="default" :class="{active:headerShow}">
+        <div class="headerBox">
+          <div class="title" :style="{'font-size':titleFonSize}">待办事项</div>
+          <div class="avatar" @click="popPersonalCenter">
+            <img src="./../assets/imgs/home/avatar.png" alt="">
+          </div>
+        </div>
+        <div class="tabContent clearfix">
+          <div class="tab fl" :class="type===0?'tabActive':''" @click="tabClick(0)">全部</div>
+          <div class="tab fl" :class="type===1?'tabActive':''" @click="tabClick(1)">裁决书</div>
+          <div class="tab fl" :class="type===2?'tabActive':''" @click="tabClick(2)">充值</div>
+        </div>
+    </header>
+    <header class="default" style="opacity:0;" v-if="headerShow">
         <div class="headerBox">
           <div class="title">待办事项</div>
           <div class="avatar" @click="popPersonalCenter">
             <img src="./../assets/imgs/home/avatar.png" alt="">
           </div>
         </div>
+        <div class="tabContent clearfix">
+          <div class="tab fl" :class="type===0?'tabActive':''" @click="tabClick(0)">全部</div>
+          <div class="tab fl" :class="type===1?'tabActive':''" @click="tabClick(1)">裁决书</div>
+          <div class="tab fl" :class="type===2?'tabActive':''" @click="tabClick(2)">充值</div>
+        </div>
     </header>
     <section>
-      <div class="tabContent clearfix">
-        <div class="tab fl" :class="type===0?'tabActive':''" @click="tabClick(0)">全部</div>
-        <div class="tab fl" :class="type===1?'tabActive':''" @click="tabClick(1)">裁决书</div>
-        <div class="tab fl" :class="type===2?'tabActive':''" @click="tabClick(2)">充值</div>
-      </div>
       <div class="listContent" v-if="filterList.length">
         <pull-refresh v-model="refreshing" @refresh="onRefresh">
           <List v-model="loadMore" :finished="finished" finished-text="没有更多了" :offset=offset @load="onLoad">
@@ -97,7 +110,9 @@ export default {
       loadMore: false,
       finished: false,
       refreshing: false,
-      offset: 100
+      offset: 100,
+      headerShow: false,
+      titleFonSize: '0.8rem'
     }
   },
   components: { PullRefresh, List },
@@ -187,17 +202,36 @@ export default {
   },
   created () {
     this.getData()
+  },
+  mounted () {
+    const This = this
+    window.onscroll = function () {
+      var a = document.documentElement.scrollTop || document.body.scrollTop// 滚动条y轴上的距离
+      var b = document.documentElement.clientHeight || document.body.clientHeight// 可视区域的高度
+      var c = document.documentElement.scrollHeight || document.body.scrollHeight// 可视化的高度与溢出的距离（总高度）
+      console.log(a, b, c)
+      // This.titleFonSize = 0.8 - ((53 - a) / 53 * 0.32) + 'rem'
+      // 0.48rem
+      if (a > 53) {
+        This.titleFonSize = 0.48 + 'rem'
+        This.headerShow = true
+      } else {
+        This.headerShow = false
+        This.titleFonSize = 0.8 + 'rem'
+      }
+    }
   }
 }
 </script>
 <style lang="stylus" scoped>
 .wrapper
   color:#4A4A4A;
-  header
-    background:linear-gradient(135deg,rgba(0,108,255,0.81) 0%,rgba(0,72,157,1) 100%);
-    text-align:center;
-    padding:66px 14px 9px 20px;
+  transition: all 2s;
+  header.default
     .headerBox
+      background:linear-gradient(135deg,rgba(0,108,255,0.81) 0%,rgba(0,72,157,1) 100%);
+      text-align:center;
+      padding:66px 14px 9px 20px;
       display:flex;
       text-align:left;
       justify-content:space-between;
@@ -212,25 +246,44 @@ export default {
         width:37px;
         position relative
         top:2px;
+  header.active
+    position:fixed;
+    left:0;
+    right:0;
+    z-index:1000;
+    background-color:#f0f0f0;
+    .headerBox
+      background:linear-gradient(135deg,rgba(0,108,255,0.81) 0%,rgba(0,72,157,1) 100%);
+      text-align:center;
+      padding:20px 0 0 0;
+      text-align:center;
+      .title
+        font-size:18px;
+        line-height:42px;
+        height:42px;
+        color:#ffffff;
+        margin:auto;
+      .avatar
+        display:none
+  .tabContent
+    width:347px
+    margin:12px auto 14px;
+    .tab
+      width:33.33%;
+      font-size:15px;
+      line-height:40px;
+      background:#FFFFFF
+      color:#1890FF;
+    :first-child
+      border-right :1pt solid #F5F5F5;
+      border-radius:4px 0px 0px 4px;
+    :last-child
+      border-left :1pt solid #F5F5F5;
+      border-radius:0px 4px 4px 0px;
+    .tabActive
+      background:#1890FF;
+      color:#FFFFFF;
   section
-    .tabContent
-      width:347px
-      margin:12px auto 14px;
-      .tab
-        width:33.33%;
-        font-size:15px;
-        line-height:40px;
-        background:#FFFFFF
-        color:#1890FF;
-      :first-child
-        border-right :1pt solid #F5F5F5;
-        border-radius:4px 0px 0px 4px;
-      :last-child
-        border-left :1pt solid #F5F5F5;
-        border-radius:0px 4px 4px 0px;
-      .tabActive
-        background:#1890FF;
-        color:#FFFFFF;
     .listContent
       .itemBox
         min-height:484px;

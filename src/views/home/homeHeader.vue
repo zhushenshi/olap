@@ -1,7 +1,7 @@
 <template>
   <div>
-    <header>
-        <div class="headerTopBox">
+    <header class="myHeader" :class="{myHeaderActive:!headerShow}">
+        <div class="headerTopBox" :class="{headerTopBoxDefault:!headerShow, headerTopBoxActive:headerShow}">
           <div class="title">工作台</div>
           <div class="avatar" @click="popPersonalCenter">
             <img src="./../../assets/imgs/home/avatar.png" alt="">
@@ -24,6 +24,7 @@
 </template>
 <script>
 import { api } from '@/utils/api'
+
 export default {
   data () {
     return {
@@ -31,7 +32,8 @@ export default {
         disputeTotalAmount: 0,
         arbitralTotalAmount: 0,
         arbTotalCount: 0
-      }
+      },
+      headerShow: false
     }
   },
   created () {
@@ -40,6 +42,20 @@ export default {
         this.moneyinfo = res.data
       }
     })
+  },
+  mounted () {
+    const This = this
+    window.onscroll = function () {
+      var a = document.documentElement.scrollTop || document.body.scrollTop// 滚动条y轴上的距离
+      var b = document.documentElement.clientHeight || document.body.clientHeight// 可视区域的高度
+      var c = document.documentElement.scrollHeight || document.body.scrollHeight// 可视化的高度与溢出的距离（总高度）
+      console.log(a, b, c)
+      if (a > 63) {
+        This.headerShow = true
+      } else if (This.headerShow && a < 23) {
+        This.headerShow = false
+      }
+    }
   },
   methods: {
     popPersonalCenter () {
@@ -58,16 +74,15 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-  header
-    background-repeat:no-repeat;
+  .myHeaderActive
     background:url('./../../assets/imgs/home/homeTop.png') top no-repeat;
+  header.myHeader
+    background-repeat:no-repeat;
+    // background:url('./../../assets/imgs/home/homeTop.png') top no-repeat;
     background-size: contain;
     text-align:center;
-    padding:63px 14px 0;
+    padding:63pX 0 0;
     .headerTopBox
-      display:flex;
-      text-align:left;
-      justify-content:space-between;
       .title
         font-size:30px;
         line-height:42px;
@@ -81,8 +96,25 @@ export default {
         top:2px;
         img
           width:100%;
+    .headerTopBoxActive
+      background:url('./../../assets/imgs/home/homeTop.png') top no-repeat;
+      text-align:center;
+      padding:20px 14px 0;
+      position:fixed;
+      left:0;
+      right:0;
+      top:0;
+      .title
+        font-size:18px;
+      .avatar
+        display:none;
+    .headerTopBoxDefault
+      display:flex;
+      text-align:left;
+      justify-content:space-between;
+      padding:0 14px;
     .home-info
-      margin-top:14px;
+      margin:14px 14px 0 14px;
       box-shadow:0px 3px 6px rgba(0,0,0,0.16);
       border-radius:5px;
       background-color:#FFFFFF;
