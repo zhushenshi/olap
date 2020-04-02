@@ -2,7 +2,6 @@ import Vue from 'vue'
 import axios from 'axios'
 import { Notify } from 'vant'
 import { baseURL } from '@/utils/config'
-import store from '../store'
 import 'vant/lib/notify/style/index'
 
 const myAxios = axios.create({
@@ -12,14 +11,8 @@ const myAxios = axios.create({
 // http请求拦截器
 myAxios.interceptors.request.use(config => {
   // 加载圈
-  const { adminAccessToken } = store.state.admin
-  if (adminAccessToken) {
-    if (localStorage.getItem('adminAccessToken') === adminAccessToken) {
-      config.headers.Authorization = adminAccessToken
-    } else if (localStorage.getItem('adminAccessToken')) {
-      Vue.prototype.$Toast({ message: '权限错误', position: 'bottom' })
-      return false
-    }
+  if (localStorage.getItem('adminAccessToken')) {
+    config.headers.Authorization = localStorage.getItem('adminAccessToken')
   }
   return config
 }, error => {
@@ -36,8 +29,6 @@ myAxios.interceptors.response.use(res => {
     Vue.prototype.$Toast({ message: error.response.status, position: 'bottom' })
     if (error.response.status === 401) { /// / token过期或被顶掉
       Notify({ type: 'primary', message: error.response.data ? error.response.data.message : '登录失效' })
-      // commit('setExpireStatus', true)
-      store.commit('set_admin_token', '')
       localStorage.setItem('adminAccessToken', '')
       var setCookie = function (name, value) {
         var time = 24 * 60 * 60 * 1000

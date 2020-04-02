@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
-import store from './store'
 import '@/stylus/index.styl' // global css
 import './assets/iconfont/iconfont.css'// iconfont
 import { Toast, Indicator } from 'mint-ui'
@@ -18,13 +17,8 @@ Vue.prototype.$Indicator = Indicator
 console.log(process.env.NODE_ENV)
 window.getTokenCallback = function (token) {
   localStorage.setItem('adminAccessToken', token)
-  if (localStorage.getItem('adminAccessToken')) {
-    store.commit('set_admin_token', localStorage.getItem('adminAccessToken'))
-    store.commit('set_admin_name', localStorage.getItem('adminName'))
-  }
   new Vue({
     router,
-    store,
     render: h => h(App)
   }).$mount('#app')
 }
@@ -37,7 +31,6 @@ if (/iphone|ipad|ipod/.test(ua) && process.env.NODE_ENV === 'production') {
 } else {
   new Vue({
     router,
-    store,
     render: h => h(App)
   }).$mount('#app')
 }

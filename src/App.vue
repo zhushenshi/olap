@@ -13,10 +13,6 @@ export default {
       this.setCookie('token2', '')
       this.setCookie('token3', '')
       localStorage.setItem('adminAccessToken', token)
-      if (localStorage.getItem('adminAccessToken')) {
-        this.$store.commit('set_admin_token', localStorage.getItem('adminAccessToken'))
-        this.$store.commit('set_admin_name', localStorage.getItem('adminName'))
-      }
     }
     // 设置 rem 函数
     function setRem () {

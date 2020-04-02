@@ -777,7 +777,7 @@
           </div>
         </Tab>
         <Tab title="案件追踪">
-          <case-tracking :arbProcess="arbProcess" @add-comment="getData"></case-tracking>
+          <case-tracking :arbProcess="arbProcess" :caseTrackingValue="caseTrackingValue" @add-comment="getData"></case-tracking>
         </Tab>
         <Tab title="案件文书">
           <case-document :caseDocumentInfo="caseDocumentInfo"></case-document>
@@ -919,6 +919,7 @@ export default {
       baseUrl: location.origin,
       previewFileShow: false,
       arbProcess: '',
+      caseTrackingValue:true,
       caseDocumentInfo: {},
       id: '',
       arbiInfo: {},
@@ -1059,7 +1060,7 @@ export default {
         var ua = navigator.userAgent.toLowerCase()
         if (/iphone|ipad|ipod/.test(ua)) {
           if (window.webkit && window.webkit.messageHandlers) {
-            window.webkit.messageHandlers.loadDoc .postMessage([url])
+            window.webkit.messageHandlers.loadDoc .postMessage([url,lastName])
           } else {}
         } else if (/android/.test(ua)) {
           if (window.object && typeof (window.object.loadDoc) === 'function') {
@@ -1095,6 +1096,7 @@ export default {
       const applyedArr = []
       const applyers = []
       this.arbProcess = this.arbiInfo.arbProcess
+      this.caseTrackingValue=!this.caseTrackingValue
       this.caseDocumentInfo = {
         arbitralInfoIds: [this.arbiInfo.id],
         documentType: '1,2,3,4,5,6,7,8,9,10'
@@ -1132,7 +1134,18 @@ export default {
       }
       console.log(this.arbiInfo.step)
       this.step = this.arbiInfo.step
-
+      //下拉刷新 会重复
+      this.arbitrationApplication=[]
+      this.arbitralAttachment=[] //  证据资料
+      this.replyLists=[] //  答辩资料
+      this.replyBrief=[] //  答辩书
+      this.conciliationEvidence=[]
+      this.dissentApplication=[] //  异议申请书
+      this.dissentAttachment=[] //  异议证据
+      this.dissentReplyApplication=[] //  异议答辩申请书
+      this.dissentReplyAttachment=[] // 补充资料
+      this.supplementaryArrb=[]
+      this.supplementaryArrs=[]
       this.arbitralContractAdvancey = this.arbiInfo.arbitralContractAdvancey || {}
       this.arbiInfo.arbitralAttachment && this.arbiInfo.arbitralAttachment.forEach(item => {
         if (item.arbitralPtype === 2 && item.evidenceProperty === 1) {

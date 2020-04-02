@@ -4,7 +4,7 @@
         <div class="headerTopBox" :class="{headerTopBoxDefault:!headerShow, headerTopBoxActive:headerShow}">
           <div class="title">工作台</div>
           <div class="avatar" @click="popPersonalCenter">
-            <img src="./../../assets/imgs/home/avatar.png" alt="">
+            <img src="./../../assets/imgs/home/defult_head_url.png" alt="">
           </div>
         </div>
         <div class="home-info clearfix">
@@ -94,6 +94,8 @@ export default {
         width:37px;
         position relative
         top:2px;
+        border-radius:50%;
+        background-color:#ffffff;
         img
           width:100%;
     .headerTopBoxActive

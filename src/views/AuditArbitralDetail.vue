@@ -113,7 +113,8 @@ export default {
       evidences: [],
       evidenceName: '',
       selectContent: [],
-      attachmentEvidenceId: ''
+      attachmentEvidenceId: '',
+      api
     }
   },
   components: { Header },

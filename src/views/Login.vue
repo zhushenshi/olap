@@ -70,17 +70,12 @@ export default {
         }).then((res) => {
           this.$Indicator.close()
           if (res.data.code === '100020') { // 登录成功
-            this.$store.commit('set_admin_token', res.data.data.access_token)
-            console.log(res.data.data.access_token.length)
-            this.$store.commit('set_admin_name', res.data.data.realname)
             // var a = res.data.data.access_token.length
             // this.setCookie('token1', res.data.data.access_token.slice(0, Math.floor(a / 3)))
             // this.setCookie('token2', res.data.data.access_token.slice(Math.floor(a / 3)), Math.floor(a / 3 * 2))
             // this.setCookie('token3', res.data.data.access_token.slice(Math.floor(a / 3 * 2), a))
+            localStorage.setItem('adminAccessToken', res.data.data.access_token)
             this.$router.push({ path: '/portal/home' })
-            localStorage.oldpath = '/admin/home/workbench'
-            localStorage.index = 0//
-            localStorage.roleId = res.data.data.roleId//
           } else {
             this.loginForm.verificationCode = ''
             this.refreshCode()

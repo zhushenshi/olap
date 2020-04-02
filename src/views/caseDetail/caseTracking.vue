@@ -53,6 +53,9 @@ export default {
   props: {
     arbProcess: {
       type: String
+    },
+    caseTrackingValue: {
+      type: Boolean
     }
   },
   data () {
@@ -68,7 +71,14 @@ export default {
   components: { PullRefresh },
   created () {
     this.getHistroyTaskInst()
-    console.log(this.arbProcess)
+  },
+  watch: {
+    caseTrackingValue: function (o, n) {
+      this.getHistroyTaskInst()
+    },
+    arbProcess: function (o, n) {
+      this.getHistroyTaskInst()
+    }
   },
   methods: {
     addComment () {
@@ -79,12 +89,11 @@ export default {
       this.refreshing = true
       if (this.refreshing) { // 关闭下拉刷新
         this.addComment()
-        console.log('pppp')
         this.refreshing = false // 关闭下拉刷新中
       }
-      this.getHistroyTaskInst()
     },
     getHistroyTaskInst () { // 案件追踪
+      this.loading = true
       api.getHistroyTaskInst({
         arbProcess: this.arbProcess
       }).then((res) => {

@@ -57,7 +57,7 @@ export default {
         api.rechargeAuditNp(params).then(res => {
           this.$Indicator.close()
           if (res.data.code === '1') {
-            this.$Toast({ message: res.data.msg, position: 'bottom' })
+            // this.$Toast({ message: res.data.msg, position: 'bottom' })
             this.$router.push({ name: 'examineResult' })
           } else {
             this.$Toast({ message: res.data.msg, position: 'bottom' })

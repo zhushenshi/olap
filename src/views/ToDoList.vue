@@ -4,7 +4,7 @@
         <div class="headerBox">
           <div class="title" :style="{'font-size':titleFonSize}">待办事项</div>
           <div class="avatar" @click="popPersonalCenter">
-            <img src="./../assets/imgs/home/avatar.png" alt="">
+            <img src="./../assets/imgs/home/defult_head_url.png" alt="">
           </div>
         </div>
         <div class="tabContent clearfix">
@@ -17,7 +17,7 @@
         <div class="headerBox">
           <div class="title">待办事项</div>
           <div class="avatar" @click="popPersonalCenter">
-            <img src="./../assets/imgs/home/avatar.png" alt="">
+            <img src="./../assets/imgs/home/defult_head_url.png" alt="">
           </div>
         </div>
         <div class="tabContent clearfix">
@@ -225,7 +225,7 @@ export default {
 <style lang="stylus" scoped>
 .wrapper
   color:#4A4A4A;
-  transition: all 2s;
+  padding-bottom:50px;
   header.default
     .headerBox
       background:linear-gradient(135deg,rgba(0,108,255,0.81) 0%,rgba(0,72,157,1) 100%);
@@ -246,6 +246,10 @@ export default {
         width:37px;
         position relative
         top:2px;
+        border-radius:50%;
+        background-color:#ffffff;
+        img
+          width:100%;
   header.active
     position:fixed;
     left:0;
