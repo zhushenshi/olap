@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="caseData content">
+    <div class="caseData content" v-if="show">
       <div class="caseDataPieTitle">案件(被申请人)地域分布</div>
       <china-map  ref="chinaMap" :chinajson='chinajson'></china-map>
     </div>
@@ -12,7 +12,8 @@ import { api } from '@/utils/api'
 export default {
   data () {
     return {
-      chinajson: []
+      chinajson: [],
+      show: false
     }
   },
   components: { ChinaMap },
@@ -39,7 +40,10 @@ export default {
     },
     getData () {
       api.getIndexMap().then((res) => {
-        this.setEchartsMap(res.data)
+        if (res.data.success) {
+          this.show = true
+          this.setEchartsMap(res.data)
+        }
       })
     }
   },
