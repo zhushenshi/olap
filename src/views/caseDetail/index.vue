@@ -1064,7 +1064,7 @@ export default {
           } else {}
         } else if (/android/.test(ua)) {
           if (window.object && typeof (window.object.loadDoc) === 'function') {
-            window.object.loadDoc (url)
+            window.object.loadDoc (url,lastName)
           }
         }
         // this.$Toast({ message: '暂不支持', position: 'bottom' })
