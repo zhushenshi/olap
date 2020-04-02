@@ -69,10 +69,10 @@
                           <img src="./../assets/imgs/shenhe.png" alt="">
                           <span v-if="value2.rechargeData">{{value2.rechargeData.applicant}}</span>
                         </div>
-                         <div class="itemInfoRow">
+                         <!-- <div class="itemInfoRow">
                           <span class="label">案件编号：</span>
                            <span v-if="value2.rechargeData">{{value2.rechargeData.caseNumber}}</span>
-                        </div>
+                        </div> -->
                         <div class="itemInfoRow">
                           <span class="label">仲裁费：</span>
                           <span v-if="value2.rechargeData">{{value2.rechargeData.money}}元</span>
