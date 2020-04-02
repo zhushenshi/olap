@@ -6,7 +6,7 @@
     </div>
     <div v-else>
       <div v-for="(item,index) in documents" :key="index">
-        <h3 class="title">{{getProcessName(item.documentType)}}送达流程</h3>
+        <h3 class="title">{{item.documentType}}送达流程</h3>
         <div  v-for="(value,inde) in item.list" :key="inde">
           <div class="documentsList">
             <div>{{value.fileName}}</div>
@@ -29,7 +29,7 @@
           </p>
           <p class="documentsName">
             <span>送达流程：</span>
-            <span>{{getProcessName(documentTypeName)}}</span>
+            <span>{{documentTypeName}}</span>
           </p>
         </div>
         <div class="documentsObj">
@@ -64,8 +64,8 @@
               <div class="documentsNames">
                 <div class="arrivedTime">送达时间：</div>
                 <div>
-                  <span class="express">{{wsobj.expressTime}}(寄)</span>
-                  <span class="express">{{wsobj.arrivedTime}}(送)</span>
+                  <span class="express" v-if="wsobj.expressTime">{{wsobj.expressTime}}(寄)</span>
+                  <span class="express" v-if="wsobj.arrivedTime">{{wsobj.arrivedTime}}(送)</span>
                 </div>
               </div>
           </div>
@@ -164,7 +164,7 @@ export default {
       this.show = false
     },
     seeinfo (val, documentType) { // 查看案件文书
-      console.log(val)
+      console.log(val, 'ppp')
       this.wsobj = {}
       this.show = true
       this.documentTypeName = documentType
@@ -174,7 +174,6 @@ export default {
       this.getData(result)
     },
     getData (val) {
-      console.log(val)
       this.wsobj.documentName = val.documentName
       val.arrivedType.split('/').map(el => {
         console.log(el)
@@ -217,15 +216,15 @@ export default {
           for (let i = 0; i < this.list.length; i++) {
             this.list[i].fileName = this.getFiletName(this.list[i].documentName)
             if (i === 0) {
-              var obj = { list: [{ fileName: '', list: [] }], documentType: this.list[0].documentType }
+              var obj = { list: [{ fileName: '', list: [] }], documentType: this.list[0].arbitralStatus }
               obj.list[0].fileName = this.list[0].fileName
               obj.list[0].list.push(this.list[0])
               arr.push(obj)
             } else {
               const leng = arr.length
-              console.log(length)
               for (let j = 0; j < leng; j++) {
-                if (this.list[i].documentType === arr[j].documentType) {
+                console.log(arr[j].arbitralStatus, 'aaa')
+                if (this.list[i].arbitralStatus === arr[j].documentType) {
                   const len = arr[j].list.length
                   for (let k = 0; k < len; k++) {
                     if (this.list[i].fileName === arr[j].list[k].fileName) {
@@ -238,8 +237,8 @@ export default {
                       break
                     }
                   }
-                } else if (this.list[i].documentType !== arr[j].documentType && j === leng - 1) {
-                  var o = { list: [{ fileName: '', list: [] }], documentType: this.list[i].documentType }
+                } else if (this.list[i].arbitralStatus !== arr[j].arbitralStatus && j === leng - 1) {
+                  var o = { list: [{ fileName: '', list: [] }], documentType: this.list[i].arbitralStatus }
                   o.list[0].fileName = this.list[i].fileName
                   o.list[0].list.push(this.list[i])
                   arr.push(o)
