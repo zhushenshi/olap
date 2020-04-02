@@ -95,13 +95,15 @@ export default {
         img
           width:100%;
     .headerTopBoxActive
-      background:url('./../../assets/imgs/home/homeTop.png') top no-repeat;
+      // background:url('./../../assets/imgs/home/homeTop.png') top no-repeat;
+      background-image: linear-gradient(to right, #006cff, #00489d);
       text-align:center;
       padding:20px 14px 0;
       position:fixed;
       left:0;
       right:0;
       top:0;
+      z-index:1000
       .title
         font-size:18px;
       .avatar
