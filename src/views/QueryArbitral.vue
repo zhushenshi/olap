@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="queryArbitral">
+    <div class="queryArbitral" :class="{queryArbitralActive:headerShow}">
       <p>
         <span class="caseTitle">案件查询</span>
         <span class="searchIcon" @click="goIntoPage('/queryArbitral/search')">
@@ -11,74 +11,111 @@
         </span>
       </p>
     </div>
-    <div class="caseStatus" v-if="caseStatusShow">
-      <ul>
-        <li v-for="item in arbTypes" :key="item.value"  @click="tabFilter(item.value)">
-            <span :class="{'activeClass': activeName == item.value}">{{item.label}}</span>
-        </li>
-      </ul>
+    <div :class="{activeFixed:headerShow}">
+      <div class="caseStatus" v-if="caseStatusShow" >
+        <ul>
+          <li v-for="item in arbTypes" :key="item.value"  @click="tabFilter(item.value)">
+              <span :class="{'activeClass': activeName == item.value}">{{item.label}}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="tabFilter">
+        <p>申请时间
+          <span class="caret-wrapper">
+            <i class="sort-caret ascending" :class="{'ascendingClass': sortName === 2 }" @click="fllter(2)"></i>
+            <i class="sort-caret descending" :class="{'descendingClass': sortName === 1 }" @click="fllter(1)"></i>
+          </span>
+        </p>
+        <p>
+          案件编号
+            <span class="caret-wrapper">
+            <i class="sort-caret ascending" :class="{'ascendingClass': caseName === 2}" @click="fllters(2)"></i>
+            <i class="sort-caret descending" :class="{'descendingClass': caseName === 1}" @click="fllters(1)"></i>
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="queryArbitral" style="opacity:0" v-if="headerShow">
+      <p>
+        <span class="caseTitle">案件查询</span>
+        <span class="searchIcon" @click="goIntoPage('/queryArbitral/search')">
+            <img src="./../assets/imgs/search.png"/>
+        </span>
+        <span v-if="showReset" class="searchIcon" @click="reset()">
+            <img src="./../assets/imgs/reset.png"/>
+        </span>
+      </p>
+    </div>
+    <div style="opacity:0"  v-if="headerShow">
+      <div class="caseStatus" v-if="caseStatusShow" >
+        <ul>
+          <li v-for="item in arbTypes" :key="item.value"  @click="tabFilter(item.value)">
+              <span :class="{'activeClass': activeName == item.value}">{{item.label}}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="tabFilter">
+        <p>申请时间
+          <span class="caret-wrapper">
+            <i class="sort-caret ascending" :class="{'ascendingClass': sortName === 2 }" @click="fllter(2)"></i>
+            <i class="sort-caret descending" :class="{'descendingClass': sortName === 1 }" @click="fllter(1)"></i>
+          </span>
+        </p>
+        <p>
+          案件编号
+            <span class="caret-wrapper">
+            <i class="sort-caret ascending" :class="{'ascendingClass': caseName === 2}" @click="fllters(2)"></i>
+            <i class="sort-caret descending" :class="{'descendingClass': caseName === 1}" @click="fllters(1)"></i>
+          </span>
+        </p>
+      </div>
     </div>
     <div v-if="filterList.length">
-    <div class="tabFilter">
-       <p>申请时间
-         <span class="caret-wrapper">
-           <i class="sort-caret ascending" :class="{'ascendingClass': sortName === 2 }" @click="fllter(2)"></i>
-           <i class="sort-caret descending" :class="{'descendingClass': sortName === 1 }" @click="fllter(1)"></i>
-        </span>
-       </p>
-       <p>
-         案件编号
-          <span class="caret-wrapper">
-           <i class="sort-caret ascending" :class="{'ascendingClass': caseName === 2}" @click="fllters(2)"></i>
-           <i class="sort-caret descending" :class="{'descendingClass': caseName === 1}" @click="fllters(1)"></i>
-        </span>
-       </p>
-    </div>
-   <pull-refresh v-model="refreshing" @refresh="onRefresh">
-  <List
-    v-model="loading" :finished="finished" finished-text="没有更多了" :offset=offset @load="onLoad">
-     <div class="filterCnt">
-      <ul>
-        <li v-for="(item,index) in filterList" :key="index" @click="intoDetail(item)">
-            <p>
-              <span>
-                <img src="./../assets/imgs/shenhe.png">
-              </span>
-              <span class="caseNum">{{item.code}}</span>
-            </p>
-            <div class="filterL">
-            <p>
-              <span class="filterTitle">申请人：</span>
-              <span class="arbProsecutorName">{{item.arbProsecutorName}}</span>
-            </p>
-            <p>
-              <span class="filterTitle">标的额：</span>
-            {{item.arbDisputeMoney | money}}元
-            </p>
-            <p>
-              <span class="filterTitle">申请日期：</span>
-            {{item.createTime}}
-            </p>
-          </div>
-          <div class="filterR">
-              <!-- <span>
-                <img src="./../assets/imgs/zhongcaifuwuqi.png"/>
-              </span> -->
-             <div class="filterRs">
-                <div class="status" v-if='item.status'>{{item.status}}</div>
-                <div class="otherStatus" v-if="item.recallStatus === '1'">
-                  <span class="recall">撤回</span>
+      <pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <List
+          v-model="loading" :finished="finished" finished-text="没有更多了" :offset=offset @load="onLoad">
+          <div class="filterCnt">
+            <ul>
+              <li v-for="(item,index) in filterList" :key="index" @click="intoDetail(item)">
+                  <p>
+                    <span>
+                      <img src="./../assets/imgs/shenhe.png">
+                    </span>
+                    <span class="caseNum">{{item.code}}</span>
+                  </p>
+                  <div class="filterL">
+                  <p>
+                    <span class="filterTitle">申请人：</span>
+                    <span class="arbProsecutorName">{{item.arbProsecutorName}}</span>
+                  </p>
+                  <p>
+                    <span class="filterTitle">标的额：</span>
+                  {{item.arbDisputeMoney | money}}元
+                  </p>
+                  <p>
+                    <span class="filterTitle">申请日期：</span>
+                  {{item.createTime}}
+                  </p>
                 </div>
-                <div class="otherStatus"  v-if="item.decisionStatus&&item.decisionStatus >= 1&&item.decisionStatus < 60">
-                  <span class="recall">异议</span>
+                <div class="filterR">
+                    <!-- <span>
+                      <img src="./../assets/imgs/zhongcaifuwuqi.png"/>
+                    </span> -->
+                  <div class="filterRs">
+                      <div class="status" v-if='item.status'>{{item.status}}</div>
+                      <div class="otherStatus" v-if="item.recallStatus === '1'">
+                        <span class="recall">撤回</span>
+                      </div>
+                      <div class="otherStatus"  v-if="item.decisionStatus&&item.decisionStatus >= 1&&item.decisionStatus < 60">
+                        <span class="recall">异议</span>
+                      </div>
+                  </div>
                 </div>
-             </div>
+              </li>
+            </ul>
           </div>
-        </li>
-      </ul>
-    </div>
-  </List>
-</pull-refresh>
+        </List>
+      </pull-refresh>
     </div>
     <div v-if="!filterList.length" class="noData">
       <img src="./../assets/imgs/zanwu-2.png"/>
@@ -116,7 +153,8 @@ export default {
       refreshing: false,
       offset: 100,
       caseStatusShow: true,
-      showReset: false
+      showReset: false,
+      headerShow: false
     }
   },
   components: { PullRefresh, List },
@@ -231,6 +269,18 @@ export default {
   },
   mounted () {
     this.activeName = 0
+    const This = this
+    window.onscroll = function () {
+      var topHeight = document.documentElement.scrollTop || document.body.scrollTop// 滚动条y轴上的距离
+      if (topHeight > 53) {
+        This.headerShow = true
+      } else {
+        This.headerShow = false
+      }
+    }
+  },
+  destroyed () {
+    window.onscroll = null
   },
   created () {
     if (this.$route.params.form) {
@@ -249,25 +299,43 @@ export default {
   height 117px
   background-image: linear-gradient(to right, #006CFF , #00489D);
   p
-      overflow hidden
-      position relative
-      top 66px
-      height 40px
-      line-height 40px
+    overflow hidden
+    position relative
+    top 66px
+    height 40px
+    line-height 40px
+    font-size 30px
+    display flex
+    justify-content space-between
+    padding:0 20px;
    .caseTitle
-      font-size 30px
       color #ffffff
-      text-align left
-      padding-left 20px
       font-weight 500
-      float left
     .searchIcon
       width 16px
       font-size 16px
       float right
-      margin-right 20px
       i
         font-size 50px
+ .activeFixed
+  position fixed
+  left 0
+  right 0
+  top:64px;
+  z-index:1000;
+.queryArbitralActive
+  position:fixed;
+  left:0
+  right:0;
+  z-index:1000;
+  height 64px
+  padding-top:20px;
+  p
+    top:0
+    font-size 18px
+    justify-content center
+    .searchIcon
+      display:none
 .caseStatus
   background #ffffff
   height 56px;
@@ -296,6 +364,7 @@ export default {
   display flex
   padding 12px 0
   font-size 14px
+  background-color:#f0f0f0
   p
     flex 1
 .caret-wrapper
