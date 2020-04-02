@@ -13,6 +13,7 @@ export default {
       this.setCookie('token2', '')
       this.setCookie('token3', '')
       localStorage.setItem('adminAccessToken', token)
+      localStorage.setItem('roleId', this.getCookie('roleId'))
     }
     // 设置 rem 函数
     function setRem () {

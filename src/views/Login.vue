@@ -75,6 +75,7 @@ export default {
             // this.setCookie('token2', res.data.data.access_token.slice(Math.floor(a / 3)), Math.floor(a / 3 * 2))
             // this.setCookie('token3', res.data.data.access_token.slice(Math.floor(a / 3 * 2), a))
             localStorage.setItem('adminAccessToken', res.data.data.access_token)
+            localStorage.setItem('roleId', res.data.data.roleId)
             this.$router.push({ path: '/portal/home' })
           } else {
             this.loginForm.verificationCode = ''

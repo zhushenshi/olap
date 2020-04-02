@@ -252,7 +252,6 @@ export default {
         position relative
         top:2px;
         border-radius:50%;
-        background-color:#ffffff;
         img
           width:100%;
   header.active

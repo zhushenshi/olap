@@ -15,7 +15,7 @@ Vue.config.productionTip = false
 Vue.prototype.$Toast = Toast
 Vue.prototype.$Indicator = Indicator
 console.log(process.env.NODE_ENV)
-window.getTokenCallback = function (token) {
+window.getTokenCallback = function (token, roleId) {
   localStorage.setItem('adminAccessToken', token)
   new Vue({
     router,
@@ -24,7 +24,7 @@ window.getTokenCallback = function (token) {
 }
 var ua = navigator.userAgent.toLowerCase()
 if (/iphone|ipad|ipod/.test(ua) && process.env.NODE_ENV === 'production') {
-// if (/iphone|ipad|ipod/.test(ua)) {本地测试ios用
+// if (/iphone|ipad|ipod/.test(ua)) { // 本地测试ios用
   if (window.webkit && window.webkit.messageHandlers) {
     window.webkit.messageHandlers.getToken.postMessage([''])
   }

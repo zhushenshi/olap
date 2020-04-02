@@ -7,11 +7,11 @@
           <!-- <img src="./../../assets/imgs/home/courtTrial.png" alt="" @click="$router.push('/queryArbitral')"> -->
           <img src="./../../assets/imgs/home/courtTrial.png" alt="">
         </div>
-        <home-progress></home-progress>
+        <home-progress v-if="!issecretary"></home-progress>
         <home-case-num></home-case-num>
         <home-case-pay></home-case-pay>
         <home-case-percent></home-case-percent>
-        <home-case-map></home-case-map>
+        <home-case-map v-if="!issecretary"></home-case-map>
       </section>
     </div>
   </div>
@@ -27,6 +27,11 @@ import homeCaseMap from './homeCaseMap.vue'
 export default {
   name: 'Home',
   components: { homeHeader, homeProgress, homeCaseNum, homeCasePay, homeCasePercent, homeCaseMap },
+  data () {
+    return {
+      issecretary: false
+    }
+  },
   methods: {
     enterMeetting () {
       var ua = navigator.userAgent.toLowerCase()
@@ -39,6 +44,14 @@ export default {
           window.object.enterMeetting()
         }
       }
+    }
+  },
+  mounted () {
+    var arr = localStorage.roleId ? localStorage.roleId.split(',') : []
+    if (arr.indexOf('secretary') > -1) {
+      this.issecretary = true
+    } else {
+      this.issecretary = false
     }
   }
 }
