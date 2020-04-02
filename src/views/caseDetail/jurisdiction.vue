@@ -41,8 +41,8 @@
             <div>异议申请书</div>
             <div v-if="dissentApplication&&dissentApplication.length>0&&dissentApplication[0].arbAttachmentDatas&&dissentApplication[0].arbAttachmentDatas.length>0">
               <div class="black mt2 fileBox" v-for="(evidence, index) in dissentApplication" :key="index">
-                <div v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'a'+ind">
-                  <span class="icon iconfont" :class="util.getFileIcon(file.attachName)" @click="previewFile(file.attachName,file.attachUrlDes)"></span>
+                <div v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'a'+ind" @click="previewFile(file.attachName,file.attachUrlDes)">
+                  <span class="icon iconfont" :class="util.getFileIcon(file.attachName)" ></span>
                   <span class="fileName" :href="file.attachUrlDes">{{file.attachName}}</span>
                 </div>
               </div>
@@ -61,7 +61,7 @@
           <p style="margin-top:16px;">证明内容：</p>
           <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
           <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
-          <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;">
+          <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;word-wrap: break-word;word-break: normal;">
             <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'b'+ind" @click="previewFile(file.attachName,file.attachUrlDes)">
               <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
               <span class="fileName">{{file.attachName}}</span>
@@ -71,7 +71,7 @@
         <div class="flexInfoBox">
           <div>
             <div>事实和理由</div>
-            <div class="black mt2">{{arbiInfo.remark}}</div>
+            <div class="black mt2">{{arbiInfo.remark?arbiInfo.remark:"/"}}</div>
           </div>
         </div>
       </div>
@@ -98,7 +98,8 @@
           </div>
         </div>
         <div style="margin-top:14px;">证据资料</div>
-        <div class="grayBg" v-for="(evidence, index) in dissentReplyAttachment" :key="'e'+index">
+        <div v-if="dissentReplyAttachment&&dissentReplyAttachment.length>0">
+           <div class="grayBg"  v-for="(evidence, index) in dissentReplyAttachment" :key="'e'+index">
           <p class="bold black"> {{evidence.evidenceName}}</p>
           <p class="borderBottom" style="padding-top:9px;"></p>
           <p style="padding:14px 0 0 0;">证据标题：</p>
@@ -106,17 +107,19 @@
           <p style="margin-top:16px;">证明内容：</p>
           <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
           <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
-          <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;">
+          <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;word-wrap: break-word;word-break: normal;">
             <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'f'+ind"  @click="previewFile(file.attachName,file.attachUrlDes)">
               <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
               <span class="fileName">{{file.attachName}}</span>
             </div>
           </div>
         </div>
+        </div>
+        <div v-else>/</div>
         <div class="flexInfoBox">
           <div>
             <div>事实和理由</div>
-            <div class="black mt2">{{arbiInfo.defenceRemark}}</div>
+            <div class="black mt2">{{arbiInfo.defenceRemark?arbiInfo.defenceRemark:'/'}}</div>
           </div>
         </div>
       </div>
@@ -136,7 +139,7 @@ export default {
   //     type: Array
   //   }
   // },
-  props: ['dissentApplication', 'dissentAttachment', 'dissentReplyApplication', 'arbiInfo'],
+  props: ['dissentApplication', 'dissentAttachment', 'dissentReplyApplication', 'arbiInfo', 'previewFile', 'dissentReplyAttachment'],
   components: { Collapse, CollapseItem },
   data () {
     return {

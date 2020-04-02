@@ -866,7 +866,7 @@
           <withdraw-data :arbRecallApplyInfoResponse="arbRecallApplyInfoResponse" :previewFile="previewFile"></withdraw-data>
         </Tab>
         <Tab title="管辖权异议资料" v-if="dissentApplication&&dissentApplication.length>0">
-          <jurisdiction :dissentApplication="dissentApplication" :dissentAttachment="dissentAttachment" :previewFile="previewFile" :arbiInfo="arbiInfo" :dissentReplyApplication="dissentReplyApplication"></jurisdiction>
+          <jurisdiction :dissentApplication="dissentApplication" :dissentReplyAttachment="dissentReplyAttachment" :dissentAttachment="dissentAttachment" :previewFile="previewFile" :arbiInfo="arbiInfo" :dissentReplyApplication="dissentReplyApplication"></jurisdiction>
         </Tab>
       </Tabs>
     </section>

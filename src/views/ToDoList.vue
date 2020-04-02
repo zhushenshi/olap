@@ -74,11 +74,16 @@
                            <span v-if="value2.rechargeData">{{value2.rechargeData.caseNumber}}</span>
                         </div> -->
                         <div class="itemInfoRow">
-                          <span class="label">仲裁费：</span>
+                          <span class="label">充值金额：</span>
                           <span v-if="value2.rechargeData">{{value2.rechargeData.money}}元</span>
                         </div>
+                        <div  class="itemInfoRow">
+                          <span class="label">充值时间：</span>
+                          <span v-if="value2.rechargeData">{{value2.rechargeData.capitalTime}}元</span>
+
+                        </div>
                       </div>
-                      <div class="operateBtn operateBtnRecharge">单案充值审核</div>
+                      <div class="operateBtn operateBtnRecharge">充值审核</div>
                     </div>
                 </div>
           </div>
