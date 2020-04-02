@@ -3,11 +3,9 @@
     <div class="queryArbitral" :class="{queryArbitralActive:headerShow}">
       <p>
         <span class="caseTitle">案件查询</span>
-        <span class="searchIcon" @click="goIntoPage('/queryArbitral/search')">
-            <img src="./../assets/imgs/search.png"/>
-        </span>
-        <span v-if="showReset" class="searchIcon" @click="reset()">
-            <img src="./../assets/imgs/reset.png"/>
+        <span class="searchIcon" >
+           <img src="./../assets/imgs/reset.png" v-if="showReset" @click="reset()"/>
+          <img src="./../assets/imgs/search.png" @click="goIntoPage('/queryArbitral/search')"/>
         </span>
       </p>
     </div>
@@ -19,7 +17,7 @@
           </li>
         </ul>
       </div>
-      <div class="tabFilter">
+      <div class="tabFilter" v-if="filterList.length" >
         <p>申请时间
           <span class="caret-wrapper">
             <i class="sort-caret ascending" :class="{'ascendingClass': sortName === 2 }" @click="fllter(2)"></i>
@@ -38,11 +36,9 @@
     <div class="queryArbitral" style="opacity:0" v-if="headerShow">
       <p>
         <span class="caseTitle">案件查询</span>
-        <span class="searchIcon" @click="goIntoPage('/queryArbitral/search')">
-            <img src="./../assets/imgs/search.png"/>
-        </span>
-        <span v-if="showReset" class="searchIcon" @click="reset()">
-            <img src="./../assets/imgs/reset.png"/>
+         <span class="searchIcon" >
+            <img src="./../assets/imgs/reset.png" v-if="showReset" @click="reset()"/>
+             <img src="./../assets/imgs/search.png" @click="goIntoPage('/queryArbitral/search')"/>
         </span>
       </p>
     </div>
@@ -54,7 +50,7 @@
           </li>
         </ul>
       </div>
-      <div class="tabFilter">
+      <div class="tabFilter" >
         <p>申请时间
           <span class="caret-wrapper">
             <i class="sort-caret ascending" :class="{'ascendingClass': sortName === 2 }" @click="fllter(2)"></i>
@@ -312,11 +308,11 @@ export default {
       color #ffffff
       font-weight 500
     .searchIcon
-      width 16px
       font-size 16px
       float right
-      i
-        font-size 50px
+      img
+         margin-right 20px
+         vertical-align middle
  .activeFixed
   position fixed
   left 0
@@ -335,7 +331,9 @@ export default {
     font-size 18px
     justify-content center
     .searchIcon
-      display:none
+      // display:none
+      position: absolute;
+      right 0
 .caseStatus
   background #ffffff
   height 56px;
