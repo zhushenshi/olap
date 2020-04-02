@@ -76,6 +76,7 @@ export default {
             this.$Toast({ message: res.data.msg, position: 'bottom' })
           } else {
             this.$Toast({ message: res.data.msg, position: 'bottom' })
+            this.$router.push({ name: 'portalToDoList' })
           }
         }).catch(ex => { console.log(ex) })
       }
