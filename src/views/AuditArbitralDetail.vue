@@ -245,7 +245,8 @@ export default {
     padding:16px 0 0;
     .selectBox
       white-space: nowrap;
-      overflow: auto;
+      overflow-x: scroll;
+      overflow-y : hidden;
       .item
         width:303px;
         display:inline-block;
