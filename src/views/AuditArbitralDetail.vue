@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Header right="审核" :rightMethod="rightMethod">审核裁决书</Header>
+    <Header right="审核" :rightMethod="rightMethod" :back="backMethod">审核裁决书</Header>
     <section class="casseBaseInfo">
       <div class="caseBaseInfoBox">
         <div class="arbNumber">编号：{{arbiInfo.arbNumber || arbiInfo.arbTemporaryNumber}}</div>
@@ -121,6 +121,9 @@ export default {
   methods: {
     rightMethod () {
       this.$router.push({ name: 'examine', params: { arbiInfo: this.arbiInfo } })
+    },
+    backMethod () {
+      this.$router.replace('/toDoList')
     },
     tabClick (val) {
       this.type = val
@@ -262,6 +265,7 @@ export default {
         padding:8px 16px 9px 16px;
         line-height:22px;
         position: relative;
+        vertical-align top
         >div
           margin:8px 0;
           overflow: hidden;

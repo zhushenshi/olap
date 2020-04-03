@@ -73,7 +73,7 @@ export default {
         this.$Indicator.close()
         if (res.data.code === '1') {
           this.$router.push({ name: 'examineResult' })
-          this.$Toast({ message: res.data.msg, position: 'bottom' })
+          // this.$Toast({ message: res.data.msg, position: 'bottom' })
         } else {
           this.$Toast({ message: res.data.msg, position: 'bottom' })
           this.$router.push({ name: 'toDoList' })
