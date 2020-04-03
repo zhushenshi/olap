@@ -17,6 +17,7 @@ Vue.prototype.$Indicator = Indicator
 console.log(process.env.NODE_ENV)
 window.getTokenCallback = function (token, roleId) {
   localStorage.setItem('adminAccessToken', token)
+  localStorage.setItem('roleId', roleId)
   new Vue({
     router,
     render: h => h(App)
