@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <div class="noData">暂无数据</div>
+      <div class="noData" v-if="documents.length==0">暂无数据</div>
     </div>
   </transition>
   <div v-if="show" class="popBox">
