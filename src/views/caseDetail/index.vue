@@ -791,9 +791,10 @@
         <Tab title="案件文书">
           <case-document :caseDocumentInfo="caseDocumentInfo"></case-document>
         </Tab>
-        <Tab title="组庭信息" v-if="arbiInfo.arbitralMergeHearDetailResponse">
+        <Tab title="组庭信息" v-if="arbiInfo.arbitralMergeHearDetailResponse||(arbiInfo.arbitralRecordResponse&&arbiInfo.arbitralRecordResponse.tribunalType)">
           <div class="tabItem">
-            <Collapse v-model="activeNames2" bind:change="onChange">
+            <!-- 合并组庭信息 -->
+            <Collapse v-model="activeNames2" bind:change="onChange" v-if="arbiInfo.arbitralMergeHearDetailResponse">
               <collapse-item name="1" :is-link="false" :border="false">
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
@@ -852,6 +853,58 @@
                     <div>
                       <div>被申请人仲裁员</div>
                       <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.defendantArbitrator}}</div>
+                    </div>
+                  </div>
+                </div>
+              </collapse-item>
+            </Collapse>
+            <Collapse v-model="activeNames2" bind:change="onChange" v-if="arbiInfo.arbitralRecordResponse&&arbiInfo.arbitralRecordResponse.tribunalType">
+              <collapse-item name="1" :is-link="false" :border="false">
+                <template slot="title">
+                  <div style="padding:15px 0 14px 0;">
+                    <h3>组庭信息</h3>
+                  </div>
+                </template>
+                <div class="tabItemContainer">
+                  <div class="flexInfoBox">
+                    <div class="infoItem">
+                      <div>庭审类型</div>
+                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.tribunalInfo}}</div>
+                    </div>
+                    <div class="infoLine"></div>
+                    <div class="infoItem">
+                      <div>庭审地点</div>
+                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.location}}</div>
+                    </div>
+                  </div>
+                  <div class="flexInfoBox">
+                    <div class="infoItem">
+                      <div>庭审日期</div>
+                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.bTime?arbiInfo.arbitralRecordResponse.bTime.substring(0,16):'/'}}~{{(arbiInfo.arbitralRecordResponse.eTime?arbiInfo.arbitralRecordResponse.eTime.substring(11,16):'/')}}</div>
+                    </div>
+                    <div class="infoLine"></div>
+                    <div class="infoItem">
+                      <div>仲裁庭组成</div>
+                      <div class="black mt2" v-if="arbiInfo.arbitralRecordResponse.appArbitratorType === 1">独任仲裁庭</div>
+                      <div class="black mt2" v-else-if="arbiInfo.arbitralRecordResponse.appArbitratorType === 2">合议仲裁庭</div>
+                      <div class="black mt2" v-else>/</div>
+                    </div>
+                  </div>
+                  <div class="flexInfoBox">
+                    <div class="infoItem">
+                      <div>首席仲裁员</div>
+                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[0]}}</div>
+                    </div>
+                    <div class="infoLine" v-if="arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[1]"></div>
+                    <div class="infoItem" v-if="arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[1]">
+                      <div>申请人仲裁员</div>
+                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[1]}}</div>
+                    </div>
+                  </div>
+                  <div class="flexInfoBox" v-if="arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[2]">
+                    <div>
+                      <div>被申请人仲裁员</div>
+                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[2]}}</div>
                     </div>
                   </div>
                 </div>
@@ -1113,6 +1166,7 @@ export default {
       }
       this.arbitralMediationResponse = this.arbiInfo.arbitralMediationResponse
       this.arbitralRecordResponse = this.arbiInfo.arbitralRecordResponse || {}
+      this.arbitralRecordResponse.arbArbitratorNameArr = this.arbiInfo.arbitralRecordResponse.arbArbitratorName.split(',')
       this.arbitralRecordResponse.tribunalInfo = this.getTribunalInfo()
       this.arbitralRecordResponse.tribunalTime = this.getTribunalTime()
       console.log('=====================================')
