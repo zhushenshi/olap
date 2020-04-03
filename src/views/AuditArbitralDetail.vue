@@ -246,7 +246,8 @@ export default {
     .selectBox
       white-space: nowrap;
       overflow-x: scroll;
-      overflow-y : hidden;
+      overflow-y: hidden;
+      height:190px;
       .item
         width:303px;
         display:inline-block;

@@ -14,6 +14,7 @@
           </div>
         </div>
       </div>
+      <div class="noData">暂无数据</div>
     </div>
   </transition>
   <div v-if="show" class="popBox">
@@ -346,4 +347,7 @@ export default {
         display inherit
         color #727272
         margin 0 0 10px 0
+.noData
+  text-align:center
+  padding:50px 0 80px;;
 </style>
