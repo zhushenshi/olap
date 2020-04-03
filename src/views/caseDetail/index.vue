@@ -40,7 +40,7 @@
           <div class="arbNumber">编号：{{arbiInfo.arbNumber || arbiInfo.arbTemporaryNumber}}</div>
           <div class="arbInfo">
             <span class="label">申请人：</span>
-            <span>{{arbiInfo.arbProsecutorName}}</span>
+            <span>{{arbiInfo.arbProsecutorName?arbiInfo.arbProsecutorName:'/'}}</span>
           </div>
           <div class="arbInfo">
             <span class="label">案件状态：</span>
@@ -56,17 +56,17 @@
             <div class="caseBaseInfoItem">
               <span class="label">案由</span>
               <br>
-              <span class="text">{{arbiInfo.arbName}}</span>
+              <span class="text">{{arbiInfo.arbName?arbiInfo.arbName:'/'}}</span>
             </div>
             <div class="caseBaseInfoItem">
               <span class="label">申请日期</span>
               <br>
-              <span class="text">{{arbiInfo.createTime}}</span>
+              <span class="text">{{arbiInfo.createTime?arbiInfo.createTime:'/'}}</span>
             </div>
             <div class="caseBaseInfoItem">
               <span class="label">标的额</span>
               <br>
-              <span class="text">{{arbiInfo.arbDisputeMoney}}</span>
+              <span class="text">{{arbiInfo.arbDisputeMoney?arbiInfo.arbDisputeMoney:'/'}}</span>
             </div>
           </div>
         </div>
@@ -129,19 +129,19 @@
                 </template>
                 <div class="tabItemContainer">
                   <div class="grayBg" v-for="(evidence, index) in arbitralAttachment" :key="'k'+index">
-                    <p class="bold black"> {{evidence.evidenceName}}</p>
-                    <p v-if="ismany" style="margin:7px 0 7px 0;">({{evidence.arbDebtNum}})</p>
-                    <p v-if="ismany" style="margin:7px 0 7px 0;">订单编号：{{evidence.arbDebtOrderNum}}</p>
+                    <p class="bold black"> {{evidence.evidenceName?evidence.evidenceName:'/'}}</p>
+                    <p v-if="ismany" style="margin:7px 0 7px 0;">({{evidence.arbDebtNum?evidence.arbDebtNum:'/'}})</p>
+                    <p v-if="ismany" style="margin:7px 0 7px 0;">订单编号：{{evidence.arbDebtOrderNum?evidence.arbDebtOrderNum:'/'}}</p>
                     <p class="borderBottom" style="padding-top:9px;"></p>
                     <p style="padding:14px 0 0 0;">证据标题：</p>
-                    <p class="black" style="margin-top:2px;">{{evidence.evidenceTitle}}</p>
+                    <p class="black" style="margin-top:2px;">{{evidence.evidenceTitle?evidence.evidenceTitle:'/'}}</p>
                     <p style="margin-top:16px;">证明内容：</p>
-                    <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent"></b></p>
+                    <p class="black" style="margin-top:2px;line-height:22px;"><b v-html="evidence.evidenceContent?evidence.evidenceContent:'/'"></b></p>
                     <p style="margin-top:16px;margin-bottom:4px;">证据附件</p>
                     <div style="background-color:#FFFFFF;padding:2px 14px 14px 14px;word-wrap: break-word;word-break: normal;">
                       <div style="margin-top:12px;" v-for="(file, ind) in evidence.arbAttachmentDatas" :key="'j'+ind" @click="previewFile(file.attachName,file.attachUrlDes)">
                         <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
-                        <span class="fileName">{{file.attachName}}</span>
+                        <span class="fileName">{{file.attachName?file.attachName:'/'}}</span>
                       </div>
                     </div>
                   </div>
@@ -159,56 +159,56 @@
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>姓名</div>
-                        <div class="black mt2">{{item.pRealname}}</div>
+                        <div class="black mt2">{{item.pRealname?item.pRealname:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>性别</div>
-                        <div class="black mt2">{{item.sex}}</div>
+                        <div class="black mt2">{{item.sex?item.sex:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>民族</div>
-                        <div class="black mt2">{{item.nation}}</div>
+                        <div class="black mt2">{{item.nation?item.nation:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>出生年月</div>
-                        <div class="black mt2">{{item.birthday}}</div>
+                        <div class="black mt2">{{item.birthday?item.birthday:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>身份证</div>
-                        <div class="black mt2">{{item.pIdnum}}</div>
+                        <div class="black mt2">{{item.pIdnum?item.pIdnum:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>邮箱</div>
-                        <div class="black mt2">{{item.pMail}}</div>
+                        <div class="black mt2">{{item.pMail?item.pMail:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>手机号码</div>
-                        <div class="black mt2">{{item.pPhone}}</div>
+                        <div class="black mt2">{{item.pPhone?item.pPhone:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>邮编</div>
-                        <div class="black mt2">{{item.pZipcode}}</div>
+                        <div class="black mt2">{{item.pZipcode?item.pZipcode:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>居住地址</div>
-                        <div class="black mt2">{{item.pAdress}}</div>
+                        <div class="black mt2">{{item.pAdress?item.pAdress:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>户籍地址</div>
-                        <div class="black mt2">{{item.pIdNumAddress}}</div>
+                        <div class="black mt2">{{item.pIdNumAddress?item.pIdNumAddress:'/'}}</div>
                       </div>
                     </div>
                     <div style="margin-top:20px;">
@@ -241,51 +241,51 @@
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>公司名称</div>
-                        <div class="black mt2">{{item.coName}}</div>
+                        <div class="black mt2">{{item.coName?item.coName:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>统一信用代码</div>
-                        <div class="black mt2">{{item.coIdnum}}</div>
+                        <div class="black mt2">{{item.coIdnum?item.coIdnum:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>注册地址</div>
-                        <div class="black mt2">{{item.coAdress}}</div>
+                        <div class="black mt2">{{item.coAdress?item.coAdress:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>约定送达地址</div>
-                        <div class="black mt2">{{item.coArrivedAddress}}</div>
+                        <div class="black mt2">{{item.coArrivedAddress?item.coArrivedAddress:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>邮编</div>
-                        <div class="black mt2">{{item.coZipcode}}</div>
+                        <div class="black mt2">{{item.coZipcode?item.coZipcode:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>法定代表人</div>
-                        <div class="black mt2">{{item.coLegalPerson}}</div>
+                        <div class="black mt2">{{item.coLegalPerson?item.coLegalPerson:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>身份证号</div>
-                        <div class="black mt2">{{item.coLegalPersonIdnum}}</div>
+                        <div class="black mt2">{{item.coLegalPersonIdnum?item.coLegalPersonIdnum:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>手机号码</div>
-                        <div class="black mt2">{{item.coPhone}}</div>
+                        <div class="black mt2">{{item.coPhone?item.coPhone:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div>
                         <div>邮箱</div>
-                        <div class="black mt2">{{item.coEmail}}</div>
+                        <div class="black mt2">{{item.coEmail?item.coEmail:'/'}}</div>
                       </div>
                     </div>
                     <div style="margin-top:20px;">
@@ -342,29 +342,29 @@
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>姓名</div>
-                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentRealname}}</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentRealname?item.arbitralAgentInfoResponse.agentRealname:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>职务</div>
-                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentJob}}</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentJob?item.arbitralAgentInfoResponse.agentJob:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>手机号码</div>
-                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentPhone}}</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentPhone?item.arbitralAgentInfoResponse.agentPhone:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>执业证号</div>
-                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentIdnum}}</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentIdnum?item.arbitralAgentInfoResponse.agentIdnum:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div>
                         <div>邮箱</div>
-                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentMail}}</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentMail?item.arbitralAgentInfoResponse.agentMail:'/'}}</div>
                       </div>
                     </div>
                     <div style="margin-top:20px;">
@@ -456,56 +456,56 @@
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>姓名</div>
-                        <div class="black mt2">{{item.pRealname}}</div>
+                        <div class="black mt2">{{item.pRealname?item.pRealname:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>性别</div>
-                        <div class="black mt2">{{item.sex}}</div>
+                        <div class="black mt2">{{item.sex?item.sex:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>民族</div>
-                        <div class="black mt2">{{item.nation}}</div>
+                        <div class="black mt2">{{item.nation?item.nation:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>出生年月</div>
-                        <div class="black mt2">{{item.birthday}}</div>
+                        <div class="black mt2">{{item.birthday?item.birthday:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>身份证</div>
-                        <div class="black mt2">{{item.pIdnum}}</div>
+                        <div class="black mt2">{{item.pIdnum?item.pIdnum:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>邮箱</div>
-                        <div class="black mt2">{{item.pMail}}</div>
+                        <div class="black mt2">{{item.pMail?item.pMail:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>手机号码</div>
-                        <div class="black mt2">{{item.pPhone}}</div>
+                        <div class="black mt2">{{item.pPhone?item.pPhone:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>邮编</div>
-                        <div class="black mt2">{{item.pZipcode}}</div>
+                        <div class="black mt2">{{item.pZipcode?item.pZipcode:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>居住地址</div>
-                        <div class="black mt2">{{item.pAdress}}</div>
+                        <div class="black mt2">{{item.pAdress?item.pAdress:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>户籍地址</div>
-                        <div class="black mt2">{{item.pIdNumAddress}}</div>
+                        <div class="black mt2">{{item.pIdNumAddress?item.pIdNumAddress:'/'}}</div>
                       </div>
                     </div>
                     <div style="margin-top:20px;">
@@ -538,51 +538,51 @@
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>公司名称</div>
-                        <div class="black mt2">{{item.coName}}</div>
+                        <div class="black mt2">{{item.coName?item.coName:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>统一信用代码</div>
-                        <div class="black mt2">{{item.coIdnum}}</div>
+                        <div class="black mt2">{{item.coIdnum?item.coIdnum:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>注册地址</div>
-                        <div class="black mt2">{{item.coAdress}}</div>
+                        <div class="black mt2">{{item.coAdress?item.coAdress:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>约定送达地址</div>
-                        <div class="black mt2">{{item.coArrivedAddress}}</div>
+                        <div class="black mt2">{{item.coArrivedAddress?item.coArrivedAddress:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>邮编</div>
-                        <div class="black mt2">{{item.coZipcode}}</div>
+                        <div class="black mt2">{{item.coZipcode?item.coZipcode:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>法定代表人</div>
-                        <div class="black mt2">{{item.coLegalPerson}}</div>
+                        <div class="black mt2">{{item.coLegalPerson?item.coLegalPerson:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>身份证号</div>
-                        <div class="black mt2">{{item.coLegalPersonIdnum}}</div>
+                        <div class="black mt2">{{item.coLegalPersonIdnum?item.coLegalPersonIdnum:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>手机号码</div>
-                        <div class="black mt2">{{item.coPhone}}</div>
+                        <div class="black mt2">{{item.coPhone?item.coPhone:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div>
                         <div>邮箱</div>
-                        <div class="black mt2">{{item.coEmail}}</div>
+                        <div class="black mt2">{{item.coEmail?item.coEmail:'/'}}</div>
                       </div>
                     </div>
                     <div style="margin-top:20px;">
@@ -639,29 +639,29 @@
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>姓名</div>
-                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentRealname}}</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentRealname?item.arbitralAgentInfoResponse.agentRealname:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>职务</div>
-                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentJob}}</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentJob?item.arbitralAgentInfoResponse.agentJob:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div class="infoItem">
                         <div>手机号码</div>
-                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentPhone}}</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentPhone?item.arbitralAgentInfoResponse.agentPhone:'/'}}</div>
                       </div>
                       <div class="infoLine"></div>
                       <div class="infoItem">
                         <div>执业证号</div>
-                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentIdnum}}</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentIdnum?item.arbitralAgentInfoResponse.agentIdnum:'/'}}</div>
                       </div>
                     </div>
                     <div class="flexInfoBox">
                       <div>
                         <div>邮箱</div>
-                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentMail}}</div>
+                        <div class="black mt2">{{item.arbitralAgentInfoResponse.agentMail?item.arbitralAgentInfoResponse.agentMail:'/'}}</div>
                       </div>
                     </div>
                     <div style="margin-top:20px;">
@@ -752,23 +752,23 @@
                   <div class="flexInfoBox">
                     <div class="infoItem">
                       <div>案由</div>
-                      <div class="black mt2">{{arbiInfo.arbName}}</div>
+                      <div class="black mt2">{{arbiInfo.arbName?arbiInfo.arbName:'/'}}</div>
                     </div>
                     <div class="infoLine"></div>
                     <div class="infoItem">
                       <div>标的额(元)</div>
-                      <div class="black mt2">{{arbiInfo.arbDisputeMoney}}</div>
+                      <div class="black mt2">{{arbiInfo.arbDisputeMoney?arbiInfo.arbDisputeMoney:'/'}}</div>
                     </div>
                   </div>
                   <div class="flexInfoBox">
                     <div class="infoItem">
                       <div>产品类型</div>
-                      <div class="black mt2">{{arbiInfo.arbProductName}}</div>
+                      <div class="black mt2">{{arbiInfo.arbProductName?arbiInfo.arbProductName:'/'}}</div>
                     </div>
                     <div class="infoLine"></div>
                     <div class="infoItem">
                       <div>仲裁费用(元)</div>
-                      <div class="black mt2">{{arbiInfo.arbArbitrateMoney}}</div>
+                      <div class="black mt2">{{arbiInfo.arbArbitrateMoney?arbiInfo.arbArbitrateMoney:'/'}}</div>
                     </div>
                   </div>
                 </div>
@@ -777,7 +777,16 @@
           </div>
         </Tab>
         <Tab title="案件追踪">
-          <case-tracking :arbProcess="arbProcess" :caseTrackingValue="caseTrackingValue" @add-comment="getData"></case-tracking>
+          <div class="tabItem">
+            <transition name="fade">
+              <pull-refresh v-model="refreshing" @refresh="getData">
+                <div style="min-height:280px;">
+                  <case-tracking :arbProcess="arbProcess" v-if="!refreshing"></case-tracking>
+                </div>
+              </pull-refresh>
+            </transition>
+          </div>
+
         </Tab>
         <Tab title="案件文书">
           <case-document :caseDocumentInfo="caseDocumentInfo"></case-document>
@@ -885,7 +894,8 @@
 </template>
 <script>
 /* eslint-disable */ 
-import { Skeleton, Tab, Tabs ,Popup,Collapse, CollapseItem } from 'vant'
+import { Skeleton, Tab, Tabs ,Popup,Collapse, CollapseItem ,PullRefresh} from 'vant'
+
 import VanImage from 'vant/lib/image'
 import 'vant/lib/skeleton/style'
 import 'vant/lib/tab/style'
@@ -919,7 +929,6 @@ export default {
       baseUrl: location.origin,
       previewFileShow: false,
       arbProcess: '',
-      caseTrackingValue:true,
       caseDocumentInfo: {},
       id: '',
       arbiInfo: {},
@@ -1016,10 +1025,12 @@ export default {
         wslist: [],
         sdlc: ''
       },
-      pdfUrl:''      
+      pdfUrl:'',
+      trackingLoading:true,
+      refreshing:false 
     }
   },
-  components: { Header, caseTracking, caseDocument, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData,Skeleton, Tab, Tabs ,Popup ,Collapse, CollapseItem ,VanImage},
+  components: { Header, caseTracking, caseDocument, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData,Skeleton, Tab, Tabs ,Popup ,Collapse, CollapseItem ,VanImage,PullRefresh},
   methods: {
     // downFile (documentGeneratorUrlDes, documentName) {
     //   api.downloadOtherFile({
@@ -1060,7 +1071,7 @@ export default {
         var ua = navigator.userAgent.toLowerCase()
         if (/iphone|ipad|ipod/.test(ua)) {
           if (window.webkit && window.webkit.messageHandlers) {
-            window.webkit.messageHandlers.loadDoc .postMessage([url,lastName])
+            window.webkit.messageHandlers.loadDoc .postMessage([url+lastName])
           } else {}
         } else if (/android/.test(ua)) {
           if (window.object && typeof (window.object.loadDoc) === 'function') {
@@ -1096,7 +1107,6 @@ export default {
       const applyedArr = []
       const applyers = []
       this.arbProcess = this.arbiInfo.arbProcess
-      this.caseTrackingValue=!this.caseTrackingValue
       this.caseDocumentInfo = {
         arbitralInfoIds: [this.arbiInfo.id],
         documentType: '1,2,3,4,5,6,7,8,9,10,11,12,14'
@@ -1424,6 +1434,7 @@ export default {
       api.getArbitralInfoDetailBySys({ arbitralId: this.id }).then(res => {
         if (res.data.code === '1') {
           this.loading=false
+          this.refreshing = false // 关闭下拉刷新中
           this.arbiInfo = res.data
           this.arbRecallApplyInfoResponse = res.data.arbRecallApplyInfoResponse
           this.arbitralLiveInfoResponse = res.data.arbitralLiveInfoResponse || {}

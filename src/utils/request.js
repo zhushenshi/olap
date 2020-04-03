@@ -63,7 +63,7 @@ myAxios.interceptors.response.use(res => {
     } else if (error.response.status === 404) {
       Notify({ type: 'primary', message: '404错误' })
     } else {
-      Vue.prototype.$Toast({ message: '接口返回错误', position: 'bottom' })
+      Vue.prototype.$Toast({ message: '服务器异常', position: 'bottom' })
     }
   }
   return Promise.reject(error)

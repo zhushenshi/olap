@@ -39,7 +39,7 @@ export default {
       reviewTextarea: '',
       arbiInfo: {},
       passOrNot: '10',
-      passActiveBtn: false,
+      passActiveBtn: true,
       refuseActiveBtn: false
     }
   },
@@ -50,21 +50,21 @@ export default {
         audit: this.passOrNot,
         reviewTextarea: this.reviewTextarea
       })
-      if (this.passOrNot === '11' && this.reviewTextarea === '') {
-        this.$Toast({ message: '请输入审核意见', position: 'bottom' })
-      } else {
-        this.$Indicator.open()
-        api.rechargeAuditNp(params).then(res => {
-          this.$Indicator.close()
-          if (res.data.code === '1') {
-            // this.$Toast({ message: res.data.msg, position: 'bottom' })
-            this.$router.push({ name: 'examineResult' })
-          } else {
-            this.$Toast({ message: res.data.msg, position: 'bottom' })
-            this.$router.push({ name: 'portalToDoList' })
-          }
-        })
-      }
+      // if (this.passOrNot === '11' && this.reviewTextarea === '') {
+      //   this.$Toast({ message: '请输入审核意见', position: 'bottom' })
+      // } else {
+      this.$Indicator.open()
+      api.rechargeAuditNp(params).then(res => {
+        this.$Indicator.close()
+        if (res.data.code === '1') {
+          // this.$Toast({ message: res.data.msg, position: 'bottom' })
+          this.$router.push({ name: 'examineResult' })
+        } else {
+          this.$Toast({ message: res.data.msg, position: 'bottom' })
+          this.$router.push({ name: 'portalToDoList' })
+        }
+      })
+      // }
     },
     review (passOrNot, reviewTextarea) {
       this.passOrNot = passOrNot

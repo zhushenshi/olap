@@ -39,7 +39,7 @@ export default {
       reviewTextarea: '',
       arbiInfo: {},
       passOrNot: '1',
-      passActiveBtn: false,
+      passActiveBtn: true,
       refuseActiveBtn: false
     }
   },
@@ -52,34 +52,34 @@ export default {
       } else {
         promise = api.secondReviewArbitralAwardNoPass
       }
-      if (this.passOrNot === '2' && this.reviewTextarea === '') {
-        this.$Toast({ message: '请输入意见', position: 'bottom' })
-      } else {
-        this.$Indicator.open()
-        this.save().then(res => {
-          if (res.data.code === '1') {
-            this.$Indicator.close()
-            return promise({
-              processCommonRequest: {
-                arbitralInfoId: this.arbiInfo.id, // 案件id
-                processTaskId: this.arbiInfo.arbProcessTask // 案件流程id
-              },
-              passOpinion: this.reviewTextarea
-            })
-          } else {
-            this.$Toast({ message: '裁决书保存失败', position: 'bottom' })
-          }
-        }).then((res) => {
+      // if (this.passOrNot === '2' && this.reviewTextarea === '') {
+      //   this.$Toast({ message: '请输入意见', position: 'bottom' })
+      // } else {
+      this.$Indicator.open()
+      this.save().then(res => {
+        if (res.data.code === '1') {
           this.$Indicator.close()
-          if (res.data.code === '1') {
-            this.$router.push({ name: 'examineResult' })
-            this.$Toast({ message: res.data.msg, position: 'bottom' })
-          } else {
-            this.$Toast({ message: res.data.msg, position: 'bottom' })
-            this.$router.push({ name: 'portalToDoList' })
-          }
-        }).catch(ex => { console.log(ex) })
-      }
+          return promise({
+            processCommonRequest: {
+              arbitralInfoId: this.arbiInfo.id, // 案件id
+              processTaskId: this.arbiInfo.arbProcessTask // 案件流程id
+            },
+            passOpinion: this.reviewTextarea
+          })
+        } else {
+          this.$Toast({ message: '裁决书保存失败', position: 'bottom' })
+        }
+      }).then((res) => {
+        this.$Indicator.close()
+        if (res.data.code === '1') {
+          this.$router.push({ name: 'examineResult' })
+          // this.$Toast({ message: res.data.msg, position: 'bottom' })
+        } else {
+          this.$Toast({ message: res.data.msg, position: 'bottom' })
+          this.$router.push({ name: 'toDoList' })
+        }
+      }).catch(ex => { console.log(ex) })
+      // }
     },
     getParams () {
       const htmlString = this.arbiInfo.arbitralRecordResponse.arbitralAwardContext

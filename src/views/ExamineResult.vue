@@ -17,7 +17,7 @@ export default {
   components: { Button },
   methods: {
     goTopage () {
-      this.$router.push({ path: '/toDoList' })
+      this.$router.replace('/toDoList')
     }
   },
   created () {
