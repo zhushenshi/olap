@@ -1162,7 +1162,7 @@ export default {
       this.arbProcess = this.arbiInfo.arbProcess
       this.caseDocumentInfo = {
         arbitralInfoIds: [this.arbiInfo.id],
-        documentType: '1,2,3,4,5,6,7,8,9,10,14'
+        documentType: '1,2,3,4,5,6,7,8,9,10,11,12,14'
       }
       this.arbitralMediationResponse = this.arbiInfo.arbitralMediationResponse
       this.arbitralRecordResponse = this.arbiInfo.arbitralRecordResponse || {}
