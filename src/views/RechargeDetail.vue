@@ -8,7 +8,7 @@
           {{arbiInfo.applicant}}</div>
         <div class="arbInfo">
           <span class="label">充值金额：</span>
-          <span>{{arbiInfo.money}}</span>
+          <span>{{arbiInfo.money+'元'}}</span>
         </div>
         <div class="arbInfo">
           <span class="label">充值时间：</span>

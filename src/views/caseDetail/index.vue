@@ -777,7 +777,16 @@
           </div>
         </Tab>
         <Tab title="案件追踪">
-          <case-tracking :arbProcess="arbProcess" :caseTrackingValue="caseTrackingValue" @add-comment="getData"></case-tracking>
+          <div class="tabItem">
+            <transition name="fade">
+              <pull-refresh v-model="refreshing" @refresh="getData">
+                <div style="min-height:280px;">
+                  <case-tracking :arbProcess="arbProcess" v-if="!refreshing"></case-tracking>
+                </div>
+              </pull-refresh>
+            </transition>
+          </div>
+
         </Tab>
         <Tab title="案件文书">
           <case-document :caseDocumentInfo="caseDocumentInfo"></case-document>
@@ -885,7 +894,8 @@
 </template>
 <script>
 /* eslint-disable */ 
-import { Skeleton, Tab, Tabs ,Popup,Collapse, CollapseItem } from 'vant'
+import { Skeleton, Tab, Tabs ,Popup,Collapse, CollapseItem ,PullRefresh} from 'vant'
+
 import VanImage from 'vant/lib/image'
 import 'vant/lib/skeleton/style'
 import 'vant/lib/tab/style'
@@ -919,7 +929,6 @@ export default {
       baseUrl: location.origin,
       previewFileShow: false,
       arbProcess: '',
-      caseTrackingValue:true,
       caseDocumentInfo: {},
       id: '',
       arbiInfo: {},
@@ -1016,10 +1025,12 @@ export default {
         wslist: [],
         sdlc: ''
       },
-      pdfUrl:''      
+      pdfUrl:'',
+      trackingLoading:true,
+      refreshing:false 
     }
   },
-  components: { Header, caseTracking, caseDocument, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData,Skeleton, Tab, Tabs ,Popup ,Collapse, CollapseItem ,VanImage},
+  components: { Header, caseTracking, caseDocument, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData,Skeleton, Tab, Tabs ,Popup ,Collapse, CollapseItem ,VanImage,PullRefresh},
   methods: {
     // downFile (documentGeneratorUrlDes, documentName) {
     //   api.downloadOtherFile({
@@ -1096,7 +1107,6 @@ export default {
       const applyedArr = []
       const applyers = []
       this.arbProcess = this.arbiInfo.arbProcess
-      this.caseTrackingValue=!this.caseTrackingValue
       this.caseDocumentInfo = {
         arbitralInfoIds: [this.arbiInfo.id],
         documentType: '1,2,3,4,5,6,7,8,9,10,14'
@@ -1424,6 +1434,7 @@ export default {
       api.getArbitralInfoDetailBySys({ arbitralId: this.id }).then(res => {
         if (res.data.code === '1') {
           this.loading=false
+          this.refreshing = false // 关闭下拉刷新中
           this.arbiInfo = res.data
           this.arbRecallApplyInfoResponse = res.data.arbRecallApplyInfoResponse
           this.arbitralLiveInfoResponse = res.data.arbitralLiveInfoResponse || {}

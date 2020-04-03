@@ -6,19 +6,19 @@
         <div class="arbNumber">编号：{{arbiInfo.arbNumber || arbiInfo.arbTemporaryNumber}}</div>
         <div class="arbInfo">
           <span class="label">案由：</span>
-          <span>{{arbiInfo.arbName}}</span>
+          <span>{{arbiInfo.arbName?arbiInfo.arbName:'/'}}</span>
         </div>
         <div class="arbInfo">
           <span class="label">申请人：</span>
-          <span>{{arbiInfo.arbProsecutorName}}</span>
+          <span>{{arbiInfo.arbProsecutorName?arbiInfo.arbProsecutorName:'/'}}</span>
         </div>
         <div class="arbInfo">
           <span class="label">被申请人：</span>
-          <span @click="toastTex">{{arbiInfo.arbDefendantName}}</span>
+          <span @click="toastTex">{{arbiInfo.arbDefendantName?arbiInfo.arbDefendantName:'/'}}</span>
         </div>
         <div class="arbInfo">
           <span class="label">申请日期：</span>
-          <span>{{arbiInfo.createTime}}</span>
+          <span>{{arbiInfo.createTime?arbiInfo.createTime:'/'}}</span>
         </div>
         <div class="caseStatus">
           待审核
@@ -28,7 +28,7 @@
     <section class="caseDetail">
       <ul class="inline-ul">
         <li :class="{'active':item.value === type}" v-for="(item,index) in types" :key="index" @click="tabClick(item.value)">
-          <p>{{item.text}}</p>
+          <p>{{item.text?item.text:'/'}}</p>
         </li>
       </ul>
       <div class="caseDetailsContent" v-if="type===0">
@@ -42,14 +42,14 @@
       <div class="caseDetailsContent caseDetailsContent2" v-if="type!==0">
         <div class="selectBox">
           <div class="item" :class="{'active':item.attachmentEvidenceId===attachmentEvidenceId}" v-for="item in evidences" :key="item.attachmentEvidenceId" @click="selectEvidence(item)">
-            <div class="title">{{item.title}}</div>
+            <div class="title">{{item.title?item.title:'/'}}</div>
             <div>
-              <span>{{item.evidenceTitle?item.evidenceTitle:'证据标题'}}:</span>
-              <span class="text">{{item.evidenceName}}</span>
+              <span>{{'证据标题'}}:</span>
+              <span class="text">{{item.evidenceTitle?item.evidenceTitle:'/'}}</span>
             </div>
             <div>证据内容：</div>
             <div class="text wrap">
-              {{item.evidenceContent}}
+              {{item.evidenceContent?item.evidenceContent:'/'}}
             </div>
             <span class="icon iconfont iconzhongcai_qipao-jiao triangle"></span>
           </div>

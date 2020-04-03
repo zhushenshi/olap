@@ -1,7 +1,7 @@
 <template>
 <div class="tabItem">
   <transition name="fade">
-    <pull-refresh v-model="refreshing" @refresh="onRefresh">
+    <!-- <pull-refresh v-model="refreshing" @refresh="onRefresh"> -->
       <div v-if="loading">
         <div class="itemBox" v-for="item in 2" :key="item">
           <div class="topTime" v-show="item==1">
@@ -40,22 +40,18 @@
             </div>
         </div>
       </div>
-    </pull-refresh>
+    <!-- </pull-refresh> -->
   </transition>
 </div>
 </template>
 <script>
 import { api } from '@/utils/api'
-import { PullRefresh } from 'vant'
 import 'vant/lib/pull-refresh/style'
 export default {
   name: 'CaseTracking',
   props: {
     arbProcess: {
       type: String
-    },
-    caseTrackingValue: {
-      type: Boolean
     }
   },
   data () {
@@ -68,30 +64,22 @@ export default {
       list: []
     }
   },
-  components: { PullRefresh },
   created () {
+    console.log(123)
     this.getHistroyTaskInst()
   },
-  watch: {
-    caseTrackingValue: function (o, n) {
-      this.getHistroyTaskInst()
-    },
-    arbProcess: function (o, n) {
-      this.getHistroyTaskInst()
-    }
-  },
   methods: {
-    addComment () {
-    // 添加完评论后发射监听事件，param是要添加的那条评论消息
-      this.$emit('add-comment')
-    },
-    onRefresh () {
-      this.refreshing = true
-      if (this.refreshing) { // 关闭下拉刷新
-        this.addComment()
-        this.refreshing = false // 关闭下拉刷新中
-      }
-    },
+    // addComment () {
+    // // 添加完评论后发射监听事件，param是要添加的那条评论消息
+    //   this.$emit('add-comment')
+    // },
+    // onRefresh () {
+    //   this.refreshing = true
+    //   if (this.refreshing) { // 关闭下拉刷新
+    //     this.addComment()
+    //     this.refreshing = false // 关闭下拉刷新中
+    //   }
+    // },
     getHistroyTaskInst () { // 案件追踪
       this.loading = true
       api.getHistroyTaskInst({
@@ -141,7 +129,6 @@ export default {
             }
           }
           this.arr = arr
-          console.log(this.arr)
         }
       })
     }
@@ -153,6 +140,7 @@ export default {
   padding:17px 14px 14px 12px!important;
   font-size:14px;
   color:#24272B;
+  min-height:280px;
   .topTime
     line-height:20px;
     margin-bottom:16px;
