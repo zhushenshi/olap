@@ -282,6 +282,7 @@ export default {
           -webkit-line-clamp: 2;
           overflow: hidden;
           min-height:44px;
+          word-break: break-all;
         .triangle
           opacity:0;
           position:absolute;

@@ -2,7 +2,7 @@
   <div>
     <div class="caseData content" v-if="show">
       <div class="caseDataPieTitle">案件(被申请人)地域分布</div>
-      <china-map  ref="chinaMap" :chinajson='chinajson'></china-map>
+      <china-map  ref="chinaMap" :chinajson='chinajson' :inRangeMax="inRangeMax"></china-map>
     </div>
   </div>
 </template>
@@ -13,7 +13,8 @@ export default {
   data () {
     return {
       chinajson: [],
-      show: false
+      show: false,
+      inRangeMax: 100
     }
   },
   components: { ChinaMap },
@@ -29,6 +30,9 @@ export default {
           }
           if (el.name.length > 3) {
             el.name = el.name.substr(0, 2)
+          }
+          if (el.value > this.inRangeMax) {
+            this.inRangeMax = el.value
           }
           num += Number(el.value)
         })

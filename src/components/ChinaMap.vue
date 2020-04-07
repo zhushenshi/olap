@@ -16,6 +16,10 @@ var echarts = require('echarts')
 export default {
   name: 'Msg',
   props: {
+    inRangeMax: {
+      type: Number,
+      default: 100
+    },
     chinajson: {
       type: Array,
       default () {
@@ -88,6 +92,7 @@ export default {
     mapconfigprop: {
       handler (val) {
         this.mapconfig = Object.assign(this.mapconfig, val)
+        this.mapconfig.inRangeMax = this.inRangeMax
       },
       immediate: true, // 很重要！！！
 
@@ -239,48 +244,52 @@ export default {
 
   },
   mounted () {
-    var chinajson = [{ name: '南海诸岛', value: 0 },
-      { name: '北京', value: 0, percent: '0' },
-      { name: '天津', value: 0, percent: '0' },
-      { name: '上海', value: 0, percent: '0' },
-      { name: '重庆', value: 0, percent: '0' },
-      { name: '河北', value: 0, percent: '0' },
-      { name: '河南', value: 0, percent: '0' },
-      { name: '云南', value: 0, percent: '0' },
-      { name: '辽宁', value: 0, percent: '0' },
-      { name: '黑龙江', value: 0, percent: '0' },
-      { name: '湖南', value: 0, percent: '0' },
-      { name: '安徽', value: 0, percent: '0' },
-      { name: '山东', value: 0, percent: '0' },
-      { name: '新疆', value: 0, percent: '0' },
-      { name: '江苏', value: 0, percent: '0' },
-      { name: '浙江', value: 0, percent: '0' },
-      { name: '江西', value: 0, percent: '0' },
-      { name: '湖北', value: 0, percent: '0' },
-      { name: '广西', value: 0, percent: '0' },
-      { name: '甘肃', value: 0, percent: '0' },
-      { name: '山西', value: 0, percent: '0' },
-      { name: '内蒙古', value: 0, percent: '0' },
-      { name: '陕西', value: 0, percent: '0' },
-      { name: '吉林', value: 0, percent: '0' },
-      { name: '福建', value: 0, percent: '0' },
-      { name: '贵州', value: 0, percent: '0' },
-      { name: '广东', value: 0, percent: '0' },
-      { name: '青海', value: 0, percent: '0' },
-      { name: '西藏', value: 0, percent: '0' },
-      { name: '四川', value: 0, percent: '0' },
-      { name: '宁夏', value: 0, percent: '0' },
-      { name: '海南', value: 0, percent: '0' },
-      { name: '台湾', value: 0, percent: '0' },
-      { name: '香港', value: 0, percent: '0' },
-      { name: '澳门', value: 0, percent: '0' }]
-    if (chinajson.some(el => el.name === '安徽')) {
-      console.log(chinajson, 'chin')
-      this.getMapJson(chinajson)
-      this.chinadata = JSON.parse(JSON.stringify(chinajson))
+    // var chinajson = [{ name: '南海诸岛', value: 0 },
+    //   { name: '北京', value: 0, percent: '0' },
+    //   { name: '天津', value: 0, percent: '0' },
+    //   { name: '上海', value: 0, percent: '0' },
+    //   { name: '重庆', value: 0, percent: '0' },
+    //   { name: '河北', value: 0, percent: '0' },
+    //   { name: '河南', value: 0, percent: '0' },
+    //   { name: '云南', value: 0, percent: '0' },
+    //   { name: '辽宁', value: 0, percent: '0' },
+    //   { name: '黑龙江', value: 0, percent: '0' },
+    //   { name: '湖南', value: 0, percent: '0' },
+    //   { name: '安徽', value: 0, percent: '0' },
+    //   { name: '山东', value: 0, percent: '0' },
+    //   { name: '新疆', value: 0, percent: '0' },
+    //   { name: '江苏', value: 0, percent: '0' },
+    //   { name: '浙江', value: 0, percent: '0' },
+    //   { name: '江西', value: 0, percent: '0' },
+    //   { name: '湖北', value: 0, percent: '0' },
+    //   { name: '广西', value: 0, percent: '0' },
+    //   { name: '甘肃', value: 0, percent: '0' },
+    //   { name: '山西', value: 0, percent: '0' },
+    //   { name: '内蒙古', value: 0, percent: '0' },
+    //   { name: '陕西', value: 0, percent: '0' },
+    //   { name: '吉林', value: 0, percent: '0' },
+    //   { name: '福建', value: 0, percent: '0' },
+    //   { name: '贵州', value: 0, percent: '0' },
+    //   { name: '广东', value: 0, percent: '0' },
+    //   { name: '青海', value: 0, percent: '0' },
+    //   { name: '西藏', value: 0, percent: '0' },
+    //   { name: '四川', value: 0, percent: '0' },
+    //   { name: '宁夏', value: 0, percent: '0' },
+    //   { name: '海南', value: 0, percent: '0' },
+    //   { name: '台湾', value: 0, percent: '0' },
+    //   { name: '香港', value: 0, percent: '0' },
+    //   { name: '澳门', value: 0, percent: '0' }]
+    if (this.chinajson.some(el => el.name === '安徽')) {
+      console.log(this.chinajson, 'chin')
+      this.getMapJson(this.chinajson)
+      this.chinadata = JSON.parse(JSON.stringify(this.chinajson))
     } else {
-      this.loadmap(this.selected, this.getChinaMap, chinajson)
+      this.loadmap(this.selected, this.getChinaMap, this.chinajson)
     }
+    setTimeout(() => {
+      console.log(this)
+      this.mapconfig.inRangeMax = 100
+    }, 5000)
   }
 }
 </script>
