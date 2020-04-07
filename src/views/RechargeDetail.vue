@@ -8,15 +8,15 @@
           {{arbiInfo.applicant}}</div>
         <div class="arbInfo">
           <span class="label">充值金额：</span>
-          <span>{{arbiInfo.money+'元'}}</span>
+          <span @click="toastTex">{{arbiInfo.money+'元'}}</span>
         </div>
         <div class="arbInfo">
           <span class="label">充值时间：</span>
-          <span>{{arbiInfo.capitalTime}}</span>
+          <span @click="toastTex">{{arbiInfo.capitalTime}}</span>
         </div>
         <div class="arbInfo">
           <span class="label">备注：</span>
-          <span>{{arbiInfo.remark}}</span>
+          <span @click="toastTex">{{arbiInfo.remark}}</span>
         </div>
         <div class="caseStatus" v-if="arbiInfo.result=='0'">
           待审核
@@ -28,13 +28,30 @@
     </section>
     <section class="rechargeTitle">
         <p>充值凭证</p>
-        <img v-for="(item,index) in arbiInfo.attachments" :key="index" :src="api.getImgURL(item.fileUrl)" alt="充值凭证" :preview="index+item.fileUrl" preview-text="充值凭证" height="100%" />
+        <!-- <img v-for="(item,index) in arbiInfo.attachments" :key="index" :src="api.getImgURL(item.fileUrl)" alt="充值凭证" :preview="index+item.fileUrl" preview-text="充值凭证" height="100%" /> -->
+        <van-image
+          v-for="(item,index) in arbiInfo.attachments"
+          :key="index"
+          fit="contain"
+          @click="previewImg(api.getImgURL(item.fileUrl))"
+          :src="api.getImgURL(item.fileUrl)">
+          <template v-slot:loading>
+            <Loading type="spinner" size="20" />
+          </template>
+          <template v-slot:error>加载失败</template>
+        </van-image>
     </section>
   </div>
 </template>
 <script>
 import Header from '@/components/Header.vue'
+import VanImage from 'vant/lib/image'
+import { Loading, ImagePreview } from 'vant'
 import { api } from '@/utils/api'
+import 'vant/lib/pull-refresh/style'
+import 'vant/lib/image/style'
+import 'vant/lib/loading/style'
+import 'vant/lib/image-preview/style'
 
 export default {
   data () {
@@ -44,12 +61,23 @@ export default {
       api
     }
   },
-  components: { Header },
+  components: { Header, VanImage, Loading },
   methods: {
     rightMethod () {
       this.$router.push({ path: '/toDoList/RechargExamine', query: { arbiInfo: this.arbiInfo } })
+    },
+    previewImg (url) {
+      ImagePreview({
+        images: [
+          url
+        ]
+      })
+    },
+    toastTex (e) {
+      if ((e.target.offsetWidth + e.target.previousSibling.offsetWidth) > e.target.parentNode.offsetWidth) {
+        this.$Toast({ message: e.target.innerHTML, position: 'middle' })
+      }
     }
-
   },
   created () {
     this.arbiInfo = JSON.parse(this.$route.query.rechargeData)
@@ -82,6 +110,8 @@ export default {
   color #9B9B9B
   margin 15px 18px
   text-align left
+  p
+    margin-bottom:10px;
   img
     margin 10px 0
     width 100%

@@ -43,16 +43,16 @@
                     <div class="right">
                       <div class="itemInfo">
                         <div class="itemInfoRow itemInfoTop">
-                          <img src="./../assets/imgs/shenhe.png" alt="">
-                          <span v-if="value2.arbitralData">{{value2.arbitralData.arbNumber || value2.arbitralData.arbTemporaryNumber}}</span>
+                          <span><img src="./../assets/imgs/shenhe.png" alt=""></span>
+                          <span v-if="value2.arbitralData" @click="toastTex">{{value2.arbitralData.arbNumber || value2.arbitralData.arbTemporaryNumber}}</span>
                         </div>
                         <div class="itemInfoRow">
                           <span class="label">申请人：</span>
-                          <span v-if="value2.arbitralData">{{value2.arbitralData.arbProsecutorName}}</span>
+                          <span v-if="value2.arbitralData" @click="toastTex">{{value2.arbitralData.arbProsecutorName}}</span>
                         </div>
                         <div class="itemInfoRow">
                           <span class="label">申请时间：</span>
-                          <span v-if="value2.arbitralData">{{value2.arbitralData.createTime}}</span>
+                          <span v-if="value2.arbitralData" @click="toastTex">{{value2.arbitralData.createTime}}</span>
                         </div>
                       </div>
                       <div class="operateBtn" >审核判决书</div>
@@ -67,7 +67,7 @@
                         <div class="itemInfo">
                         <div class="itemInfoRow itemInfoTop">
                           <img src="./../assets/imgs/shenhe.png" alt="">
-                          <span v-if="value2.rechargeData">{{value2.rechargeData.applicant}}</span>
+                          <span v-if="value2.rechargeData" @click="toastTex">{{value2.rechargeData.applicant}}</span>
                         </div>
                          <!-- <div class="itemInfoRow">
                           <span class="label">案件编号：</span>
@@ -75,11 +75,11 @@
                         </div> -->
                         <div class="itemInfoRow">
                           <span class="label">充值金额：</span>
-                          <span v-if="value2.rechargeData">{{value2.rechargeData.money?value2.rechargeData.money:'0'}}元</span>
+                          <span v-if="value2.rechargeData" @click="toastTex">{{value2.rechargeData.money?value2.rechargeData.money:'0'}}元</span>
                         </div>
                         <div  class="itemInfoRow">
                           <span class="label">充值时间：</span>
-                          <span v-if="value2.rechargeData">{{value2.rechargeData.capitalTime}}</span>
+                          <span v-if="value2.rechargeData" @click="toastTex">{{value2.rechargeData.capitalTime}}</span>
 
                         </div>
                       </div>
@@ -141,6 +141,12 @@ export default {
       this.refreshing = true
       this.pageNo = 1
       this.getData()
+    },
+    toastTex (e) {
+      if ((e.target.offsetWidth + e.target.previousSibling.offsetWidth) > e.target.parentNode.offsetWidth) {
+        e.stopPropagation()
+        this.$Toast({ message: e.target.innerHTML, position: 'middle' })
+      }
     },
     getData () {
       const params = Object.assign({

@@ -82,15 +82,15 @@
                   <div class="filterL">
                   <p>
                     <span class="filterTitle">申请人：</span>
-                    <span class="arbProsecutorName">{{item.arbProsecutorName}}</span>
+                    <span class="arbProsecutorName" @click="toastTex">{{item.arbProsecutorName}}</span>
                   </p>
                   <p>
                     <span class="filterTitle">标的额：</span>
-                  {{item.arbDisputeMoney | money}}元
+                    <span @click="toastTex">{{item.arbDisputeMoney | money}}元</span>
                   </p>
                   <p>
                     <span class="filterTitle">申请日期：</span>
-                  {{item.createTime}}
+                    <span @click="toastTex">{{item.createTime}}</span>
                   </p>
                 </div>
                 <div class="filterR">
@@ -155,6 +155,12 @@ export default {
   },
   components: { PullRefresh, List },
   methods: {
+    toastTex (e) {
+      if ((e.target.offsetWidth + e.target.previousSibling.offsetWidth) > e.target.parentNode.offsetWidth) {
+        e.stopPropagation()
+        this.$Toast({ message: e.target.innerHTML, position: 'middle' })
+      }
+    },
     onLoad () {
       this.pageNo++
       this.loading = true
@@ -448,14 +454,19 @@ export default {
             border-radius 10px
             width 40px
             text-align center
-.arbProsecutorName
+.filterL
   overflow: hidden;
+  width:80%;
   text-overflow:ellipsis;
   white-space: nowrap;
-  display inline-block
-  width 60%
-  position relative
-  top 5px
+  p
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    // .arbProsecutorName
+    //   // width 60%
+    //   position relative
+    //   top 5px
 .noData
   color #bcbcbc
   font-size 14px

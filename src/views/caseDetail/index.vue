@@ -40,33 +40,33 @@
           <div class="arbNumber">编号：{{arbiInfo.arbNumber || arbiInfo.arbTemporaryNumber}}</div>
           <div class="arbInfo">
             <span class="label">申请人：</span>
-            <span>{{arbiInfo.arbProsecutorName?arbiInfo.arbProsecutorName:'/'}}</span>
+            <span @click="toastTex">{{arbiInfo.arbProsecutorName?arbiInfo.arbProsecutorName:'/'}}</span>
           </div>
           <div class="arbInfo">
             <span class="label">案件状态：</span>
-            <span class="arbStatus" v-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==4">{{arbiInfo.status}}<i>(已撤回)</i></span>
-            <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==2">{{arbiInfo.status}}<i>(撤回中)</i></span>
-            <span class="arbStatus" v-else-if="arbiInfo.decisionStatus&&arbiInfo.decisionStatus >= 1&&arbiInfo.decisionStatus < 60">{{arbiInfo.status}}(管辖权异议)</span>
-            <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==70">已<i>(撤回)</i>结案</span>
-            <span class="arbStatus" v-else-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==71">已<i>(撤回)</i>归档</span>
-            <span class="arbStatus" v-else>{{arbiInfo.status}}</span>
+            <span class="arbStatus" @click="toastTex" v-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==4">{{arbiInfo.status}}<i>(已撤回)</i></span>
+            <span class="arbStatus" @click="toastTex" v-else-if="arbiInfo.arbStopStatus ==2">{{arbiInfo.status}}<i>(撤回中)</i></span>
+            <span class="arbStatus" @click="toastTex" v-else-if="arbiInfo.decisionStatus&&arbiInfo.decisionStatus >= 1&&arbiInfo.decisionStatus < 60">{{arbiInfo.status}}(管辖权异议)</span>
+            <span class="arbStatus" @click="toastTex" v-else-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==70">已<i>(撤回)</i>结案</span>
+            <span class="arbStatus" @click="toastTex" v-else-if="arbiInfo.arbStopStatus ==3 && arbiInfo.arbStatus==71">已<i>(撤回)</i>归档</span>
+            <span class="arbStatus" @click="toastTex" v-else>{{arbiInfo.status}}</span>
 
           </div>
           <div class="caseBaseInfoTable">
             <div class="caseBaseInfoItem">
               <span class="label">案由</span>
               <br>
-              <span class="text">{{arbiInfo.arbName?arbiInfo.arbName:'/'}}</span>
+              <span class="text" @click="toastTex">{{arbiInfo.arbName?arbiInfo.arbName:'/'}}</span>
             </div>
             <div class="caseBaseInfoItem">
               <span class="label">申请日期</span>
               <br>
-              <span class="text">{{arbiInfo.createTime?arbiInfo.createTime:'/'}}</span>
+              <span class="text" @click="toastTex">{{arbiInfo.createTime?arbiInfo.createTime:'/'}}</span>
             </div>
             <div class="caseBaseInfoItem">
               <span class="label">标的额</span>
               <br>
-              <span class="text">{{arbiInfo.arbDisputeMoney?arbiInfo.arbDisputeMoney:'/'}}</span>
+              <span class="text" @click="toastTex">{{arbiInfo.arbDisputeMoney?arbiInfo.arbDisputeMoney:'/'}}</span>
             </div>
           </div>
         </div>
@@ -1156,6 +1156,12 @@ export default {
         // })        
       }
     },
+    toastTex (e) {
+      if ((e.target.offsetWidth + e.target.previousSibling.offsetWidth) > e.target.parentNode.offsetWidth) {
+        e.stopPropagation()
+        this.$Toast({ message: e.target.innerHTML, position: 'middle' })
+      }
+    },    
     formatData () {
       const applyedArr = []
       const applyers = []
@@ -1485,10 +1491,10 @@ export default {
       }
     },
     getData () {
-      api.getArbitralInfoDetailBySys({ arbitralId: this.id }).then(res => {
+      api.getArbitralInfoDetailBySys({ arbitralId: this.id }).then(res => {        
+          this.refreshing = false // 关闭下拉刷新中
         if (res.data.code === '1') {
           this.loading=false
-          this.refreshing = false // 关闭下拉刷新中
           this.arbiInfo = res.data
           this.arbRecallApplyInfoResponse = res.data.arbRecallApplyInfoResponse
           this.arbitralLiveInfoResponse = res.data.arbitralLiveInfoResponse || {}

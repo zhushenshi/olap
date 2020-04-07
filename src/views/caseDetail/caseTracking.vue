@@ -20,26 +20,43 @@
         </div>
       </div>
       <div v-else>
-        <div class="itemBox" v-for="(item,index) in arr" :key="index">
-          <p class="topTime">{{item.endTime}}</p>
-          <div v-for="(value1,index1) in item.list" :key="index1">
-             <div class="fileName">{{value1.fileName.replace(/\b(0+)/gi,"")}}</div>
-             <div  v-for="(ite,inde) in value1" :key="inde">
-             <div v-for="(value,ind) in ite" :key="ind">
-               <div   class="item" v-if="value.taskName" >
-                <div class="left">
-                  <div class="leftBottom">{{value.endTime | formathm}}</div>
-                </div>
-                <div class="right" >
-                  <p>{{value.index}}：{{value.taskName}}</p>
-                  <p class="text">{{value.assignee}}</p>
-                </div>
-                </div>
-          </div>
-          </div>
+        <div class="itemBox" v-for="(item,index) in histroyTaskInst" :key="index">
+          <p class="topTime" v-if="index===0||item.endTime.slice(0, 7)!=histroyTaskInst[index-1].endTime.slice(0, 7)">{{item.endTime.slice(0, 7)}}</p>
+          <div>
+            <div class="fileName" v-if="index===0||item.endTime.slice(8, 11)!=histroyTaskInst[index-1].endTime.slice(8, 11)">{{item.endTime.slice(8, 11).replace(/\b(0+)/gi,"")}}</div>
+            <div   class="item" v-if="item.taskName" >
+              <div class="left">
+                <div class="leftBottom">{{item.endTime | formathm}}</div>
+              </div>
+              <div class="right" >
+                <p>{{item.index}}：{{item.taskName}}</p>
+                <p class="text">{{item.assignee}}</p>
+              </div>
+              </div>
             </div>
         </div>
       </div>
+      <!-- <div v-else>
+        <div class="itemBox" v-for="(item,index) in arr" :key="index">
+          <p class="topTime">{{item.endTime}}</p>
+          <div v-for="(value1,index1) in item.list" :key="index1">
+            <div class="fileName">{{value1.fileName.replace(/\b(0+)/gi,"")}}</div>
+             <div  v-for="(ite,inde) in value1" :key="inde">
+              <div v-for="(value,ind) in ite" :key="ind">
+                <div   class="item" v-if="value.taskName" >
+                  <div class="left">
+                    <div class="leftBottom">{{value.endTime | formathm}}</div>
+                  </div>
+                  <div class="right" >
+                    <p>{{value.index}}：{{value.taskName}}</p>
+                    <p class="text">{{value.assignee}}</p>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div> -->
     <!-- </pull-refresh> -->
   </transition>
 </div>
@@ -92,43 +109,43 @@ export default {
           this.histroyTaskInst.forEach((v, i) => {
             v.index = '第' + (len - i) + '步'
           })
-          var arr = []
-          this.list = this.histroyTaskInst
-          for (let i = 0; i < this.list.length; i++) {
-            var endTime = this.list[i].endTime
-            var endTimes = endTime.slice(0, 7)
-            this.list[i].fileName = endTime.slice(8, 11)
-            if (i === 0) {
-              var obj = { list: [{ fileName: '', list: [] }], endTime: endTimes }
-              obj.list[0].fileName = this.list[0].fileName
-              obj.list[0].list.push(this.list[0])
-              arr.push(obj)
-            } else {
-              const leng = arr.length
-              for (let j = 0; j < leng; j++) {
-                if (endTimes === arr[j].endTime) {
-                  const len = arr[j].list.length
-                  for (let k = 0; k < len; k++) {
-                    if (this.list[i].fileName === arr[j].list[k].fileName) {
-                      arr[j].list[k].list.push(this.list[i])
-                      break
-                    } else if (this.list[i].fileName !== arr[j].list[k].fileName && k === len - 1) {
-                      var ob = { fileName: this.list[i].fileName, list: [] }
-                      ob.list.push(this.list[i])
-                      arr[j].list.push(ob)
-                      break
-                    }
-                  }
-                } else if (this.list[i].endTime !== arr[j].endTime && j === leng - 1) {
-                  var o = { list: [{ fileName: '', list: [] }], endTime: endTimes }
-                  o.list[0].fileName = this.list[i].fileName
-                  o.list[0].list.push(this.list[i])
-                  arr.push(o)
-                }
-              }
-            }
-          }
-          this.arr = arr
+          // var arr = []
+          // this.list = this.histroyTaskInst
+          // for (let i = 0; i < this.list.length; i++) {
+          //   var endTime = this.list[i].endTime
+          //   var endTimes = endTime.slice(0, 7)
+          //   this.list[i].fileName = endTime.slice(8, 11)
+          //   if (i === 0) {
+          //     var obj = { list: [{ fileName: '', list: [] }], endTime: endTimes }
+          //     obj.list[0].fileName = this.list[0].fileName
+          //     obj.list[0].list.push(this.list[0])
+          //     arr.push(obj)
+          //   } else {
+          //     const leng = arr.length
+          //     for (let j = 0; j < leng; j++) {
+          //       if (endTimes === arr[j].endTime) {
+          //         const len = arr[j].list.length
+          //         for (let k = 0; k < len; k++) {
+          //           if (this.list[i].fileName === arr[j].list[k].fileName) {
+          //             arr[j].list[k].list.push(this.list[i])
+          //             break
+          //           } else if (this.list[i].fileName !== arr[j].list[k].fileName && k === len - 1) {
+          //             var ob = { fileName: this.list[i].fileName, list: [] }
+          //             ob.list.push(this.list[i])
+          //             arr[j].list.push(ob)
+          //             break
+          //           }
+          //         }
+          //       } else if (this.list[i].endTime !== arr[j].endTime && j === leng - 1) {
+          //         var o = { list: [{ fileName: '', list: [] }], endTime: endTimes }
+          //         o.list[0].fileName = this.list[i].fileName
+          //         o.list[0].list.push(this.list[i])
+          //         arr.push(o)
+          //       }
+          //     }
+          //   }
+          // }
+          // this.arr = arr
         }
       })
     }

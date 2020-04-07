@@ -6,11 +6,11 @@
         <div class="arbNumber">编号：{{arbiInfo.arbNumber || arbiInfo.arbTemporaryNumber}}</div>
         <div class="arbInfo">
           <span class="label">案由：</span>
-          <span>{{arbiInfo.arbName?arbiInfo.arbName:'/'}}</span>
+          <span @click="toastTex">{{arbiInfo.arbName?arbiInfo.arbName:'/'}}</span>
         </div>
         <div class="arbInfo">
           <span class="label">申请人：</span>
-          <span>{{arbiInfo.arbProsecutorName?arbiInfo.arbProsecutorName:'/'}}</span>
+          <span @click="toastTex">{{arbiInfo.arbProsecutorName?arbiInfo.arbProsecutorName:'/'}}</span>
         </div>
         <div class="arbInfo">
           <span class="label">被申请人：</span>
@@ -45,11 +45,11 @@
             <div class="title">{{item.title?item.title:'/'}}</div>
             <div>
               <span>{{'证据标题'}}:</span>
-              <span class="text">{{item.evidenceTitle?item.evidenceTitle:'/'}}</span>
+              <span class="text" @click="toastTex">{{item.evidenceTitle?item.evidenceTitle:'/'}}</span>
             </div>
             <div>证据内容：</div>
-            <div class="text wrap">
-              {{item.evidenceContent?item.evidenceContent:'/'}}
+            <div class="text wrap" @click="toastClampTex">
+              <span>{{item.evidenceContent?item.evidenceContent:'/'}}</span>
             </div>
             <span class="icon iconfont iconzhongcai_qipao-jiao triangle"></span>
           </div>
@@ -129,14 +129,15 @@ export default {
       this.type = val
     },
     toastTex (e) {
-      // console.log(e.target.innerHTML)
-      // console.log(e.target.offsetWidth)
-      // console.log(e.target.previousSibling.offsetWidth)
-      // console.log(e.target.parentNode.offsetWidth)
       if ((e.target.offsetWidth + e.target.previousSibling.offsetWidth) > e.target.parentNode.offsetWidth) {
         this.$Toast({ message: e.target.innerHTML, position: 'middle' })
       }
-      // div.scrollHeight==div.offsetHeight
+    },
+    toastClampTex (e) {
+      if (e.target.offsetHeight > e.target.parentNode.offsetHeight) {
+        e.stopPropagation()
+        this.$Toast({ message: e.target.innerHTML, position: 'middle' })
+      }
     },
     getData () {
       this.$Indicator.open()
@@ -173,13 +174,15 @@ export default {
           const list = [6, 7, 8, 9, 10]
           this.evidences = arbitralAttachments.filter(val => list.indexOf(val.evidenceProperty) === -1).map(item => {
             item.name = (item.evidenceName || '') + '：' + (item.evidenceTitle || '')
-            if (item.arbitralPtype === 1) {
-              // item.name = '答辩证据：' + item.name
-              item.title = '答辩证据资料：'
-            } else if (item.arbitralPtype === 2) {
-              // item.name = '申请资料：' + item.name
-              item.title = '申请人证据资料：'
-            }
+            // 1-申请书，2-证据资料，3-其他,  4-被申请人答辩书  5-被申请人答辩证据  6-调解证据  7-管辖权异议申请书  8-管辖权异议证据  9-管辖权异议答辩书  10-管辖权异议答辩证据 11-资料补充
+            // if (item.arbitralPtype === 1) {
+            //   // item.name = '答辩证据：' + item.name
+            //   item.title = '答辩证据资料：'
+            // } else if (item.arbitralPtype === 2) {
+            //   // item.name = '申请资料：' + item.name
+            //   item.title = '申请人证据资料：'
+            // }
+            item.title = this.getEvidenceProperty(item.evidenceProperty) + ':' + item.evidenceName
             return item
           })
           this.evidenceName = this.evidences[0].attachmentEvidenceId
@@ -206,6 +209,36 @@ export default {
       if (Array.isArray(this.evidences) && this.evidences.length > 0) {
         this.selectEvidence(this.evidences[0])
       }
+    },
+    getEvidenceProperty (val) {
+      // 1-申请书，2-证据资料，3-其他,  4-被申请人答辩书  5-被申请人答辩证据  6-调解证据  7-管辖权异议申请书  8-管辖权异议证据  9-管辖权异议答辩书  10-管辖权异议答辩证据 11-资料补充
+      var property = ''
+      if (parseInt(val) === 1) {
+        property = '申请书'
+      } else if (parseInt(val) === 2) {
+        property = '证据资料'
+      } else if (parseInt(val) === 3) {
+        property = '其他'
+      } else if (parseInt(val) === 4) {
+        property = '被申请人答辩书'
+      } else if (parseInt(val) === 5) {
+        property = '被申请人答辩证据'
+      } else if (parseInt(val) === 6) {
+        property = '调解证据'
+      } else if (parseInt(val) === 7) {
+        property = '管辖权异议申请书'
+      } else if (parseInt(val) === 8) {
+        property = '管辖权异议证据'
+      } else if (parseInt(val) === 9) {
+        property = '管辖权异议答辩书'
+      } else if (parseInt(val) === 10) {
+        property = '管辖权异议答辩证据'
+      } else if (parseInt(val) === 11) {
+        property = '资料补充'
+      } else {
+        property = ''
+      }
+      return property
     },
     selectEvidence (item) {
       this.attachmentEvidenceId = item.attachmentEvidenceId
