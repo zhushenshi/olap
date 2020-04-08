@@ -63,7 +63,6 @@
 </template>
 <script>
 import { api } from '@/utils/api'
-import 'vant/lib/pull-refresh/style'
 export default {
   name: 'CaseTracking',
   props: {
@@ -82,8 +81,10 @@ export default {
     }
   },
   created () {
-    console.log(123)
     this.getHistroyTaskInst()
+  },
+  destroyed () {
+    this.histroyTaskInst = []
   },
   methods: {
     // addComment () {
@@ -99,8 +100,10 @@ export default {
     // },
     getHistroyTaskInst () { // 案件追踪
       this.loading = true
+      var time = new Date()
       api.getHistroyTaskInst({
-        arbProcess: this.arbProcess
+        arbProcess: this.arbProcess,
+        r: time.getTime()
       }).then((res) => {
         this.loading = false
         if (res.data.code === '1') {

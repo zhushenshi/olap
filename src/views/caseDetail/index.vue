@@ -781,7 +781,7 @@
             <transition name="fade">
               <pull-refresh v-model="refreshing" @refresh="getData">
                 <div style="min-height:280px;">
-                  <case-tracking :arbProcess="arbProcess" v-if="!refreshing"></case-tracking>
+                  <case-tracking :arbProcess="arbProcess" ref="caseTracking" v-if="!refreshing"></case-tracking>
                 </div>
               </pull-refresh>
             </transition>
@@ -958,7 +958,7 @@ import 'vant/lib/collapse/style'
 import 'vant/lib/collapse-item/style'
 import 'vant/lib/image/style'
 import 'vant/lib/image-preview/style'
-
+import 'vant/lib/pull-refresh/style'
 import Header from '@/components/Header.vue'
 import caseTracking from './caseTracking.vue'// 案件追踪
 import jurisdiction from './jurisdiction.vue'// 管辖权异议资料
@@ -1498,6 +1498,9 @@ export default {
           this.arbiInfo = res.data
           this.arbRecallApplyInfoResponse = res.data.arbRecallApplyInfoResponse
           this.arbitralLiveInfoResponse = res.data.arbitralLiveInfoResponse || {}
+          if(this.$refs.caseTracking){
+            this.$refs.caseTracking.getHistroyTaskInst()
+          }
           if (this.arbiInfo.id) {
             this.formatData()
             // if (this.tabName !== '1') {
