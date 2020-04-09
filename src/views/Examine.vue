@@ -58,7 +58,6 @@ export default {
       this.$Indicator.open()
       this.save().then(res => {
         if (res.data.code === '1') {
-          this.$Indicator.close()
           return promise({
             processCommonRequest: {
               arbitralInfoId: this.arbiInfo.id, // 案件id
@@ -67,6 +66,7 @@ export default {
             passOpinion: this.reviewTextarea
           })
         } else {
+          this.$Indicator.close()
           this.$Toast({ message: '裁决书保存失败', position: 'bottom' })
         }
       }).then((res) => {
