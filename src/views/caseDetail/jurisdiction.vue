@@ -118,7 +118,7 @@
         <div v-else>/</div>
         <div class="flexInfoBox">
           <div>
-            <div>事实和理由</div>
+            <div>答辩及质证意见</div>
             <div class="black mt2">{{arbiInfo.defenceRemark?arbiInfo.defenceRemark:'/'}}</div>
           </div>
         </div>
