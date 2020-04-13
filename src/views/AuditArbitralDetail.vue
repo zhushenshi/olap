@@ -49,7 +49,7 @@
             </div>
             <div>证据内容：</div>
             <div class="text wrap" @click="toastClampTex">
-              <span>{{item.evidenceContent?item.evidenceContent:'/'}}</span>
+              <span v-html="item.evidenceContent?item.evidenceContent:'/'"></span>
             </div>
             <span class="icon iconfont iconzhongcai_qipao-jiao triangle"></span>
           </div>
@@ -136,7 +136,7 @@ export default {
     toastClampTex (e) {
       if (e.target.offsetHeight > e.target.parentNode.offsetHeight) {
         e.stopPropagation()
-        this.$Toast({ message: e.target.innerHTML, position: 'middle' })
+        this.$Toast({ message: e.target.innerText, position: 'middle' })
       }
     },
     getData () {
