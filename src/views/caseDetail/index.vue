@@ -794,7 +794,7 @@
         <Tab title="组庭信息" v-if="arbiInfo.arbitralMergeHearDetailResponse||(arbiInfo.arbitralRecordResponse&&arbiInfo.arbitralRecordResponse.tribunalType)">
           <div class="tabItem">
             <!-- 合并组庭信息 -->
-            <Collapse v-model="activeNames2" bind:change="onChange" v-if="arbiInfo.arbitralMergeHearDetailResponse">
+            <Collapse v-model="activeNames2" bind:change="onChange" v-if="arbiInfo.arbitralMergeHearDetailResponse&&arbiInfo.arbitralMergeHearDetailResponse.arbitralMergeNumber">
               <collapse-item name="1" :is-link="false" :border="false">
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
@@ -858,7 +858,7 @@
                 </div>
               </collapse-item>
             </Collapse>
-            <Collapse v-model="activeNames2" bind:change="onChange" v-if="arbiInfo.arbitralRecordResponse&&arbiInfo.arbitralRecordResponse.tribunalType">
+            <Collapse v-model="activeNames2" bind:change="onChange" v-else>
               <collapse-item name="1" :is-link="false" :border="false">
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
@@ -1119,7 +1119,7 @@ export default {
             url
           ]
         })
-      } else {
+      } else if(lastName === '.doc' || lastName === '.docx'){
         url=api.getDocURL(url)
         var ua = navigator.userAgent.toLowerCase()
         if (/iphone|ipad|ipod/.test(ua)) {
@@ -1154,6 +1154,8 @@ export default {
         //     reader.readAsArrayBuffer(blob)
         //   }
         // })        
+      }else{
+        this.$Toast({ message: '暂不支持预览该类型文件', position: 'bottom' })
       }
     },
     toastTex (e) {
