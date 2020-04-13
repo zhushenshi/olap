@@ -781,7 +781,7 @@
             <transition name="fade">
               <pull-refresh v-model="refreshing" @refresh="getData">
                 <div style="min-height:280px;">
-                  <case-tracking :arbProcess="arbProcess" ref="caseTracking" v-if="!refreshing"></case-tracking>
+                  <case-tracking :arbProcess="arbProcess" v-if="!refreshing"></case-tracking>
                 </div>
               </pull-refresh>
             </transition>
@@ -828,7 +828,7 @@
                   <div class="flexInfoBox">
                     <div class="infoItem">
                       <div>庭审日期</div>
-                      <div class="black mt2">{{obj.trialBeginTime}}-{{(obj.trialEndTime || '').substring(11)}}</div>
+                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.trialBeginTime}}-{{(arbiInfo.arbitralMergeHearDetailResponse.trialEndTime || '').substring(11)}}</div>
                     </div>
                     <div class="infoLine"></div>
                     <div class="infoItem">
@@ -858,7 +858,7 @@
                 </div>
               </collapse-item>
             </Collapse>
-            <Collapse v-model="activeNames2" bind:change="onChange" v-if="arbiInfo.arbitralRecordResponse&&arbiInfo.arbitralRecordResponse.tribunalType">
+            <Collapse v-model="activeNames2" bind:change="onChange" v-if="arbiInfo.arbitralRecordResponse&&arbiInfo.arbitralRecordResponse.tribunalType&&!arbiInfo.arbitralMergeHearDetailResponse">
               <collapse-item name="1" :is-link="false" :border="false">
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
@@ -958,7 +958,7 @@ import 'vant/lib/collapse/style'
 import 'vant/lib/collapse-item/style'
 import 'vant/lib/image/style'
 import 'vant/lib/image-preview/style'
-import 'vant/lib/pull-refresh/style'
+
 import Header from '@/components/Header.vue'
 import caseTracking from './caseTracking.vue'// 案件追踪
 import jurisdiction from './jurisdiction.vue'// 管辖权异议资料
@@ -1498,9 +1498,6 @@ export default {
           this.arbiInfo = res.data
           this.arbRecallApplyInfoResponse = res.data.arbRecallApplyInfoResponse
           this.arbitralLiveInfoResponse = res.data.arbitralLiveInfoResponse || {}
-          if(this.$refs.caseTracking){
-            this.$refs.caseTracking.getHistroyTaskInst()
-          }
           if (this.arbiInfo.id) {
             this.formatData()
             // if (this.tabName !== '1') {
