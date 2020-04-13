@@ -781,7 +781,7 @@
             <transition name="fade">
               <pull-refresh v-model="refreshing" @refresh="getData">
                 <div style="min-height:280px;">
-                  <case-tracking :arbProcess="arbProcess" v-if="!refreshing"></case-tracking>
+                  <case-tracking :arbProcess="arbProcess" ref="caseTracking" v-if="!refreshing"></case-tracking>
                 </div>
               </pull-refresh>
             </transition>
@@ -841,24 +841,24 @@
                   <div class="flexInfoBox">
                     <div class="infoItem">
                       <div>首席仲裁员</div>
-                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.arbitrator}}</div>
+                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.arbitrator?arbiInfo.arbitralMergeHearDetailResponse.arbitrator:'/'}}</div>
                     </div>
                     <div class="infoLine"></div>
                     <div class="infoItem">
                       <div>申请人仲裁员</div>
-                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.prosecutorArbitrator}}</div>
+                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.prosecutorArbitrator?arbiInfo.arbitralMergeHearDetailResponse.prosecutorArbitrator:'/'}}</div>
                     </div>
                   </div>
                   <div class="flexInfoBox">
                     <div>
                       <div>被申请人仲裁员</div>
-                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.defendantArbitrator}}</div>
+                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.defendantArbitrator?arbiInfo.arbitralMergeHearDetailResponse.defendantArbitrator:'/'}}</div>
                     </div>
                   </div>
                 </div>
               </collapse-item>
             </Collapse>
-            <Collapse v-model="activeNames2" bind:change="onChange" v-if="arbiInfo.arbitralRecordResponse&&arbiInfo.arbitralRecordResponse.tribunalType&&!arbiInfo.arbitralMergeHearDetailResponse">
+            <Collapse v-model="activeNames2" bind:change="onChange" v-if="arbiInfo.arbitralRecordResponse&&arbiInfo.arbitralRecordResponse.tribunalType">
               <collapse-item name="1" :is-link="false" :border="false">
                 <template slot="title">
                   <div style="padding:15px 0 14px 0;">
@@ -869,12 +869,12 @@
                   <div class="flexInfoBox">
                     <div class="infoItem">
                       <div>庭审类型</div>
-                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.tribunalInfo}}</div>
+                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.tribunalInfo?arbiInfo.arbitralRecordResponse.tribunalInfo:'/'}}</div>
                     </div>
                     <div class="infoLine"></div>
                     <div class="infoItem">
                       <div>庭审地点</div>
-                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.location}}</div>
+                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.location?arbiInfo.arbitralRecordResponse.location:'/'}}</div>
                     </div>
                   </div>
                   <div class="flexInfoBox">
@@ -893,18 +893,18 @@
                   <div class="flexInfoBox">
                     <div class="infoItem">
                       <div>首席仲裁员</div>
-                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[0]}}</div>
+                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[0]?arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[0]:'/'}}</div>
                     </div>
                     <div class="infoLine" v-if="arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[1]"></div>
                     <div class="infoItem" v-if="arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[1]">
                       <div>申请人仲裁员</div>
-                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[1]}}</div>
+                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[1]?arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[1]:'/'}}</div>
                     </div>
                   </div>
                   <div class="flexInfoBox" v-if="arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[2]">
                     <div>
                       <div>被申请人仲裁员</div>
-                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[2]}}</div>
+                      <div class="black mt2">{{arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[2]?arbiInfo.arbitralRecordResponse.arbArbitratorNameArr[2]:'/'}}</div>
                     </div>
                   </div>
                 </div>
@@ -958,7 +958,7 @@ import 'vant/lib/collapse/style'
 import 'vant/lib/collapse-item/style'
 import 'vant/lib/image/style'
 import 'vant/lib/image-preview/style'
-
+import 'vant/lib/pull-refresh/style'
 import Header from '@/components/Header.vue'
 import caseTracking from './caseTracking.vue'// 案件追踪
 import jurisdiction from './jurisdiction.vue'// 管辖权异议资料
@@ -1113,7 +1113,7 @@ export default {
       if (lastName === '.pdf') {
         this.previewFileShow = !this.previewFileShow
         this.pdfUrl=url
-      } else if (lastName === '.png' || lastName === '.jpg' || lastName === '') {
+      } else if (lastName === '.png' || lastName === '.jpg' || lastName === '.jpeg'|| lastName === '') {
         ImagePreview({
           images: [
             url
@@ -1498,6 +1498,9 @@ export default {
           this.arbiInfo = res.data
           this.arbRecallApplyInfoResponse = res.data.arbRecallApplyInfoResponse
           this.arbitralLiveInfoResponse = res.data.arbitralLiveInfoResponse || {}
+          if(this.$refs.caseTracking){
+            this.$refs.caseTracking.getHistroyTaskInst()
+          }
           if (this.arbiInfo.id) {
             this.formatData()
             // if (this.tabName !== '1') {
