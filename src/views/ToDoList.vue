@@ -55,7 +55,7 @@
                           <span v-if="value2.arbitralData" @click="toastTex">{{value2.arbitralData.createTime}}</span>
                         </div>
                       </div>
-                      <div class="operateBtn" >审核判决书</div>
+                      <div class="operateBtn" >审核裁决书</div>
                     </div>
                     </div>
                   <div class="item"  v-if="type!=1 && value2.arbitralData ==null" @click="goToRecharge(value2.rechargeData)">

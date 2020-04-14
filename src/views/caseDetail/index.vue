@@ -802,13 +802,13 @@
                   </div>
                 </template>
                 <div class="tabItemContainer">
-                  <!-- <div class="flexInfoBox">
+                  <div class="flexInfoBox" v-if="arbiInfo.arbitralMergeHearDetailResponse.arbitralMergeCourtNumber">
                     <div>
                       <div>合并组庭编号</div>
-                      <div class="black mt2">{{'item.pAdress'}}</div>
+                      <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.arbitralMergeCourtNumber}}</div>
                     </div>
-                  </div> -->
-                  <div class="flexInfoBox">
+                  </div>
+                  <div class="flexInfoBox" v-if="arbiInfo.arbitralMergeHearDetailResponse.arbitralMergeNumber">
                     <div>
                       <div>合并开庭编号</div>
                       <div class="black mt2">{{arbiInfo.arbitralMergeHearDetailResponse.arbitralMergeNumber}}</div>
