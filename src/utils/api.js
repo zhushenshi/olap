@@ -917,6 +917,13 @@ const api = {
       data: params
     })
   },
+  queryArbitralDocumentDetail (params) { // 批量查询案件文书详情
+    return myAxios({
+      method: 'get',
+      url: '/olap-arbitral/api/document/queryArbitralDocumentDetail',
+      params: params
+    })
+  },
   queryProcessArbitralDocument (params) { // 线上邮递文书查询（已送达的文书不返回）
     return myAxios({
       method: 'post',

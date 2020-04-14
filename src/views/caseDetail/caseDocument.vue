@@ -40,19 +40,23 @@
             </Tabs>
         </div>
         <div >
-          <div>
-            <p class="title">邮件送达</p>
+          <div class="documentitem" v-for="(item,index) in arrivedWayDetailObj.arrivedWayDetail" :key="index">
+            <p class="title">{{item.arrivedWayDesc}}</p>
             <p class="documentsName">
-              <span>送达地址：</span>
-              <span>{{wsobj.emailAddress}}</span>
+              <span>{{item.arrivedWayDesc.includes('邮件') ?'送达邮箱':'送达地址'}}：</span>
+              <span>{{item.arrivedAddress}}</span>
             </p>
-            <p class="documentsName">
+            <p class="documentsName" v-if="item.postNumber">
+              <span>快递单号：</span>
+              <span>{{item.postNumber}}</span>
+            </p>
+            <p class="documentsName" v-if="item.arrivedTime">
               <span>送达时间：</span>
-              <span>{{wsobj.documentArrivedTime}}</span>
+              <span>{{item.arrivedTime}}</span>
             </p>
           </div>
-          <div class="line"></div>
-          <div>
+          <!-- <div class="line"></div> -->
+          <!-- <div>
             <p class="title">邮递送达</p>
               <p class="documentsName address">
                 <span>送达地址：</span>
@@ -69,9 +73,9 @@
                   <span class="express" v-if="wsobj.arrivedTime">{{wsobj.arrivedTime}}(送)</span>
                 </div>
               </div>
-          </div>
-          <div class="line"></div>
-          <div>
+          </div> -->
+          <!-- <div class="line"></div> -->
+          <!-- <div>
             <p class="title">短信送达</p>
             <p class="documentsName">
               <span>送达地址：</span>
@@ -81,7 +85,7 @@
               <span>送达时间：</span>
               <span>{{wsobj.documentMessageArrivedTime}}</span>
             </p>
-          </div>
+          </div> -->
         </div>
     </div>
   </div>
@@ -115,7 +119,12 @@ export default {
         wslist: []
       },
       active: 0,
-      loading: true
+      loading: true,
+      arrivedWayDetailObj: {
+        documentName: '',
+        arrivedProcessDesc: '',
+        arrivedWayDetail: []
+      }
     }
   },
   created () {
@@ -191,6 +200,15 @@ export default {
         if (el === '短信送达') {
           this.wsobj.userPhone = val.userPhone
           this.wsobj.documentMessageArrivedTime = val.documentMessageArrivedTime
+        }
+      })
+      this.$Indicator.open()
+      api.queryArbitralDocumentDetail({ documentId: val.arbitralDocumentId }).then(res => {
+        this.$Indicator.close()
+        if (res.data.code === '1') {
+          this.arrivedWayDetailObj = res.data.data
+        } else {
+          this.$Toast({ message: res.data.msg, position: 'bottom' })
         }
       })
     },
@@ -318,6 +336,12 @@ export default {
 .van-overlay{
   z-index 9999
   opacity 0.7
+}
+.documentitem{
+  border-bottom:1pt solid red;
+}
+.documentitem:last-child{
+  border:none;
 }
 .line
   height 1px

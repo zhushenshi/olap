@@ -9,7 +9,7 @@
       </template>
       <div class="tabItemContainer">
         <div v-for="(evidence, index) in replyBrief" :key="'e'+index">
-          <div v-for="(file,i) in evidence.arbAttachmentDatas" :key="i" @click="previewFile(file.attachName,file.attachUrlDes)">
+          <div v-for="(file,i) in evidence.arbAttachmentDatas" :key="i" @click="previewFile(file.attachName,file.attachUrlDes)" class="fileMagin">
             <span class="icon iconfont" :class="util.getFileIcon(file.attachName)"></span>
             <span class="fileName">{{file.attachName}}</span>
           </div>
