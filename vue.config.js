@@ -40,5 +40,14 @@ module.exports = {
       .set('@', resolve('./src'))
       .set('assets', resolve('./src/assets'))
       .set('components', resolve('./src/components'))
+  },
+  pwa: {
+    iconPaths: {
+      favicon32: 'favicon.ico',
+      favicon16: 'favicon.ico',
+      appleTouchIcon: 'favicon.ico',
+      maskIcon: 'favicon.ico',
+      msTileImage: 'favicon.ico'
+    }
   }
 }
