@@ -32,13 +32,14 @@ import util from '@/utils/util'
 import { Button, Field } from 'vant'
 import 'vant/lib/button/style'
 import 'vant/lib/field/style'
+import MycaptchaUrl from '../assets/yzm.png'
 export default {
   data () {
     return {
       type: 'account',
       value: '',
       uuid: '',
-      captchaUrl: '',
+      captchaUrl: MycaptchaUrl,
       loginForm: {
         username: '',
         password: '',
@@ -52,7 +53,7 @@ export default {
     login () {
       var $JSEncrypt = new JSEncrypt()
       $JSEncrypt.setPublicKey('MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCPfoCRJo068xVcIhYnigpb4sxMjSKlkXVZIgl0vTdkdda+Qu8n4VxiLv6P8mHPi9WLZENJQd4kSM6gvSMpm2PtkNRY7aLceTrroPd6tAjKxsa8hvClAFy97OEcpOzi+WqxL8ERSeZ62Rai3fVjIbMP4b1tXaPiUxoPGgdJ74/l/QIDAQAB')
-      var loginFormPwd = $JSEncrypt.encrypt(this.loginForm.password)
+      // var loginFormPwd = $JSEncrypt.encrypt(this.loginForm.password)
       if (!this.loginForm.username) {
         this.$Toast({ message: '请填写用户名', position: 'bottom' })
       } else if (!this.loginForm.password) {
@@ -61,30 +62,46 @@ export default {
         this.$message.error('请填写验证码')
         this.$Toast({ message: '请填写验证码', position: 'bottom' })
       } else {
+        console.log(api.mockRequest())
+
         this.$Indicator.open()
-        api.sysUserLogin({
-          username: this.loginForm.username,
-          password: loginFormPwd,
-          kaptcha: this.loginForm.kaptcha,
-          uuid: this.uuid
-        }).then((res) => {
+        api.mockRequest({ success: true, msg: '登录成功', code: '100020', data: { access_token: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInJvbGVJZCI6ImFkbWluaXN0cmF0b3IiLCJhdXRoU3RhdHVzIjpudWxsLCJ1c2VydHlwZSI6IjUiLCJzb3VyY2UiOiJOUFpDVyIsInVzZXJJZCI6IjEiLCJhdXRob3JpdGllcyI6WyJST0xFX2FkbWluOnNldHRpbmdzOkFyYml0cmFsQXdhcmRNYW5hZ2UiLCJST0xFX2FkbWluOm1hbmFnZTp0cmlidW5hbFdyaXR0ZW4iLCJST0xFX2FkbWluOnNldHRpbmdzOnByb2R1Y3QiLCJST0xFX2FkbWluOnNldHRpbmdzOnRpbWVMaW1pdCIsIlJPTEVfYWRtaW46bWFuYWdlOnJlcGx5IiwiUk9MRV9hZG1pbjpmaW5hbmNpYWw6cHJlY2hhcmdlIiwiUk9MRV9hZG1pbjpzZXR0aW5nczpjb250cmFjdEZvcm11bGEiLCJST0xFX2FkbWluOmF1ZGl0OmF1ZGl0QXJiaXRyYWxBd2FyZDphdWRpdEFyYml0cmFsQXdhcmRMaXN0IiwiUk9MRV9hZG1pbjphdWRpdDphdWRpdEp1cmlzZGljdGlvbjphdWRpdEp1cmlzZGljdGlvbkxpc3QiLCJST0xFX2FkbWluOmF1ZGl0OmF1ZGl0RGF0YTphdWRpdERhdGFMaXN0IiwiUk9MRV9hZG1pbjpzZXR0aW5nczppbml0UGFyYW1ldGVyIiwiUk9MRV9hZG1pbjptYW5hZ2U6bm90aWNlIiwiUk9MRV9hZG1pbjptYW5hZ2U6Y291cnRSZWNvcmQ6Y291cnRSZWNvcmRMaXN0IiwiUk9MRV9hZG1pbjpzZXR0aW5nczphcmJOdW1iZXIiLCJST0xFX2FkbWluOm1hbmFnZTp0cmlidW5hbE9mZmxpbmUiLCJST0xFX2FkbWluOnNldHRpbmdzOmFyYml0cmF0b3JNYW5hZ2UiLCJST0xFX2FkbWluOmZpbmFuY2lhbDpiaWxsIiwiUk9MRV9hZG1pbjptYW5hZ2U6dHJpYnVuYWwiLCJST0xFX2FkbWluOmFkbWluTWFuYWdlOnJvbGVNYW5hZ2UiLCJST0xFX2FkbWluOnNldHRpbmdzOnByb2NlZHVyZSIsIlJPTEVfYWRtaW46bWFuYWdlOmFkbWluTXNnIiwiUk9MRV9hZG1pbjptYW5hZ2U6cHJvb2ZyZWFkOnByb29mcmVhZExpc3QiLCJST0xFX2FkbWluOnNldHRpbmdzOmNvc3RDYWxjUnVsZSIsIm51bGwiLCJST0xFX2FkbWluOmZpbmFuY2lhbDpwcmVwYXltZW50IiwiUk9MRV9hZG1pbjptYW5hZ2U6cXVlcnlBcmJpdHJhbCIsIlJPTEVfYWRtaW46bWFuYWdlOmFyYml0cmFsQXdhcmQiLCJST0xFX2FkbWluOmFkbWluTWFuYWdlOmFkbWluTWFuYWdlTGlzdCJdLCJjbGllbnRfaWQiOiJjbGllbnRfb2xhcCIsInJlYWxuYW1lIjoi57O757uf566h55CG5ZGYIiwibGFzdExvZ2luVGltZSI6bnVsbCwiYXVkIjpbImFwaSJdLCJwaG9uZSI6IjEzNjEyMzQ1Njc4IiwibW9iaWxlU3RhdHVzIjpudWxsLCJzY29wZSI6WyJhbGwiXSwicm9sZU5hbWUiOm51bGwsInBlcm1zIjoibnVsbCxST0xFX2FkbWluOm1hbmFnZTpxdWVyeUFyYml0cmFsLG51bGwsUk9MRV9hZG1pbjphdWRpdDphdWRpdEp1cmlzZGljdGlvbjphdWRpdEp1cmlzZGljdGlvbkxpc3QsUk9MRV9hZG1pbjptYW5hZ2U6bm90aWNlLFJPTEVfYWRtaW46bWFuYWdlOnJlcGx5LG51bGwsUk9MRV9hZG1pbjptYW5hZ2U6dHJpYnVuYWwsUk9MRV9hZG1pbjptYW5hZ2U6dHJpYnVuYWxPZmZsaW5lLFJPTEVfYWRtaW46bWFuYWdlOmNvdXJ0UmVjb3JkOmNvdXJ0UmVjb3JkTGlzdCxST0xFX2FkbWluOm1hbmFnZTp0cmlidW5hbFdyaXR0ZW4sUk9MRV9hZG1pbjphdWRpdDphdWRpdERhdGE6YXVkaXREYXRhTGlzdCxudWxsLFJPTEVfYWRtaW46bWFuYWdlOnByb29mcmVhZDpwcm9vZnJlYWRMaXN0LFJPTEVfYWRtaW46YXVkaXQ6YXVkaXRBcmJpdHJhbEF3YXJkOmF1ZGl0QXJiaXRyYWxBd2FyZExpc3QsUk9MRV9hZG1pbjptYW5hZ2U6YXJiaXRyYWxBd2FyZCxudWxsLFJPTEVfYWRtaW46ZmluYW5jaWFsOmJpbGwsbnVsbCxST0xFX2FkbWluOnNldHRpbmdzOmFyYml0cmF0b3JNYW5hZ2UsUk9MRV9hZG1pbjpzZXR0aW5nczpwcm9kdWN0LFJPTEVfYWRtaW46c2V0dGluZ3M6Y29udHJhY3RGb3JtdWxhLFJPTEVfYWRtaW46c2V0dGluZ3M6QXJiaXRyYWxBd2FyZE1hbmFnZSxST0xFX2FkbWluOnNldHRpbmdzOmNvc3RDYWxjUnVsZSxST0xFX2FkbWluOnNldHRpbmdzOnRpbWVMaW1pdCxST0xFX2FkbWluOnNldHRpbmdzOmFyYk51bWJlcixST0xFX2FkbWluOnNldHRpbmdzOmluaXRQYXJhbWV0ZXIsbnVsbCxST0xFX2FkbWluOmFkbWluTWFuYWdlOmFkbWluTWFuYWdlTGlzdCxST0xFX2FkbWluOmFkbWluTWFuYWdlOnJvbGVNYW5hZ2UsUk9MRV9hZG1pbjptYW5hZ2U6YWRtaW5Nc2csUk9MRV9hZG1pbjpzZXR0aW5nczpwcm9jZWR1cmUsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFJPTEVfYWRtaW46ZmluYW5jaWFsOnByZXBheW1lbnQsUk9MRV9hZG1pbjpmaW5hbmNpYWw6cHJlY2hhcmdlLG51bGwiLCJleHAiOjE1ODcxMTU0MDAsImp0aSI6IjI4NWJmODZmLWY2NDgtNGJiMy05MTMzLTQ0MTE5MjlhYjE3NCIsImVtYWlsIjoicm9vdEByZW5yZW4uaW8iLCJ1c2VybmFtZSI6ImFkbWluIiwiY2hhbm5lbENvZGUiOm51bGwsInN0YXR1cyI6MX0.wdlhUB6mdguNXBmOliloyYBPEDKk7VOHuUj3wfkCd8s', expires_in: '86399', roleId: 'administrator', roleName: null, usertype: '5', source: 'NPZCW', userId: '1', email: 'root@renren.io', username: 'admin', realname: '系统管理员', channelCode: null, lastLoginTime: null, authStatus: null, mobileStatus: null, status: 1, phone: '13612345678' } }).then(res => {
           this.$Indicator.close()
+          console.log(res)
           if (res.data.code === '100020') { // 登录成功
-            // var a = res.data.data.access_token.length
-            // this.setCookie('token1', res.data.data.access_token.slice(0, Math.floor(a / 3)))
-            // this.setCookie('token2', res.data.data.access_token.slice(Math.floor(a / 3)), Math.floor(a / 3 * 2))
-            // this.setCookie('token3', res.data.data.access_token.slice(Math.floor(a / 3 * 2), a))
             localStorage.setItem('adminAccessToken', res.data.data.access_token)
             localStorage.setItem('roleId', res.data.data.roleId)
+            this.$Toast({ message: '登录成功', position: 'bottom' })
             this.$router.push({ path: '/portal/home' })
           } else {
             this.loginForm.verificationCode = ''
             this.refreshCode()
             this.$Toast({ message: res.data.msg, position: 'bottom' })
           }
-        }).catch(() => {
-          this.$Indicator.close()
         })
+        // api.sysUserLogin({
+        //   username: this.loginForm.username,
+        //   password: loginFormPwd,
+        //   kaptcha: this.loginForm.kaptcha,
+        //   uuid: this.uuid
+        // }).then((res) => {
+        //   this.$Indicator.close()
+        //   if (res.data.code === '100020') { // 登录成功
+        //     // var a = res.data.data.access_token.length
+        //     // this.setCookie('token1', res.data.data.access_token.slice(0, Math.floor(a / 3)))
+        //     // this.setCookie('token2', res.data.data.access_token.slice(Math.floor(a / 3)), Math.floor(a / 3 * 2))
+        //     // this.setCookie('token3', res.data.data.access_token.slice(Math.floor(a / 3 * 2), a))
+        //     localStorage.setItem('adminAccessToken', res.data.data.access_token)
+        //     localStorage.setItem('roleId', res.data.data.roleId)
+        //     this.$router.push({ path: '/portal/home' })
+        //   } else {
+        //     this.loginForm.verificationCode = ''
+        //     this.refreshCode()
+        //     this.$Toast({ message: res.data.msg, position: 'bottom' })
+        //   }
+        // }).catch(() => {
+        //   this.$Indicator.close()
+        // })
       }
     },
     setCookie (name, value) {
@@ -95,7 +112,7 @@ export default {
     },
     refreshCode () {
       var uuid = util.uuidfn()
-      this.captchaUrl = api.getCodeUrl(uuid)
+      // this.captchaUrl = api.getCodeUrl(uuid)
       this.uuid = uuid
     }
   },

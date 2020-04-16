@@ -1,6 +1,15 @@
 import { myAxios } from '@/utils/request'
 var baseURL = ''
 const api = {
+  mockRequest (data, time) {
+    console.log(data)
+    if (!time)time = 1000
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ data })
+      }, time)
+    })
+  },
   uploadURLNew: baseURL + '/olap-arbitral/api/document/uploadReplaceDocument', // 上传url
   // uploadURLJudgeDocument: baseURL + '/api/document/uploadJudgeDocument',  // 上传url
   uploadURL: baseURL + '/olap-file/fast/file/upload', // 上传url

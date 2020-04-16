@@ -29,17 +29,17 @@ module.exports = {
     // port: 8888, // 端口地址
     // https: false, // 使用https提供服务
     // 这里写你调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 '' ，即空字符串
-    // proxy: 'http://116.236.220.218:39080', // app
+    // proxy: 'http://116.236.220.218:39080' // app
     // proxy: 'http://116.236.220.215:39088'// web端
     // proxy: 'http://192.168.102.23:7000'//孟磊
     // proxy: 'http://192.168.102.123:7000'// 张云飞1
-    before (app) {
-      app.post('/olap-auth/login', (req, res) => {
-        res.json([
-          { id: 1, name: '卤蛋' }
-        ])
-      })
-    }
+    // before (app) {
+    //   app.post('/olap-auth/login', (req, res) => {
+    //     res.json([
+    //       { id: 1, name: '卤蛋' }
+    //     ])
+    //   })
+    // }
   },
 
   chainWebpack: (config) => {
