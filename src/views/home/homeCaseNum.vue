@@ -123,7 +123,7 @@ export default {
       myChart.setOption(option)
     },
     getArbIndexRanking () {
-      api.getArbIndexRanking({ type: this.type, orderType: this.orderType }).then(res => {
+      api.mockRequest({ success: true, msg: '操作成功', code: '1', data: null, list: [{ name: '票据返还请求权纠纷', proportion: '63.49%', arbCount: '40' }, { name: '返还原物纠纷', proportion: '33.33%', arbCount: '21' }, { name: '人寿保险合同纠纷', proportion: '1.59%', arbCount: '1' }, { name: '民间委托理财合同纠纷', proportion: '1.59%', arbCount: '1' }] }).then(res => {
         if (res.data.code === '1') {
           this.arbarr = res.data.list
           this.arbarr.map(el => {
@@ -133,6 +133,16 @@ export default {
           })
         }
       })
+      // api.getArbIndexRanking({ type: this.type, orderType: this.orderType }).then(res => {
+      //   if (res.data.code === '1') {
+      //     this.arbarr = res.data.list
+      //     this.arbarr.map(el => {
+      //       if (el.name.length > 14) {
+      //         el.name = el.name.substr(0, 14)
+      //       }
+      //     })
+      //   }
+      // })
     },
     choseType (val) { // 选择时间类型 周月 年
       this.type = val

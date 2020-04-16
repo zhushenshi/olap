@@ -37,11 +37,16 @@ export default {
     }
   },
   created () {
-    api.getArbIndexHeadInfo({ arbStatus: 2 }).then(res => {
+    api.mockRequest({ success: true, msg: '操作成功', code: '1', data: null, arbTotalCount: '168', disputeTotalAmount: '337240.00', arbitralTotalAmount: '47902.50' }).then(res => {
       if (res.data.code === '1') {
         this.moneyinfo = res.data
       }
     })
+    // api.getArbIndexHeadInfo({ arbStatus: 2 }).then(res => {
+    //   if (res.data.code === '1') {
+    //     this.moneyinfo = res.data
+    //   }
+    // })
   },
   mounted () {
     const This = this

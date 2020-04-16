@@ -137,13 +137,20 @@ export default {
       this.getData()
     },
     getData () {
-      api.getPaymentStatistics({ type: this.type }).then(res => {
+      api.mockRequest({ success: true, msg: '操作成功', code: '1', data: [['星期一', '300.00', '2100.00', '2020-04-13'], ['星期二', '300.00', '0.00', '2020-04-14'], ['星期三', '0.00', '3600.00', '2020-04-15'], ['星期四', '2400.00', '9300.00', '2020-04-16'], ['星期五', '0', '0', '--'], ['星期六', '0', '0', '--'], ['星期日', '0', '0', '--']], paymentTotal: '3000.00', waitPaymentTotal: '15000.00' }).then(res => {
         if (res.data.code === '1') {
           this.getmoneyechartsdata(res.data.data)
           this.waitPaymentTotal = res.data.waitPaymentTotal
           this.paymentTotal = res.data.paymentTotal
         }
       })
+      // api.getPaymentStatistics({ type: this.type }).then(res => {
+      //   if (res.data.code === '1') {
+      //     this.getmoneyechartsdata(res.data.data)
+      //     this.waitPaymentTotal = res.data.waitPaymentTotal
+      //     this.paymentTotal = res.data.paymentTotal
+      //   }
+      // })
     }
   },
   created () {
