@@ -1080,7 +1080,9 @@ export default {
       },
       pdfUrl:'',
       trackingLoading:true,
-      refreshing:false 
+      refreshing:false,
+      ImagePreviewShow:false,
+      instance:''
     }
   },
   components: { Header, caseTracking, caseDocument, jurisdiction, withdrawData, mediateData, replyData, supplementData, videoData,Skeleton, Tab, Tabs ,Popup ,Collapse, CollapseItem ,VanImage,PullRefresh},
@@ -1114,10 +1116,15 @@ export default {
         this.previewFileShow = !this.previewFileShow
         this.pdfUrl=url
       } else if (lastName === '.png' || lastName === '.jpg' || lastName === '.jpeg'|| lastName === '') {
-        ImagePreview({
+        this.ImagePreviewShow=true
+        this.instance =ImagePreview({
           images: [
             url
-          ]
+          ],
+          closeOnPopstate:true,
+          onClose:()=>{
+            this.ImagePreviewShow=false
+          }
         })
       } else if(lastName === '.doc' || lastName === '.docx'){
         url=api.getDocURL(url)
@@ -1513,12 +1520,28 @@ export default {
           }
         }
       })
+    },
+    back(){
+      
     }
   },
   created () {
     this.id = this.$route.query.id
     this.getData()
     // this.downFile('/olap-file/fast/file/downloadPdfFile?pdfUrl=YI+fm3g75gkbLTqGafDt8pNb6shu1tErwSrejE+6G6zw4gtVr3gIlsNEL4U5jIeQ9YHRR4dkP/udYfIrj5QZZOs9H+KYXESjqACbHs1fhwc=', '测试文件')
+  },
+  mounted(){
+    window.caseDetailBackMethod=()=>{
+       if(this.previewFileShow||this.previewFileShow1||this.ImagePreviewShow){
+         this.previewFileShow=false
+         this.previewFileShow1=false
+         if(this.instance){
+           this.instance.close()
+         }
+       }else{
+          this.$router.go(-1)
+       }
+    }
   }
 }
 </script>

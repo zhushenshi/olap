@@ -1,6 +1,6 @@
 <template>
   <div class="Myheader">
-  <div class="header" :style="{backgroundColor:bgColor}">
+  <div :class="{header:true,lHeader:isliuhai}" :style="{backgroundColor:bgColor}">
     <div class="headerContent">
       <span class="icon iconfont iconzhongcai_zuo left" @click="goBack" v-if="backShow"></span>
       <div class="title">
@@ -9,7 +9,7 @@
       <span class="right" v-if="right" @click="rightMethod">{{right}}</span>
     </div>
   </div>
-  <div class="place"></div>
+  <div :class="{place:true,lPlace:isliuhai}"></div>
   </div>
 </template>
 <script>
@@ -39,6 +39,7 @@ export default {
   },
   data () {
     return {
+      isliuhai: false// 1 非刘海 2liuhia
     }
   },
   methods: {
@@ -46,12 +47,12 @@ export default {
       if (this.back) {
         this.back()
       } else {
-        console.log('调用默认的back')
         this.$router.go(-1)
       }
     }
   },
   created () {
+    this.isliuhai = localStorage.getItem('isliuhai') ? parseInt(localStorage.getItem('isliuhai')) === 2 : false
   }
 }
 </script>
@@ -86,6 +87,11 @@ export default {
     top:0;
     font-size:17px;
     color:#1890FF;
+.lHeader
+  padding-top:44px;
+  height:88px;
 .place
   height:64px;
+.lPlace
+  height:88px;
 </style>

@@ -29,6 +29,26 @@ export default {
     // this.setCookie('abcd', '这是一个测试Cookie')
     // alert(this.getCookie('token'))
   },
+  mounted () {
+    this.isIPhoneXMore()
+    window.backMethod = () => {
+      const routeName = this.$route.name
+      if (routeName !== 'Home' && routeName !== 'toDoList' && routeName !== 'QueryArbitral') {
+        if (routeName === 'auditArbitralDetail' || routeName === 'examineResult') { // rechargeDetail
+          this.$router.replace('/toDoList')
+        } else if (routeName === 'CaseDetails') { // 案件详情
+          window.caseDetailBackMethod()
+        } else {
+          this.$router.go(-1)
+        }
+        return true
+      }
+    }
+    window.getIPhoneXMoreCallback = (res) => {
+      // alert(res)//2不是
+      localStorage.setItem('isliuhai', res)
+    }
+  },
   methods: {
     setCookie (name, value) {
       var time = 24 * 60 * 60 * 1000
@@ -43,6 +63,14 @@ export default {
         return unescape(arr[2])
       } else {
         return null
+      }
+    },
+    isIPhoneXMore () {
+      var ua = navigator.userAgent.toLowerCase()
+      if (/iphone|ipad|ipod/.test(ua)) {
+        if (window.webkit && window.webkit.messageHandlers) {
+          window.webkit.messageHandlers.isIPhoneXMore.postMessage([''])
+        } else {}
       }
     }
   }

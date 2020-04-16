@@ -272,6 +272,18 @@ const util = {
     })
     // 执行传入方法
     functionName()
+  },
+  hideOrShowBottomUI (show) {
+    var ua = navigator.userAgent.toLowerCase()
+    if (/iphone|ipad|ipod/.test(ua)) {
+      if (window.webkit && window.webkit.messageHandlers) {
+        window.webkit.messageHandlers.hideOrShowBottomUI.postMessage([show])
+      } else {}
+    } else if (/android/.test(ua)) {
+      if (window.object && typeof (window.object.hideOrShowBottomUI) === 'function') {
+        window.object.hideOrShowBottomUI(show)
+      }
+    }
   }
 }
 

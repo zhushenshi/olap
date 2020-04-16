@@ -16,17 +16,17 @@
           <p class="caseText">正常结案总数占比</p>
           <p class="caseNum">{{datainfo.closeCountProportion}}</p>
           <div class="caseChartBox">
-            <Progress  pivot-text=""  color="#1890FF"  :percentage="datainfo.closeCountProportion&&parseInt(datainfo.closeCountProportion)" stroke-width="16"/>
+            <van-progress  pivot-text=""  color="#1890FF"  :percentage="datainfo.closeCountProportion&&parseInt(datainfo.closeCountProportion)" stroke-width="16"/>
           </div>
           <p class="casePs">*本统计以当年数据统计</p>
           <div class="caseMonthNum clearfix">
             <div class="fl halfDiv">
               月同比
-              <span class="icon iconfont" :class="{'icon-shang':getAddorRe(datainfo.monthToYearProportion)==3,'icon-xiangxia':getAddorRe(datainfo.monthToYearProportion)==2}"></span>
+              <span class="icon iconfont" :class="{'iconzhongcai_sanjiao-shang':getAddorRe(datainfo.monthToYearProportion)==3,'iconzhongcai_sanjiao-xia':getAddorRe(datainfo.monthToYearProportion)==2}"></span>
               <span class="percent">{{datainfo.monthToYearProportion=='--'?datainfo.monthToYearProportion:(''+datainfo.monthToYearProportion).replace('-','')}}</span></div>
             <div class="fl halfDiv">
               周环比
-              <span class="icon iconfont" :class="{'icon-shang':getAddorRe(datainfo.chainRatioProportion)==3,'icon-xiangxia':getAddorRe(datainfo.chainRatioProportion)==2}"></span>
+              <span class="icon iconfont" :class="{'iconzhongcai_sanjiao-shang':getAddorRe(datainfo.chainRatioProportion)==3,'iconzhongcai_sanjiao-xia':getAddorRe(datainfo.chainRatioProportion)==2}"></span>
               <span class="percent">{{datainfo.chainRatioProportion=='--'?datainfo.chainRatioProportion:(''+datainfo.chainRatioProportion).replace('-','')}}</span></div>
           </div>
         </div>
@@ -36,12 +36,12 @@
           <div class="caseChartBox">
             <div class="fl halfDiv">
               月同比
-              <span class="icon iconfont" :class="{'icon-shang':getAddorRe(datainfo.disputeMonthProportion)==3,'icon-xiangxia':getAddorRe(datainfo.disputeMonthProportion)==2}"></span>
+              <span class="icon iconfont" :class="{'iconzhongcai_sanjiao-shang':getAddorRe(datainfo.disputeMonthProportion)==3,'iconzhongcai_sanjiao-xia':getAddorRe(datainfo.disputeMonthProportion)==2}"></span>
               <span>{{datainfo.disputeMonthProportion=='--'?datainfo.disputeMonthProportion:(''+datainfo.disputeMonthProportion).replace('-','')}}</span>
             </div>
             <div class="fl halfDiv">
               周环比
-              <span class="icon iconfont" :class="{'icon-shang':getAddorRe(datainfo.disputeRatioProportion)==3,'icon-xiangxia':getAddorRe(datainfo.disputeRatioProportion)==2}"></span>
+              <span class="icon iconfont" :class="{'iconzhongcai_sanjiao-shang':getAddorRe(datainfo.disputeRatioProportion)==3,'iconzhongcai_sanjiao-xia':getAddorRe(datainfo.disputeRatioProportion)==2}"></span>
               <span>{{datainfo.disputeRatioProportion=='--'?datainfo.disputeRatioProportion:(''+datainfo.disputeRatioProportion).replace('-','')}}</span>
             </div>
           </div>
@@ -54,7 +54,7 @@
           <p class="caseText">仲裁费总额</p>
           <p class="caseNum">{{datainfo.arbitrateMoneyTotal|money}}</p>
           <div class="caseChartBox">
-            <Progress  pivot-text=""  color="#F5391B"  track-color="#1890FF" :percentage="(parseInt(datainfo.waitPaymentTotal)/(parseInt(datainfo.waitPaymentTotal)+parseInt(datainfo.paymentTotal)))?parseInt(datainfo.waitPaymentTotal)/(parseInt(datainfo.waitPaymentTotal)+parseInt(datainfo.paymentTotal))*100:0" stroke-width="16"/>
+            <van-progress  pivot-text=""  color="#F5391B"  track-color="#1890FF" :percentage="(parseInt(datainfo.waitPaymentTotal)/(parseInt(datainfo.waitPaymentTotal)+parseInt(datainfo.paymentTotal)))?parseInt(datainfo.waitPaymentTotal)/(parseInt(datainfo.waitPaymentTotal)+parseInt(datainfo.paymentTotal))*100:0" stroke-width="16"/>
           </div>
           <p class="casePs">*本统计以当年数据统计</p>
           <div class="caseMonthNum clearfix">
@@ -68,7 +68,10 @@
 </template>
 <script>
 import SvgLine from '@/components/SvgLine.vue'
-import { Progress } from 'vant'
+// import { Progress } from 'vant'
+import VanProgress from 'vant/lib/progress'
+import 'vant/lib/progress/style'
+
 import { api } from '@/utils/api'
 export default {
   data () {
@@ -90,7 +93,7 @@ export default {
       listarr: []
     }
   },
-  components: { SvgLine, Progress },
+  components: { SvgLine, VanProgress },
   methods: {
     getData () {
       api.getArbTotalCountInfo().then(res => {
@@ -187,10 +190,10 @@ export default {
           width:50%;
           span.percent
             margin-left:3px;
-          span.icon-shang
+          span.iconzhongcai_sanjiao-shang
             color:#52c41a
             margin-left:3px;
-          span.icon-xiangxia
+          span.iconzhongcai_sanjiao-xia
             color:#e73236
             margin-left:3px;
 </style>

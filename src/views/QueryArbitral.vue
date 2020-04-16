@@ -4,8 +4,10 @@
       <p>
         <span class="caseTitle">案件查询</span>
         <span class="searchIcon" >
-           <img src="./../assets/imgs/reset.png" v-if="showReset" @click="reset()"/>
-          <img src="./../assets/imgs/search.png" @click="goIntoPage('/queryArbitral/search')"/>
+            <span class="iconfont iconzhongcai_shuaxin" v-if="showReset" @click="reset()"></span>
+            <span class="iconfont iconzhongcai_sousuo" @click="goIntoPage('/queryArbitral/search')"></span>
+           <!-- <img src="./../assets/imgs/reset.png" v-if="showReset" @click="reset()"/> -->
+          <!-- <img src="./../assets/imgs/search.png" @click="goIntoPage('/queryArbitral/search')"/> -->
         </span>
       </p>
     </div>
@@ -37,8 +39,10 @@
       <p>
         <span class="caseTitle">案件查询</span>
          <span class="searchIcon" >
-            <img src="./../assets/imgs/reset.png" v-if="showReset" @click="reset()"/>
-             <img src="./../assets/imgs/search.png" @click="goIntoPage('/queryArbitral/search')"/>
+            <!-- <img src="./../assets/imgs/reset.png" v-if="showReset" @click="reset()"/>
+             <img src="./../assets/imgs/search.png" @click="goIntoPage('/queryArbitral/search')"/> -->
+            <span class="iconfont iconzhongcai_shuaxin" v-if="showReset" @click="reset()"></span>
+            <span class="iconfont iconzhongcai_sousuo" @click="goIntoPage('/queryArbitral/search')"></span>
         </span>
       </p>
     </div>
@@ -177,11 +181,11 @@ export default {
       this.getAllArbitralInfos()
     },
     intoDetail (item) {
-      console.log(item)
       this.$router.push({
         path: '/caseDetails',
         query: { id: item.id }
       })
+      util.hideOrShowBottomUI(false)
     },
     tabFilter (val) {
       this.activeName = val
@@ -211,6 +215,7 @@ export default {
     },
     goIntoPage (url) {
       this.$router.push(url)
+      util.hideOrShowBottomUI(false)
     },
     getAllArbitralInfos () {
       var arbStatusList = this.activeName !== 0 ? this.activeName.split(',') : []
@@ -285,6 +290,7 @@ export default {
     window.onscroll = null
   },
   created () {
+    util.hideOrShowBottomUI(true)
     if (this.$route.params.form) {
       this.formInline = this.$route.params.form
       this.showReset = true
@@ -319,6 +325,12 @@ export default {
       img
          margin-right 20px
          vertical-align middle
+         width:16px;
+      .iconfont
+        font-size:19px;
+        color:#ffffff;
+      .iconzhongcai_shuaxin
+        margin-right:20px;
  .activeFixed
   position fixed
   left 0
@@ -339,7 +351,7 @@ export default {
     .searchIcon
       // display:none
       position: absolute;
-      right 0
+      right 20px;
 .caseStatus
   background #ffffff
   height 56px;
@@ -422,6 +434,7 @@ export default {
         img
           vertical-align middle
           margin-right 12px
+          width:24px;
         .caseNum
           font-size 17px
           font-weight 600

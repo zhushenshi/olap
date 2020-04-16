@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Header :back="back" right="确认" :rightMethod='search'>搜索</Header>
+    <Header right="确认" :rightMethod='search'>搜索</Header>
     <div class="serachCnt">
       <input v-model="form.arbNumber" placeholder="请输入案件编号"/>
       <!-- <input v-model="form.arbName" placeholder="请选择案由"/> -->
@@ -34,9 +34,6 @@ export default {
   },
   components: { Header, DatetimePicker },
   methods: {
-    back () {
-      this.$router.push('/queryArbitral')
-    },
     search () {
       this.$router.push({ name: 'QueryArbitral', params: { form: this.form } })
     },

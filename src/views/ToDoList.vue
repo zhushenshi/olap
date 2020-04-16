@@ -105,6 +105,7 @@ import { api } from '@/utils/api'
 import { PullRefresh, List } from 'vant'
 import 'vant/lib/pull-refresh/style'
 import 'vant/lib/list/style'
+import util from '@/utils/util'
 export default {
   data () {
     return {
@@ -190,6 +191,7 @@ export default {
         path: '/toDoList/auditArbitralDetail',
         query: { id: id }
       })
+      util.hideOrShowBottomUI(false)
     },
     goToRecharge (value) {
       console.log(value)
@@ -198,6 +200,7 @@ export default {
         path: '/toDoList/rechargeDetail',
         query: { rechargeData: rechargeData }
       })
+      util.hideOrShowBottomUI(false)
     },
     popPersonalCenter () {
       var ua = navigator.userAgent.toLowerCase()
@@ -213,6 +216,7 @@ export default {
     }
   },
   created () {
+    util.hideOrShowBottomUI(true)
     this.getData()
   },
   mounted () {
@@ -324,6 +328,8 @@ export default {
             flex:309;
             display:flex;
             justify-content:space-between;
+            // border-radius:4px;
+            border-radius:4px 5px 5px 4px;
             .itemInfo
               width:253px;
               padding:18px 0 14px 14px;
@@ -356,6 +362,7 @@ export default {
               padding:14px 8px 13px;
               text-align:center;
               background:#41A3FC;
+              font-size:14px;
             .operateBtnExamine
               background:#41A3FC;
             .operateBtnRecharge

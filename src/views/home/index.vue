@@ -23,6 +23,7 @@ import homeCaseNum from './homeCaseNum.vue'
 import homeCasePay from './homeCasePay.vue'
 import homeCasePercent from './homeCasePercent.vue'
 import homeCaseMap from './homeCaseMap.vue'
+import util from '@/utils/util'
 
 export default {
   name: 'Home',
@@ -47,6 +48,7 @@ export default {
     }
   },
   mounted () {
+    util.hideOrShowBottomUI(true)
     var arr = localStorage.roleId ? localStorage.roleId.split(',') : []
     if (arr.indexOf('secretary') > -1) {
       this.issecretary = true
@@ -61,8 +63,11 @@ export default {
     background: #f0f0f0;
     padding-bottom:20px;
     section
-    .courtTrial
-      margin-top:8px;
-      img
-        width 96%
+      .courtTrial
+        margin-top:8px;
+        // border:1px solid red;
+        margin:17px 14px 16px;
+        img
+          width 100%
+          box-shadow:0px 3px 6px rgba(0,0,0,0.16);
 </style>

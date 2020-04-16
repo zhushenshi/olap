@@ -5,7 +5,6 @@ import { Notify } from 'vant'
 import { baseURL } from '@/utils/config'
 import 'vant/lib/notify/style/index'
 const loginOut = function () {
-  console.log('login')
   var ua = navigator.userAgent.toLowerCase()
   if (/iphone|ipad|ipod/.test(ua)) {
     if (window.webkit && window.webkit.messageHandlers) {

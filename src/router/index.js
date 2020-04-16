@@ -79,7 +79,7 @@ const routes = [
   },
   {
     path: '/caseDetails', // 案件详情
-    name: 'CaseDetails ',
+    name: 'CaseDetails',
     component: () => import(/* webpackChunkName: "caseDetail" */ '../views/caseDetail')
   },
   { // 案件查询

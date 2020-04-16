@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "14099939",
+      "name": "仲裁_刷新",
+      "font_class": "zhongcai_shuaxin",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "14094237",
+      "name": "仲裁_三角-下",
+      "font_class": "zhongcai_sanjiao-xia",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "14094238",
+      "name": "仲裁_三角-上",
+      "font_class": "zhongcai_sanjiao-shang",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
       "icon_id": "13655112",
       "name": "仲裁_气泡-角",
       "font_class": "zhongcai_qipao-jiao",

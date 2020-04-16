@@ -63,6 +63,8 @@ export default {
   background-color:#FFFFFF;
   box-shadow:0px 3px 6px rgba(0,0,0,0.16);
   padding-top:21px;
+  padding-bottom:5px;
+  overflow:hidden;
   .caseDataPieTitle
     height:25px;
     font-size:18px;
