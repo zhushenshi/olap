@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.b433f66890c3d057e612fb5791aedddf.js"
+  "precache-manifest.e8f24b8175c9aa052a56c9241b2f0c4b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "olap-front-app"});
