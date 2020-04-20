@@ -184,7 +184,7 @@ export default {
       myChart.setOption(option)
     },
     getData () {
-      api.getCompanyArbProportion({}).then(res => {
+      api.mockRequest({ success: true, msg: '操作成功', code: '1', data: null, list: [{ name: '合肥小指', proportion: '84.24%', arbCount: '139', total: '165' }, { name: '张云飞的企业(南平)', proportion: '6.67%', arbCount: '11', total: '165' }, { name: '郑雪峰企业02(南平)', proportion: '5.46%', arbCount: '9', total: '165' }, { name: '郑雪峰企业04(南平)', proportion: '3.03%', arbCount: '5', total: '165' }, { name: '前端企业', proportion: '0.61%', arbCount: '1', total: '165' }] }, 300).then(res => {
         if (res.data.code === '1') {
           var arr = []
           res.data.list.map(el => {
@@ -193,6 +193,15 @@ export default {
           this.setEchartsPie(arr)
         }
       })
+      // api.getCompanyArbProportion({}).then(res => {
+      //   if (res.data.code === '1') {
+      //     var arr = []
+      //     res.data.list.map(el => {
+      //       arr.push({ value: +el.arbCount, name: el.name })
+      //     })
+      //     this.setEchartsPie(arr)
+      //   }
+      // })
     }
   },
   created () {

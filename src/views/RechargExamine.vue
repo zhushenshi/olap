@@ -46,24 +46,24 @@ export default {
   components: { Header, Button, Field },
   methods: {
     rightMethod () {
-      const params = Object.assign({}, this.arbiInfo, {
-        audit: this.passOrNot,
-        reviewTextarea: this.reviewTextarea
-      })
+      // const params = Object.assign({}, this.arbiInfo, {
+      //   audit: this.passOrNot,
+      //   reviewTextarea: this.reviewTextarea
+      // })
       // if (this.passOrNot === '11' && this.reviewTextarea === '') {
       //   this.$Toast({ message: '请输入审核意见', position: 'bottom' })
       // } else {
-      this.$Indicator.open()
-      api.rechargeAuditNp(params).then(res => {
-        this.$Indicator.close()
-        if (res.data.code === '1') {
-          // this.$Toast({ message: res.data.msg, position: 'bottom' })
-          this.$router.push({ name: 'examineResult' })
-        } else {
-          this.$Toast({ message: res.data.msg, position: 'bottom' })
-          this.$router.push({ name: 'portalToDoList' })
-        }
-      })
+      // this.$Indicator.open()
+      // api.rechargeAuditNp(params).then(res => {
+      // this.$Indicator.close()
+      if (this.passOrNot) {
+        // this.$Toast({ message: res.data.msg, position: 'bottom' })
+        this.$router.push({ name: 'examineResult' })
+      } else {
+        // this.$Toast({ message: res.data.msg, position: 'bottom' })
+        this.$router.push({ name: 'portalToDoList' })
+      }
+      // })
       // }
     },
     review (passOrNot, reviewTextarea) {

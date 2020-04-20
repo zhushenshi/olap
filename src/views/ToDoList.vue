@@ -150,41 +150,132 @@ export default {
       }
     },
     getData () {
-      const params = Object.assign({
-        pageNo: this.pageNo,
-        pageSize: this.pageSize,
-        type: this.type
-      })
+      // const params = Object.assign({
+      //   pageNo: this.pageNo,
+      //   pageSize: this.pageSize,
+      //   type: this.type
+      // })
       this.$Indicator.open()
-      api.getWorkList(params).then(res => {
-        if (res.data.code === '1') {
-          this.$Indicator.close()
-          const list = res.data.list
-          this.filterList = res.data.list
-          if (this.filterList.length >= 40) {
-            this.finished = true
-          }
-          if (this.loadMore) { // 上拉加载
+      if (this.type === 0) {
+        api.mockRequest({ success: true, msg: '操作成功', code: '1', data: null, list: [{ year: '2020', yearData: [{ month: '04', monthData: [{ day: '10', dataList: [{ type: '1', arbitralData: { id: '79bbaff97ad111ea9c0e005056ae47c6', arbitralInfoId: '79bbaff97ad111ea9c0e005056ae47c6', arbNumber: '(2020)南仲案字第2-0035号', arbDefendantName: '姬云清', createTime: '2020-04-10 10:17', updateTime: '2020-04-10 11:02', arbName: '入伙纠纷', arbDisputeMoney: 1000.0, arbArbitrateMoney: null, arbStatus: 64, arbProcess: '297150', arbProcessExplain: '4', arbProcessTask: '297544', arbTemporaryNumber: '(2020)南仲（沪）缴字第102号', arbProsecutorName: '明浔醉', createBy: null, arbProductId: '9d2eaa47725911ea9c0e005056ae47c6', arbProductName: '产品1', uploadStatus: null, expressStatus: null, onlineStatus: null, messageStatus: null, recallStatus: '2', remark: null, defencesAttachState: null, mediateDocumentCounts: null, decisionStatus: null, decisionId: null, decisionCreateTime: '', decisionProsecutorName: null, arbitralStatus: null, decisionRemark: null, defenceRemark: null, userFundRecordId: null, userFundStatus: null, arbitralLiveStatus: '0', arbTribunalBeginTime: '2020-04-11 19:45:00', arbitralType: 0, companyCode: null, currentCompanyCode: '', awardModifyState: null, arbitralAttachmentCount: null, number: null, additionalMaterialStatus: null }, rechargeData: null }, { type: '1', arbitralData: { id: '484eb5c67ad111ea9c0e005056ae47c6', arbitralInfoId: '484eb5c67ad111ea9c0e005056ae47c6', arbNumber: '(2020)南仲案字第2-0072号', arbDefendantName: '姬云清', createTime: '2020-04-10 10:16', updateTime: '2020-04-16 14:34', arbName: '入伙纠纷', arbDisputeMoney: 1000.0, arbArbitrateMoney: null, arbStatus: 64, arbProcess: '296950', arbProcessExplain: '4', arbProcessTask: '322109', arbTemporaryNumber: '(2020)南仲（沪）缴字第98号', arbProsecutorName: '明浔醉', createBy: null, arbProductId: '9d2eaa47725911ea9c0e005056ae47c6', arbProductName: '产品1', uploadStatus: null, expressStatus: null, onlineStatus: null, messageStatus: null, recallStatus: '2', remark: null, defencesAttachState: null, mediateDocumentCounts: null, decisionStatus: null, decisionId: null, decisionCreateTime: '', decisionProsecutorName: null, arbitralStatus: null, decisionRemark: null, defenceRemark: null, userFundRecordId: null, userFundStatus: null, arbitralLiveStatus: '0', arbTribunalBeginTime: '2020-04-15 19:30:00', arbitralType: 0, companyCode: null, currentCompanyCode: '', awardModifyState: null, arbitralAttachmentCount: null, number: null, additionalMaterialStatus: null }, rechargeData: null }] }, { day: '09', dataList: [{ type: '1', arbitralData: { id: '343518b67a2211ea9c0e005056ae47c6', arbitralInfoId: '343518b67a2211ea9c0e005056ae47c6', arbNumber: '(2020)南仲案字第2-0010号', arbDefendantName: '落落', createTime: '2020-04-09 13:23', updateTime: '2020-04-09 14:11', arbName: '票据返还请求权纠纷', arbDisputeMoney: 1000.0, arbArbitrateMoney: null, arbStatus: 64, arbProcess: '285935', arbProcessExplain: '4', arbProcessTask: '286527', arbTemporaryNumber: '(2020)南仲（沪）缴字第35号', arbProsecutorName: '合肥小指', createBy: null, arbProductId: '9d2eaa47725911ea9c0e005056ae47c6', arbProductName: '产品1', uploadStatus: null, expressStatus: null, onlineStatus: null, messageStatus: null, recallStatus: '2', remark: null, defencesAttachState: null, mediateDocumentCounts: null, decisionStatus: null, decisionId: null, decisionCreateTime: '', decisionProsecutorName: null, arbitralStatus: null, decisionRemark: null, defenceRemark: null, userFundRecordId: null, userFundStatus: null, arbitralLiveStatus: '0', arbTribunalBeginTime: '2020-04-10 08:00:00', arbitralType: 0, companyCode: null, currentCompanyCode: '', awardModifyState: null, arbitralAttachmentCount: null, number: null, additionalMaterialStatus: null }, rechargeData: null }] }, { day: '20', dataList: [{ type: '2', arbitralData: null, rechargeData: { id: '4c0b4a4782aa11ea9c0e005056ae47c6', rechargeType: '0', applicant: '郑雪峰企业04(南平)', arbInfoId: null, caseNumber: null, money: '5000.00', createTime: '2020-04-20 09:57:32', capitalTime: '2020-04-20 09:56:26', remark: '充值', result: '0', advice: null, externalNotice: null, attachments: [{ fileName: 'timg.jpg', fileUrl: 'YI+fm3g75glk13dj75UNXp3A/LVKYISfYbhXCzldhcjN4qnr+ZvB0WJJIJIwjkuwhctqoMyv1wiGrAKKGd8qqavRS0+f+MVePCxyn3Onu/0=' }] } }] }] }] }] }, 500).then(res => {
+          if (res.data.code === '1') {
+            this.$Indicator.close()
+            const list = res.data.list
+            this.filterList = res.data.list
+            if (this.filterList.length >= 40) {
+              this.finished = true
+            }
+            if (this.loadMore) { // 上拉加载
             // this.filterList = this.filterList.concat(list) // 上拉加载新数据添加到数组中
-            this.$nextTick(() => { // 在下次 DOM 更新循环结束之后执行延迟回调
-              this.loadMore = false // 关闭上拉加载中
-            })
-            if (list.length < 10) { // 没有更多数据
-              this.finished = true // 上拉加载完毕
+              this.$nextTick(() => { // 在下次 DOM 更新循环结束之后执行延迟回调
+                this.loadMore = false // 关闭上拉加载中
+              })
+              if (list.length < 10) { // 没有更多数据
+                this.finished = true // 上拉加载完毕
+              }
             }
-          }
-          if (this.refreshing) { // 关闭下拉刷新
-            this.refreshing = false // 关闭下拉刷新中
-            this.filterList = list // 重新给数据赋值
-            if (this.finished) { // 如果上拉加载完毕为true则设为false。解决上拉加载完毕后再下拉刷新就不会执行上拉加载问题
-              this.finished = false
+            if (this.refreshing) { // 关闭下拉刷新
+              this.refreshing = false // 关闭下拉刷新中
+              this.filterList = list // 重新给数据赋值
+              if (this.finished) { // 如果上拉加载完毕为true则设为false。解决上拉加载完毕后再下拉刷新就不会执行上拉加载问题
+                this.finished = false
+              }
             }
+          } else {
+            this.$Indicator.close()
+            this.filterList = []
           }
-        } else {
-          this.$Indicator.close()
-          this.filterList = []
-        }
-      })
+        })
+      } else if (this.type === 1) {
+        api.mockRequest({ success: true, msg: '操作成功', code: '1', data: null, list: [{ year: '2020', yearData: [{ month: '04', monthData: [{ day: '10', dataList: [{ type: '1', arbitralData: { id: '79bbaff97ad111ea9c0e005056ae47c6', arbitralInfoId: '79bbaff97ad111ea9c0e005056ae47c6', arbNumber: '(2020)南仲案字第2-0035号', arbDefendantName: '姬云清', createTime: '2020-04-10 10:17', updateTime: '2020-04-10 11:02', arbName: '入伙纠纷', arbDisputeMoney: 1000.0, arbArbitrateMoney: null, arbStatus: 64, arbProcess: '297150', arbProcessExplain: '4', arbProcessTask: '297544', arbTemporaryNumber: '(2020)南仲（沪）缴字第102号', arbProsecutorName: '明浔醉', createBy: null, arbProductId: '9d2eaa47725911ea9c0e005056ae47c6', arbProductName: '产品1', uploadStatus: null, expressStatus: null, onlineStatus: null, messageStatus: null, recallStatus: '2', remark: null, defencesAttachState: null, mediateDocumentCounts: null, decisionStatus: null, decisionId: null, decisionCreateTime: '', decisionProsecutorName: null, arbitralStatus: null, decisionRemark: null, defenceRemark: null, userFundRecordId: null, userFundStatus: null, arbitralLiveStatus: '0', arbTribunalBeginTime: '2020-04-11 19:45:00', arbitralType: 0, companyCode: null, currentCompanyCode: '', awardModifyState: null, arbitralAttachmentCount: null, number: null, additionalMaterialStatus: null }, rechargeData: null }, { type: '1', arbitralData: { id: '484eb5c67ad111ea9c0e005056ae47c6', arbitralInfoId: '484eb5c67ad111ea9c0e005056ae47c6', arbNumber: '(2020)南仲案字第2-0072号', arbDefendantName: '姬云清', createTime: '2020-04-10 10:16', updateTime: '2020-04-16 14:34', arbName: '入伙纠纷', arbDisputeMoney: 1000.0, arbArbitrateMoney: null, arbStatus: 64, arbProcess: '296950', arbProcessExplain: '4', arbProcessTask: '322109', arbTemporaryNumber: '(2020)南仲（沪）缴字第98号', arbProsecutorName: '明浔醉', createBy: null, arbProductId: '9d2eaa47725911ea9c0e005056ae47c6', arbProductName: '产品1', uploadStatus: null, expressStatus: null, onlineStatus: null, messageStatus: null, recallStatus: '2', remark: null, defencesAttachState: null, mediateDocumentCounts: null, decisionStatus: null, decisionId: null, decisionCreateTime: '', decisionProsecutorName: null, arbitralStatus: null, decisionRemark: null, defenceRemark: null, userFundRecordId: null, userFundStatus: null, arbitralLiveStatus: '0', arbTribunalBeginTime: '2020-04-15 19:30:00', arbitralType: 0, companyCode: null, currentCompanyCode: '', awardModifyState: null, arbitralAttachmentCount: null, number: null, additionalMaterialStatus: null }, rechargeData: null }] }, { day: '09', dataList: [{ type: '1', arbitralData: { id: '343518b67a2211ea9c0e005056ae47c6', arbitralInfoId: '343518b67a2211ea9c0e005056ae47c6', arbNumber: '(2020)南仲案字第2-0010号', arbDefendantName: '落落', createTime: '2020-04-09 13:23', updateTime: '2020-04-09 14:11', arbName: '票据返还请求权纠纷', arbDisputeMoney: 1000.0, arbArbitrateMoney: null, arbStatus: 64, arbProcess: '285935', arbProcessExplain: '4', arbProcessTask: '286527', arbTemporaryNumber: '(2020)南仲（沪）缴字第35号', arbProsecutorName: '合肥小指', createBy: null, arbProductId: '9d2eaa47725911ea9c0e005056ae47c6', arbProductName: '产品1', uploadStatus: null, expressStatus: null, onlineStatus: null, messageStatus: null, recallStatus: '2', remark: null, defencesAttachState: null, mediateDocumentCounts: null, decisionStatus: null, decisionId: null, decisionCreateTime: '', decisionProsecutorName: null, arbitralStatus: null, decisionRemark: null, defenceRemark: null, userFundRecordId: null, userFundStatus: null, arbitralLiveStatus: '0', arbTribunalBeginTime: '2020-04-10 08:00:00', arbitralType: 0, companyCode: null, currentCompanyCode: '', awardModifyState: null, arbitralAttachmentCount: null, number: null, additionalMaterialStatus: null }, rechargeData: null }] }] }] }] }, 500).then(res => {
+          if (res.data.code === '1') {
+            this.$Indicator.close()
+            const list = res.data.list
+            this.filterList = res.data.list
+            if (this.filterList.length >= 40) {
+              this.finished = true
+            }
+            if (this.loadMore) { // 上拉加载
+            // this.filterList = this.filterList.concat(list) // 上拉加载新数据添加到数组中
+              this.$nextTick(() => { // 在下次 DOM 更新循环结束之后执行延迟回调
+                this.loadMore = false // 关闭上拉加载中
+              })
+              if (list.length < 10) { // 没有更多数据
+                this.finished = true // 上拉加载完毕
+              }
+            }
+            if (this.refreshing) { // 关闭下拉刷新
+              this.refreshing = false // 关闭下拉刷新中
+              this.filterList = list // 重新给数据赋值
+              if (this.finished) { // 如果上拉加载完毕为true则设为false。解决上拉加载完毕后再下拉刷新就不会执行上拉加载问题
+                this.finished = false
+              }
+            }
+          } else {
+            this.$Indicator.close()
+            this.filterList = []
+          }
+        })
+      } else {
+        api.mockRequest({ success: true, msg: '操作成功', code: '1', data: null, list: [{ year: '2020', yearData: [{ month: '04', monthData: [{ day: '20', dataList: [{ type: '2', arbitralData: null, rechargeData: { id: '4c0b4a4782aa11ea9c0e005056ae47c6', rechargeType: '0', applicant: '郑雪峰企业04(南平)', arbInfoId: null, caseNumber: null, money: '5000.00', createTime: '2020-04-20 09:57:32', capitalTime: '2020-04-20 09:56:26', remark: '充值', result: '0', advice: null, externalNotice: null, attachments: [{ fileName: 'timg.jpg', fileUrl: 'YI+fm3g75glk13dj75UNXp3A/LVKYISfYbhXCzldhcjN4qnr+ZvB0WJJIJIwjkuwhctqoMyv1wiGrAKKGd8qqavRS0+f+MVePCxyn3Onu/0=' }] } }] }] }] }] }, 500).then(res => {
+          if (res.data.code === '1') {
+            this.$Indicator.close()
+            const list = res.data.list
+            this.filterList = res.data.list
+            if (this.filterList.length >= 40) {
+              this.finished = true
+            }
+            if (this.loadMore) { // 上拉加载
+            // this.filterList = this.filterList.concat(list) // 上拉加载新数据添加到数组中
+              this.$nextTick(() => { // 在下次 DOM 更新循环结束之后执行延迟回调
+                this.loadMore = false // 关闭上拉加载中
+              })
+              if (list.length < 10) { // 没有更多数据
+                this.finished = true // 上拉加载完毕
+              }
+            }
+            if (this.refreshing) { // 关闭下拉刷新
+              this.refreshing = false // 关闭下拉刷新中
+              this.filterList = list // 重新给数据赋值
+              if (this.finished) { // 如果上拉加载完毕为true则设为false。解决上拉加载完毕后再下拉刷新就不会执行上拉加载问题
+                this.finished = false
+              }
+            }
+          } else {
+            this.$Indicator.close()
+            this.filterList = []
+          }
+        })
+      }
+      // api.getWorkList(params).then(res => {
+      //   if (res.data.code === '1') {
+      //     this.$Indicator.close()
+      //     const list = res.data.list
+      //     this.filterList = res.data.list
+      //     if (this.filterList.length >= 40) {
+      //       this.finished = true
+      //     }
+      //     if (this.loadMore) { // 上拉加载
+      //       // this.filterList = this.filterList.concat(list) // 上拉加载新数据添加到数组中
+      //       this.$nextTick(() => { // 在下次 DOM 更新循环结束之后执行延迟回调
+      //         this.loadMore = false // 关闭上拉加载中
+      //       })
+      //       if (list.length < 10) { // 没有更多数据
+      //         this.finished = true // 上拉加载完毕
+      //       }
+      //     }
+      //     if (this.refreshing) { // 关闭下拉刷新
+      //       this.refreshing = false // 关闭下拉刷新中
+      //       this.filterList = list // 重新给数据赋值
+      //       if (this.finished) { // 如果上拉加载完毕为true则设为false。解决上拉加载完毕后再下拉刷新就不会执行上拉加载问题
+      //         this.finished = false
+      //       }
+      //     }
+      //   } else {
+      //     this.$Indicator.close()
+      //     this.filterList = []
+      //   }
+      // })
     },
     goToDetail (id) {
       this.$router.push({

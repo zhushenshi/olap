@@ -96,7 +96,7 @@ export default {
   components: { SvgLine, VanProgress },
   methods: {
     getData () {
-      api.getArbTotalCountInfo().then(res => {
+      api.mockRequest({ success: true, msg: '操作成功', code: '1', data: null, applyTotalCount: '165', monthCount: '165', list: [['1', '0'], ['2', '0'], ['3', '0'], ['4', '165'], ['5', '0'], ['6', '0'], ['7', '0'], ['8', '0'], ['9', '0'], ['10', '0'], ['11', '0'], ['12', '0']] }).then(res => {
         if (res.data.code === '1') {
           this.applyTotalCount = res.data.applyTotalCount
           this.monthCount = res.data.monthCount
@@ -109,12 +109,31 @@ export default {
           })
         }
       })
-      api.getCloseCaseCount().then(res => {
+      api.mockRequest({ success: true, msg: '操作成功', code: '1', data: null, closeCountProportion: '20.83%', monthToYearProportion: '--', chainRatioProportion: '-100.00%', disputeMoneyTotal: '326598.00', disputeMonthProportion: '--', disputeRatioProportion: '-100.00%', dayAverage: '2942.32', arbitrateMoneyTotal: '44852.50', waitPaymentTotal: '25202.50', paymentTotal: '19650.00' }).then(res => {
         this.loading = false
         if (res.data.code === '1') {
           this.datainfo = res.data
         }
       })
+      // api.getArbTotalCountInfo().then(res => {
+      //   if (res.data.code === '1') {
+      //     this.applyTotalCount = res.data.applyTotalCount
+      //     this.monthCount = res.data.monthCount
+      //     res.data.list.map(el => {
+      //       this.listarr.push(+el[1])
+      //       // var svgwid = document.querySelector('.svgwid')
+      //       // if (svgwid) {
+      //       // this.svgwidth = svgwid.clientWidth - 86
+      //       // }
+      //     })
+      //   }
+      // })
+      // api.getCloseCaseCount().then(res => {
+      //   this.loading = false
+      //   if (res.data.code === '1') {
+      //     this.datainfo = res.data
+      //   }
+      // })
     },
     getAddorRe (val) {
       if (val === '--') {

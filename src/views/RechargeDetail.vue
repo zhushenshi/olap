@@ -29,17 +29,16 @@
     <section class="rechargeTitle">
         <p>充值凭证</p>
         <!-- <img v-for="(item,index) in arbiInfo.attachments" :key="index" :src="api.getImgURL(item.fileUrl)" alt="充值凭证" :preview="index+item.fileUrl" preview-text="充值凭证" height="100%" /> -->
-        <van-image
-          v-for="(item,index) in arbiInfo.attachments"
-          :key="index"
+        <!-- <van-image
           fit="contain"
           @click="previewImg(api.getImgURL(item.fileUrl))"
-          :src="api.getImgURL(item.fileUrl)">
+          :src="'../assets/fapiao.jpg'">
           <template v-slot:loading>
             <Loading type="spinner" size="20" />
           </template>
           <template v-slot:error>加载失败</template>
-        </van-image>
+        </van-image> -->
+        <img src="../assets/fapiao.jpg" alt="">
     </section>
   </div>
 </template>

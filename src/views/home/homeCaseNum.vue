@@ -154,11 +154,30 @@ export default {
       this.getArbIndexRanking()
     },
     getUserIndexHistogram () {
-      api.getUserIndexHistogram({ type: this.type }).then(res => {
-        if (res.data.code === '1') {
-          this.getechartsdata(res.data.data)
-        }
-      })
+      if (this.type === 3) {
+        api.mockRequest({ success: true, msg: '操作成功', code: '1', data: [['星期一', '10', '--'], ['星期二', '5', '--'], ['星期三', '20', '--'], ['星期四', '15', '--'], ['星期五', '30', '--'], ['星期六', '10', '--'], ['星期日', '12', '--']] }, 300).then(res => {
+          if (res.data.code === '1') {
+            this.getechartsdata(res.data.data)
+          }
+        })
+      } else if (this.type === 2) {
+        api.mockRequest({ success: true, msg: '操作成功', code: '1', data: [['1', '0', '--'], ['2', '0', '--'], ['3', '0', '--'], ['4', '0', '--'], ['5', '0', '--'], ['6', '0', '--'], ['7', '0', '--'], ['8', '0', '--'], ['9', '39', '--'], ['10', '63', '--'], ['11', '0', '--'], ['12', '0', '--'], ['13', '8', '--'], ['14', '1', '--'], ['15', '12', '--'], ['16', '42', '--'], ['17', '0', '--'], ['18', '0', '--'], ['19', '0', '--'], ['20', '0', '--'], ['21', '0', '--'], ['22', '0', '--'], ['23', '0', '--'], ['24', '0', '--'], ['25', '0', '--'], ['26', '0', '--'], ['27', '0', '--'], ['28', '0', '--'], ['29', '0', '--'], ['30', '0', '--']] }, 300).then(res => {
+          if (res.data.code === '1') {
+            this.getechartsdata(res.data.data)
+          }
+        })
+      } else {
+        api.mockRequest({ success: true, msg: '操作成功', code: '1', data: [['1', '50', '--'], ['2', '0', '--'], ['3', '0', '--'], ['4', '165', '--'], ['5', '0', '--'], ['6', '0', '--'], ['7', '0', '--'], ['8', '30', '--'], ['9', '0', '--'], ['10', '0', '--'], ['11', '0', '--'], ['12', '0', '--']] }, 300).then(res => {
+          if (res.data.code === '1') {
+            this.getechartsdata(res.data.data)
+          }
+        })
+      }
+      // api.getUserIndexHistogram({ type: this.type }).then(res => {
+      //   if (res.data.code === '1') {
+      //     this.getechartsdata(res.data.data)
+      //   }
+      // })
     }
   },
   created () {
